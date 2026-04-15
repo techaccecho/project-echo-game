@@ -66,10 +66,6 @@ interact={
 ]
 }
 
-[internationalization]
-
-locale/translations_pot_files=PackedStringArray("res://dialogue/greet.dialogue")
-
 [layer_names]
 
 2d_render/layer_1="player"

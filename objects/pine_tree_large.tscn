@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://yayo4t5ledsq"]
+
+[ext_resource type="Texture2D" uid="uid://p0e6uu8lg2qk" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Tree/Common/Shadow/Pine Tree.png" id="1_2qb0h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0urin"]
+size = Vector2(9, 7)
+
+[node name="Sprite2D" type="Sprite2D" unique_id=1488782070]
+texture = ExtResource("1_2qb0h")
+offset = Vector2(0, -17)
+region_enabled = true
+region_rect = Rect2(96, 0, 32, 48)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=14771871]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=2051235086]
+shape = SubResource("RectangleShape2D_0urin")

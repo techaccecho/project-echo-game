@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cnrapy7qat1b"]
+
+[ext_resource type="Texture2D" uid="uid://c78ktq7e6kc3q" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Exterior/Houses/NPCS houses/Houses.png" id="1_trlmd"]
+
+[node name="House" type="Node2D" unique_id=66966952]
+
+[node name="Roof" type="Sprite2D" parent="." unique_id=907131315]
+texture = ExtResource("1_trlmd")
+region_enabled = true
+region_rect = Rect2(0, 0, 704, 784)
+
+[node name="Walls" type="Sprite2D" parent="." unique_id=1612530956]
+
+[node name="Base" type="Sprite2D" parent="." unique_id=1500002266]
+
+[node name="Pillars" type="Sprite2D" parent="." unique_id=765321984]
