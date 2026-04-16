@@ -1,0 +1,10 @@
+[gd_resource type="TileSet" format=3 uid="uid://cu70ub5pe6rno"]
+
+[ext_resource type="Texture2D" uid="uid://jsnpsgdl4rin" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Tileset/Water tile.png" id="1_fq3e8"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mbtnb"]
+texture = ExtResource("1_fq3e8")
+0:0/0 = 0
+
+[resource]
+sources/3 = SubResource("TileSetAtlasSource_mbtnb")
