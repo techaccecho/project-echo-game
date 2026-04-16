@@ -5,45 +5,50 @@
 [ext_resource type="TileSet" uid="uid://bbsoqod2r2a3x" path="res://structures/houses/tilesets/stone_wall.tres" id="3_45ug1"]
 [ext_resource type="TileSet" uid="uid://dnw6mm5d4ult6" path="res://structures/houses/tilesets/doors_windows_chimneys.tres" id="4_i0bso"]
 
-[node name="BlacksmithHouseRoot" type="Node2D" unique_id=1295368702]
+[node name="BlacksmithHouse" type="Node2D" unique_id=1295368702]
 
-[node name="BlacksmithHouse" type="Node2D" parent="." unique_id=738775331]
-position = Vector2(226, 735)
-
-[node name="RoofBottom" type="TileMapLayer" parent="BlacksmithHouse" unique_id=65879577]
+[node name="RoofBottom" type="TileMapLayer" parent="." unique_id=65879577]
 z_index = 3
+position = Vector2(226, 735)
 tile_map_data = PackedByteArray("AADt/87/AwAZAAAAAADt/8//AwAZAAEAAADt/9D/AwAZAAIAAADu/87/AwAaAAAAAADu/8//AwAaAAEAAADu/9D/AwAaAAIAAADv/87/AwAZAAAAAADv/8//AwAZAAEAAADv/9D/AwAZAAIAAADw/87/AwAaAAAAAADw/8//AwAaAAEAAADw/9D/AwAaAAIAAADx/87/AwAZAAAAAADx/8//AwAZAAEAAADx/9D/AwAZAAIAAADy/87/AwAaAAAAAADy/8//AwAaAAEAAADy/9D/AwAaAAIAAADz/87/AwACAAcAAADz/8//AwAZAAEAAADz/9D/AwAZAAIAAAD0/87/AwADAAcAAAD0/8//AwAZAAEAAAD0/9D/AwAZAAIAAAD1/87/AwAEAAcAAAD1/8//AwAZAAEAAAD1/9D/AwAZAAIAAAD2/87/AwAaAAAAAAD2/8//AwAaAAEAAAD2/9D/AwAaAAIAAADy/8r/AgAFAAEAAADy/8v/AgAFAAIAAADz/8n/AgAGAAAAAADz/8r/AgAGAAEAAADz/8v/AgAGAAIAAADz/8z/AgAGAAMAAAD0/8r/AgAHAAEAAAD0/8v/AgAHAAIAAADy/8z/AgAFAAMAAADy/83/AgAFAAQAAAD0/8n/AgAHAAAAAAD1/8n/AgAIAAAAAAD1/8r/AgAIAAEAAAD1/8v/AgAIAAIAAAD1/8z/AgAIAAMAAAD2/8r/AgAJAAEAAAD2/8v/AgAJAAIAAAD2/8z/AgAJAAMAAAD2/83/AgAJAAQAAADz/83/AwACAAYAAAD0/83/AwADAAYAAAD1/83/AwAEAAYAAADx/9H/AwAEAAgAAADx/9L/AwAEAAkAAADy/9H/AwAFAAgAAADy/9L/AwAFAAkAAAA=")
 tile_set = ExtResource("1_i0bso")
 
-[node name="RoofTop" type="TileMapLayer" parent="BlacksmithHouse" unique_id=1780519489]
+[node name="RoofTop" type="TileMapLayer" parent="." unique_id=1780519489]
 z_index = 4
+position = Vector2(226, 735)
 tile_map_data = PackedByteArray("AADt/83/AwAZAAAAAADt/87/AwAZAAEAAADt/8//AwAZAAIAAADu/83/AwAaAAAAAADu/87/AwAaAAEAAADu/8//AwAaAAIAAADv/83/AwAZAAAAAADv/87/AwAZAAEAAADv/8//AwAZAAIAAADw/83/AwAaAAAAAADw/87/AwAaAAEAAADw/8//AwAaAAIAAADx/8//AwAZAAIAAADy/8//AwAaAAIAAADz/8//AwAZAAIAAAD1/8//AwAZAAIAAAD0/8//AwAaAAIAAADx/83/AwAZAAAAAADx/87/AwAZAAEAAADy/83/AwAaAAAAAADy/87/AwAaAAEAAAD2/83/AwAaAAAAAAD2/87/AwAaAAEAAAD2/8//AwAaAAIAAAA=")
 tile_set = ExtResource("1_i0bso")
 
-[node name="Pillars" type="TileMapLayer" parent="BlacksmithHouse" unique_id=955893209]
+[node name="Pillars" type="TileMapLayer" parent="." unique_id=955893209]
 z_index = 2
+position = Vector2(226, 735)
 tile_map_data = PackedByteArray("AADw/9D/AAAZABgAAADw/9H/AAAZABgAAADt/9D/AAAYABgAAADt/9H/AAAYABgAAADu/9L/AAAaABYAAADv/9L/AAAaABYAAADt/9L/AAAYABYAAADw/9L/AAAZABYAAAD1/9L/AAAaABYAAAD2/9D/AAAcABgAAAD2/9H/AAAcABgAAAD2/9L/AAAcABYAAADy/9L/AAAaABYAAADz/9L/AAAbABYAAADz/9D/AAAbABgAAADz/9H/AAAbABgAAAD0/9L/AAAaABYAAADx/9L/AAAaABYAAAD0/8n/AAAkABUAAAD0/8r/AAAkABYAAAD0/8v/AAAkABcAAAA=")
 tile_set = ExtResource("2_weath")
 
-[node name="Stairs" type="TileMapLayer" parent="BlacksmithHouse" unique_id=181417531]
+[node name="Stairs" type="TileMapLayer" parent="." unique_id=181417531]
 z_index = 4
+position = Vector2(226, 735)
 tile_map_data = PackedByteArray("AADv/9T/AAAkABMAAADu/9T/AAAiABMAAADv/9X/AAAkABQAAADu/9X/AAAiABQAAAA=")
 tile_set = ExtResource("2_weath")
 
-[node name="Walls" type="TileMapLayer" parent="BlacksmithHouse" unique_id=908297763]
+[node name="Walls" type="TileMapLayer" parent="." unique_id=908297763]
+position = Vector2(226, 735)
 tile_map_data = PackedByteArray("AADw/9H/DAACAAUAAADw/9L/DAACAAYAAADx/9H/DAADAAUAAADx/9L/DAADAAYAAADy/9H/DAAEAAUAAADy/9L/DAABAAYAAADz/9H/DAAAAAUAAADz/9L/DAACAAYAAAD0/9H/DAABAAUAAAD0/9L/DAADAAYAAADu/9D/DAAAAAQAAADv/9D/DAABAAQAAADw/9D/DAACAAQAAADx/9D/DAADAAQAAADy/9D/DAAEAAQAAADz/9D/DAAFAAQAAAD0/9D/DAAGAAQAAADt/9D/DAAHAAQAABDt/9H/DAAHAAYAABDt/9L/DAAHAAYAABD2/9D/DAAHAAQAAAD2/9H/DAAHAAUAAAD2/9L/DAAHAAYAAAD1/9D/DAAGAAQAAAD1/9H/DAAGAAUAAAD1/9L/DAAGAAYAAADu/9H/DAAAAAUAAADu/9L/DAADAAYAAADv/9H/DAABAAUAAADv/9L/DAABAAYAAADz/8v/DAAAAAEAAADz/8z/DAAAAAEAAADz/83/DAAAAAEAAADz/87/DAAAAAEAAAD0/8v/DAABAAEAAAD0/8z/DAABAAEAAAD0/83/DAABAAEAAAD0/87/DAABAAEAAAD1/8v/DAACAAEAAAD1/8z/DAACAAEAAAD1/83/DAACAAEAAAD1/87/DAACAAEAAAA=")
 tile_set = ExtResource("3_45ug1")
 
-[node name="Windows" type="TileMapLayer" parent="BlacksmithHouse" unique_id=129576371]
+[node name="Windows" type="TileMapLayer" parent="." unique_id=129576371]
 z_index = 4
+position = Vector2(226, 735)
 tile_map_data = PackedByteArray("AAD0/9H/BAANAAcAAAD1/9H/BAAOAAcAAADu/9H/BAANAAcAAADv/9H/BAAOAAcAAAD1/8r/BAACAA0AAAD1/8v/BAACAA4AAAD2/8r/BAADAA0AAAD2/8v/BAADAA4AAAD2/8z/BAADAA8AAADu/87/BAAUAAgAAADu/8//BAAUAAkAAADv/87/BAAVAAgAAADv/8//BAAVAAkAAADu/8z/BAAUAAUAAADu/83/BAAUAAYAAADv/8z/BAAVAAUAAADv/83/BAAVAAYAAAA=")
 tile_set = ExtResource("4_i0bso")
 
-[node name="Floor" type="TileMapLayer" parent="BlacksmithHouse" unique_id=234762332]
+[node name="Floor" type="TileMapLayer" parent="." unique_id=234762332]
+position = Vector2(226, 735)
 tile_map_data = PackedByteArray("AAD1/9P/AgAjABAAAAD0/9P/AgAjABAAAADz/9P/AgAjABAAAADy/9P/AgAjABAAAADx/9P/AgAjABAAAADw/9P/AgAjABAAAADv/9P/AgAjABAAAADu/9P/AgAjABAAAADt/9P/AgAiABAAAAD1/9T/AgAjABEAAADt/9T/AgAiABEAAADu/9T/AgAjABEAAADv/9T/AgAjABEAAADw/9T/AgAjABEAAADx/9T/AgAjABEAAADy/9T/AgAjABEAAADz/9T/AgAjABEAAAD0/9T/AgAjABEAAAD1/9L/AgAjAA8AAADt/9L/AgAiAA8AAAD2/9L/AgAkAA8AAAD2/9P/AgAkABAAAAD2/9T/AgAkABEAAAD0/9L/AgAjAA8AAADz/9L/AgAjAA8AAADy/9L/AgAjAA8AAADx/9L/AgAjAA8AAADw/9L/AgAjAA8AAADv/9L/AgAjAA8AAADu/9L/AgAjAA8AAAA=")
 tile_set = ExtResource("1_i0bso")
 
-[node name="TopHouse" type="TileMapLayer" parent="BlacksmithHouse" unique_id=43520589]
+[node name="TopHouse" type="TileMapLayer" parent="." unique_id=43520589]
 z_index = 4
+position = Vector2(226, 735)
 tile_map_data = PackedByteArray("AADy/8z/AgAFAAYAAADy/83/AgAFAAcAAADy/87/AgAFAAgAAADz/8v/AgAGAAUAAADz/8z/AgAGAAYAAADz/83/AgAGAAcAAADz/87/AgAGAAgAAAD0/8z/AgAHAAYAAAD0/83/AgAHAAcAAAD0/87/AgAHAAgAAAD1/8v/AgAIAAUAAAD1/8z/AgAIAAYAAAD1/83/AgAIAAcAAAD1/87/AgAIAAgAAAD2/8z/AgAJAAYAAAD2/83/AgAJAAcAAAD2/87/AgAJAAgAAAA=")
 tile_set = ExtResource("1_i0bso")
