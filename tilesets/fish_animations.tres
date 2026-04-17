@@ -1,0 +1,59 @@
+[gd_resource type="TileSet" format=3 uid="uid://1hii26qsqmgh"]
+
+[ext_resource type="Texture2D" uid="uid://dfnp3ky2djlnx" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Fish/bubbles 2.png" id="1_0lbmo"]
+[ext_resource type="Texture2D" uid="uid://cfuvt7bvd1iqo" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Fish/bubbles.png" id="2_flxpd"]
+[ext_resource type="Texture2D" uid="uid://betnucvh881ck" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Fish/Fish point small.png" id="3_i7rgu"]
+[ext_resource type="Texture2D" uid="uid://ckqb8tpljv7bq" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Fish/FishPoint.png" id="4_dnpm2"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qagc7"]
+texture = ExtResource("1_0lbmo")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_05omo"]
+texture = ExtResource("2_flxpd")
+0:0/animation_columns = 7
+0:0/animation_frame_0/duration = 1.0
+0:0/animation_frame_1/duration = 1.0
+0:0/animation_frame_2/duration = 1.0
+0:0/animation_frame_3/duration = 1.0
+0:0/animation_frame_4/duration = 1.0
+0:0/animation_frame_5/duration = 1.0
+0:0/animation_frame_6/duration = 1.0
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uce4y"]
+texture = ExtResource("3_i7rgu")
+0:0/animation_columns = 11
+0:0/animation_speed = 4.0
+0:0/animation_frame_0/duration = 1.0
+0:0/animation_frame_1/duration = 1.0
+0:0/animation_frame_2/duration = 1.0
+0:0/animation_frame_3/duration = 1.0
+0:0/animation_frame_4/duration = 1.0
+0:0/animation_frame_5/duration = 1.0
+0:0/animation_frame_6/duration = 1.0
+0:0/animation_frame_7/duration = 1.0
+0:0/animation_frame_8/duration = 1.0
+0:0/animation_frame_9/duration = 1.0
+0:0/animation_frame_10/duration = 1.0
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6rc46"]
+texture = ExtResource("4_dnpm2")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+
+[resource]
+sources/0 = SubResource("TileSetAtlasSource_qagc7")
+sources/1 = SubResource("TileSetAtlasSource_05omo")
+sources/2 = SubResource("TileSetAtlasSource_uce4y")
+sources/3 = SubResource("TileSetAtlasSource_6rc46")
