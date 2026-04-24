@@ -1,0 +1,27 @@
+[gd_scene format=4 uid="uid://c22k3vhlkopgk"]
+
+[ext_resource type="TileSet" uid="uid://ls5ufjbwxb68" path="res://structures/houses/tilesets/houses.tres" id="2_itds3"]
+[ext_resource type="TileSet" uid="uid://cok1cqxkvmqrh" path="res://tilesets/tilled_soil_wet_soil.tres" id="3_itds3"]
+[ext_resource type="TileSet" uid="uid://5hqydjyei7cw" path="res://tilesets/Road.tres" id="4_itds3"]
+
+[node name="Workshop" type="Node2D" unique_id=691895347]
+position = Vector2(0, -14)
+
+[node name="Pivot" type="Node2D" parent="." unique_id=1806847007]
+position = Vector2(3, 14)
+
+[node name="Pillars" type="TileMapLayer" parent="Pivot" unique_id=1245475675]
+position = Vector2(-2, 739)
+tile_set = ExtResource("2_itds3")
+
+[node name="Floor1" type="TileMapLayer" parent="Pivot" unique_id=1769767558]
+z_index = -2
+position = Vector2(-2, 739)
+tile_map_data = PackedByteArray("AAD+/9L/BgAJAAIAAAD//9L/BgAJAAIAAAAAANL/BgAJAAIAAAABANL/BgAJAAIAAAACANL/BgAJAAIAAAADANL/BgAJAAIAAAAEANL/BgAJAAIAAAABANP/BgAJAAIAAAD8/9P/BgAJAAIAAAD7/9T/BgAIAAMAAAD7/9P/BgAIAAEAAAD7/9L/BgAIAAAAAAD9/9L/BgAFAAEAAAD8/9L/BgAKAAAAAAD9/9H/BgAIAAAAAAD+/9H/BgAKAAAAAAD//9H/BgAKAAAAAAAAANH/BgAKAAAAAAABANH/BgAKAAAAAAACANH/BgAKAAAAAAAFANH/BgALAAAAAAAGANL/BgALAAAAAAAGANP/BgALAAMAAAAFANL/BgAGAAEAAAAFANP/BgAJAAMAAAAEANP/BgAJAAMAAAADANP/BgAJAAMAAAACANT/BgALAAMAAAACANP/BgAGAAIAAAABANT/BgAJAAMAAAAAANT/BgAIAAMAAAAAANP/BgAFAAIAAAD//9P/BgAJAAMAAAD+/9P/BgAJAAMAAAD9/9P/BgAGAAIAAAD8/9T/BgAJAAMAAAD9/9T/BgALAAMAAAADANH/BgAKAAAAAAAEANH/BgAKAAAAAAA=")
+tile_set = ExtResource("3_itds3")
+
+[node name="Floor2" type="TileMapLayer" parent="Pivot" unique_id=1583644115]
+z_index = -1
+position = Vector2(-2, 739)
+tile_map_data = PackedByteArray("AAD9/9H/AAAGAAkAAAD9/9L/AAAGAAgAAAD9/9P/AAAHAAkAAAD+/9H/AAAHAAcAAAD+/9L/AAAGAAcAAAD+/9P/AAAHAAcAAAD//9H/AAAGAAkAAAD//9L/AAAHAAgAAAAAANL/AAAHAAkAAAAAANP/AAAHAAkAAAAAANT/AAAHAAcAAAABANH/AAAHAAkAAAABANL/AAAGAAcAAAABANT/AAAHAAcAAAACANH/AAAHAAcAAAACANL/AAAHAAgAAAACANP/AAAHAAgAAAACANT/AAAGAAcAAAADANH/AAAGAAkAAAADANL/AAAGAAcAAAADANP/AAAHAAkAAAAEANH/AAAGAAgAAAAEANL/AAAGAAgAAAAEANP/AAAHAAgAAAAFANH/AAAHAAcAAAAFANL/AAAHAAgAAAAFANP/AAAHAAcAAAAGANL/AAAGAAcAAAAGANP/AAAGAAkAAAAAANH/AAAHAAgAAAA=")
+tile_set = ExtResource("4_itds3")

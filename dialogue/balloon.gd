@@ -37,6 +37,9 @@ var locals: Dictionary = {}
 
 var _locale: String = TranslationServer.get_locale()
 
+## Character who is speaking
+var _speaker: Node2D = null
+
 ## The current line
 var dialogue_line: DialogueLine:
 	set(value):
@@ -70,8 +73,11 @@ var mutation_cooldown: Timer = Timer.new()
 ## Indicator to show that player can progress dialogue.
 @onready var progress: Polygon2D = %Progress
 
+## Tail for balloon speach
+@onready var tail: Control = $Balloon/Tail
 
 func _ready() -> void:
+	balloon.resized.connect(_update_tail)
 	balloon.hide()
 	Engine.get_singleton("DialogueManager").mutated.connect(_on_mutated)
 
@@ -125,6 +131,9 @@ func start(with_dialogue_resource: DialogueResource = null, title: String = "", 
 func apply_dialogue_line() -> void:
 	mutation_cooldown.stop()
 
+	# Reposition balloon to whoever is speaking this line
+	_update_speaker_from_line()
+
 	progress.hide()
 	is_waiting_for_input = false
 	balloon.focus_mode = Control.FOCUS_ALL
@@ -142,6 +151,10 @@ func apply_dialogue_line() -> void:
 	# Show our balloon
 	balloon.show()
 	will_hide_balloon = false
+
+	# Wait one frame for the UI to calculate balloon.size before drawing the tail
+	await get_tree().process_frame
+	_update_tail()
 
 	dialogue_label.show()
 	if not dialogue_line.text.is_empty():
@@ -213,5 +226,40 @@ func _on_balloon_gui_input(event: InputEvent) -> void:
 func _on_responses_menu_response_selected(response: DialogueResponse) -> void:
 	next(response.next_id)
 
+# Dialogue Text Bubble Positioning
+func _update_speaker_from_line() -> void:
+	# Try to find a node in extra_game_states whose NPC/character name matches the dialogue line
+	var speaker_name: String = dialogue_line.character.to_lower()
+	for state in temporary_game_states:
+		# Skip non-nodes (e.g. the balloon itself, dictionaries)
+		if not state is Node2D:
+			continue
+		# Match by node name or a custon "character_name" property (added inside our character scripts)
+		if state.name.to_lower() == speaker_name or (state.get(&"character_name") != null and (state.character_name as String).to_lower() == speaker_name):
+			_speaker = state
+			break
+	
+	_reposition_to_speaker()
+
+func _reposition_to_speaker() -> void:
+	if not is_instance_valid(_speaker):
+		return
+	var anchor: Node = _speaker.get_node_or_null("BalloonAnchor2D")
+	var world_pos: Vector2
+	if anchor:
+		world_pos = (anchor as Node2D).global_position
+	else:
+		world_pos = _speaker.global_position + Vector2(0, -80)
+	
+	# CanvasLayer uses offset, not global_position
+	# Convert world position to screen position via the camera
+	var canvas_transform: Transform2D = get_viewport().get_canvas_transform()
+	var screen_pos: Vector2 = canvas_transform * world_pos
+	offset = screen_pos - Vector2(balloon.size.x / 2.0, balloon.size.y)
+
+func _update_tail() -> void:
+	if not is_instance_valid(tail):
+		return
+	tail.draw_tail(balloon.size.x, balloon.size.y)
 
 #endregion

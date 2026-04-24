@@ -394,7 +394,7 @@ animations = [{
 size = Vector2(9, 10)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3jken"]
-radius = 13.0
+radius = 29.0
 
 [node name="NpcBlacksmith" type="CharacterBody2D" unique_id=1996695969]
 script = ExtResource("1_e4nl8")
@@ -414,5 +414,8 @@ one_shot = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=1245227380]
 shape = SubResource("CircleShape2D_3jken")
+
+[node name="BalloonAnchor2D" type="Node2D" parent="." unique_id=1238928460]
+position = Vector2(0, -16)
 
 [connection signal="timeout" from="StateTimer" to="." method="_on_state_timer_timeout"]

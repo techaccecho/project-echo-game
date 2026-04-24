@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://ccxk7nsx3r1g3"]
+
+[ext_resource type="Texture2D" uid="uid://cukxhx3l8thj" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Work Benches/Anvil.png" id="1_77fip"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8j7df"]
+atlas = ExtResource("1_77fip")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q5twi"]
+atlas = ExtResource("1_77fip")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m2h8l"]
+atlas = ExtResource("1_77fip")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c5uqm"]
+atlas = ExtResource("1_77fip")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2heno"]
+atlas = ExtResource("1_77fip")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xpqbv"]
+atlas = ExtResource("1_77fip")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_egn3o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8j7df")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q5twi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m2h8l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c5uqm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2heno")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xpqbv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_77fip"]
+size = Vector2(11, 4)
+
+[node name="AnvilWhiteGray" type="AnimatedSprite2D" unique_id=572894837]
+sprite_frames = SubResource("SpriteFrames_egn3o")
+frame_progress = 0.7169663
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=2131542548]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1153397161]
+position = Vector2(0.5, 3)
+shape = SubResource("RectangleShape2D_77fip")
