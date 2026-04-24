@@ -16,9 +16,6 @@
 [node name="GameWorld" type="Node2D" unique_id=906258989]
 y_sort_enabled = true
 
-[node name="NpcBlacksmith" parent="." unique_id=1996695969 instance=ExtResource("10_druaq")]
-position = Vector2(-1131, -850)
-
 [node name="AnvilWhiteGray" parent="." unique_id=572894837 instance=ExtResource("30_65dot")]
 z_index = 5
 position = Vector2(-230, -782)
@@ -53,6 +50,9 @@ tile_set = ExtResource("10_ccgqp")
 
 [node name="WorkshopGround" parent="GameLevel1" unique_id=691895347 instance=ExtResource("24_6rc46")]
 position = Vector2(-228, -874)
+
+[node name="NpcBlacksmith" parent="GameLevel1" unique_id=1996695969 instance=ExtResource("10_druaq")]
+position = Vector2(-286, -769)
 
 [node name="PlayerJosh" parent="GameLevel1" unique_id=1395837091 instance=ExtResource("15_8cpu7")]
 z_index = 5

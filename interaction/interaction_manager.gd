@@ -2,7 +2,7 @@ extends Node2D
 
 #class_name InteractionManager
 
-@onready var player_josh = get_tree().get_first_node_in_group("player_josh")
+@onready var player = get_tree().get_first_node_in_group("player")
 @onready var label = $Label
 
 const base_text = "[E] to "
@@ -38,11 +38,11 @@ func _process(_delta):
 		label.hide()
 
 func _sort_by_distance_to_player(area1, area2):
-	if area1 == null or area2 == null or player_josh == null:
+	if area1 == null or area2 == null or player == null:
 		return false
 	
-	var area1_to_player = player_josh.global_position.distance_to(area1.global_position)
-	var area2_to_player = player_josh.global_position.distance_to(area2.global_position)
+	var area1_to_player = player.global_position.distance_to(area1.global_position)
+	var area2_to_player = player.global_position.distance_to(area2.global_position)
 	return area1_to_player < area2_to_player
 
 func _input(event):
