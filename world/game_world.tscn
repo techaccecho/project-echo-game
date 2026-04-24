@@ -52,7 +52,7 @@ tile_set = ExtResource("10_ccgqp")
 position = Vector2(-228, -874)
 
 [node name="NpcBlacksmith" parent="GameLevel1" unique_id=1996695969 instance=ExtResource("10_druaq")]
-position = Vector2(-286, -769)
+position = Vector2(-392, -702)
 
 [node name="PlayerJosh" parent="GameLevel1" unique_id=1395837091 instance=ExtResource("15_8cpu7")]
 z_index = 5
