@@ -34,6 +34,7 @@ tile_map_data = PackedByteArray("AAD6//z/BAAJAAIAAAD6//3/BAAJAAIAAAD6//7/BAAJAAI
 tile_set = ExtResource("3_u30do")
 
 [node name="BlacksmithHouse" parent="GameLevel1" unique_id=738775331 instance=ExtResource("11_uce4y")]
+y_sort_enabled = false
 position = Vector2(-467, -835)
 
 [node name="GroundItems0" type="TileMapLayer" parent="GameLevel1" unique_id=1743550438]
@@ -52,6 +53,7 @@ tile_set = ExtResource("10_ccgqp")
 position = Vector2(-228, -874)
 
 [node name="NpcBlacksmith" parent="GameLevel1" unique_id=1996695969 instance=ExtResource("10_druaq")]
+z_index = 5
 position = Vector2(-392, -702)
 
 [node name="PlayerJosh" parent="GameLevel1" unique_id=1395837091 instance=ExtResource("15_8cpu7")]
