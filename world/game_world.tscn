@@ -22,7 +22,7 @@ position = Vector2(-230, -782)
 frame_progress = 0.35702416
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1409798256]
-position = Vector2(-182, -763)
+position = Vector2(-207, -865)
 zoom = Vector2(3, 3)
 
 [node name="GameLevel1" type="Node2D" parent="." unique_id=154145874]
@@ -35,7 +35,7 @@ tile_set = ExtResource("3_u30do")
 
 [node name="BlacksmithHouse" parent="GameLevel1" unique_id=738775331 instance=ExtResource("11_uce4y")]
 z_index = 5
-position = Vector2(-467, -835)
+position = Vector2(-452, -865)
 
 [node name="GroundItems0" type="TileMapLayer" parent="GameLevel1" unique_id=1743550438]
 tile_map_data = PackedByteArray("AAD0/8z/AAANAAIAAAD0/83/AAANAAMAAAD1/8z/AAAOAAIAAAD1/83/AAAOAAMAAADy/8z/AAANAAIAAADy/83/AAANAAMAAADz/8z/AAAOAAIAAADz/83/AAAOAAMAAADs/8v/AAADAAEAAADs/8z/AAAPAAMAAADx/8z/AAADAAEAAAD4/8//AwAFAAEAAAD3/8//AwAFAAEAAAD2/8//AwALAAEAAAD5/8v/AwAFAAEAAADu/83/AwAFAAEAAADt/83/AwALAAEAAADs/8f/AwAFAAEAAADv/8b/AwAFAAEAAAD0/8b/AwAFAAEAAAD1/8b/AwAFAAEAAAD4/8n/AwAFAAEAAAA=")
@@ -58,14 +58,14 @@ position = Vector2(-392, -702)
 
 [node name="PlayerJosh" parent="GameLevel1" unique_id=1395837091 instance=ExtResource("15_8cpu7")]
 z_index = 5
-position = Vector2(-182, -763)
+position = Vector2(-207, -865)
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="GameLevel1/PlayerJosh" unique_id=493444989]
 remote_path = NodePath("../../../Camera2D")
 
 [node name="WorkshopShell" parent="GameLevel1" unique_id=2097110525 instance=ExtResource("14_qu7vk")]
 z_index = 5
-position = Vector2(-205, -860)
+position = Vector2(-204, -851)
 
 [node name="River" parent="GameLevel1" unique_id=347155084 instance=ExtResource("9_druaq")]
 
