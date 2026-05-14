@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://byas1fk3l2kah" path="res://character/npc_blacksmith.gd" id="1_e4nl8"]
 [ext_resource type="Texture2D" uid="uid://d23swoh8g1bha" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Character and Portrait/Character/Others/NPC'S/Blacksmith/1.png" id="1_y3igw"]
+[ext_resource type="Resource" uid="uid://gh5xdkvqmbo7" path="res://inventory/items/axe.tres" id="2_3jken"]
 [ext_resource type="Texture2D" uid="uid://pilaym7scjij" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Character and Portrait/Character/Others/NPC'S/Blacksmith/Idle.png" id="2_e4nl8"]
 [ext_resource type="Texture2D" uid="uid://bs1u1mxtg1u40" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Character and Portrait/Character/Others/NPC'S/Blacksmith/Walk.png" id="3_imbse"]
 [ext_resource type="PackedScene" uid="uid://bibupx3yvo61" path="res://interaction/interaction_area/interaction_area.tscn" id="5_imbse"]
@@ -398,6 +399,7 @@ radius = 29.0
 
 [node name="NpcBlacksmith" type="CharacterBody2D" unique_id=1996695969]
 script = ExtResource("1_e4nl8")
+axe = ExtResource("2_3jken")
 
 [node name="Movement" type="AnimatedSprite2D" parent="." unique_id=865940540]
 sprite_frames = SubResource("SpriteFrames_msofp")

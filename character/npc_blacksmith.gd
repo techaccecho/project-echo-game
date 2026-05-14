@@ -5,6 +5,8 @@ enum SMITH_STATE { IDLE, SMITHING, TALKING, WALK }
 @export var idle_duration: float = 3.0
 @export var walk_duration: float = 2.0
 @export var character_name: String = "NPCBlacksmith"
+# Inventory: Blacksmith gives player the axe
+@export var axe: InvItem
 
 @onready var animated_sprite = $Movement
 @onready var state_timer = $StateTimer
@@ -36,6 +38,8 @@ func _on_interact():
 	#await animated_sprite.animation_finished
 	if current_state != SMITH_STATE.IDLE && current_state != SMITH_STATE.SMITHING && current_state != SMITH_STATE.WALK:
 		return
+	# Player talks to NPC, NPC hands player axe
+	#player.collect(axe)
 	current_state = SMITH_STATE.TALKING
 	DialogueManager.show_dialogue_balloon(dialogue_resource, "start", [self, player])
 	current_state = SMITH_STATE.IDLE

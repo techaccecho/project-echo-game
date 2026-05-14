@@ -67,3 +67,8 @@ func disable_movement():
 
 func enable_movement():
 	movement_enabled = true
+
+# Inventory
+# Our player has access to the inventory. This function puts an item into the inventory by calling inventory.insert
+func collect(item):
+	inv.insert(item)
