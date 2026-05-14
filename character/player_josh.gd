@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+@export var inv: Inv
 @export var walk_speed: float = 100
 @export var run_speed: float = 200
 @export var character_name: String = "Player"
@@ -66,3 +67,8 @@ func disable_movement():
 
 func enable_movement():
 	movement_enabled = true
+
+# Inventory
+# Our player has access to the inventory. This function puts an item into the inventory by calling inventory.insert
+func collect(item):
+	inv.insert(item)
