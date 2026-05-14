@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://5xvypv6jcbq3" path="res://character/npc_blacksmith.tscn" id="10_druaq"]
 [ext_resource type="PackedScene" uid="uid://ntcl7tkfgme1" path="res://base_terrain/scenes/water_border.tscn" id="10_hdkfl"]
 [ext_resource type="PackedScene" uid="uid://d2qstdm4lgcpa" path="res://structures/houses/blacksmith/blacksmith_house.tscn" id="11_uce4y"]
+[ext_resource type="PackedScene" uid="uid://doa04urw7iidr" path="res://inventory/inv_ui.tscn" id="13_1i7os"]
 [ext_resource type="PackedScene" uid="uid://dfo2onkt5unk" path="res://structures/houses/blacksmith/workshop_shell.tscn" id="14_qu7vk"]
 [ext_resource type="PackedScene" uid="uid://wvbxyfgl33vp" path="res://character/player_josh.tscn" id="15_8cpu7"]
 [ext_resource type="PackedScene" uid="uid://cjv2qoon2uq34" path="res://base_terrain/scenes/tree_border.tscn" id="17_esbob"]
@@ -100,3 +101,12 @@ position = Vector2(-115, -918)
 [node name="PineTreeLarge7" parent="." unique_id=21135125 instance=ExtResource("22_q8vt7")]
 z_index = 5
 position = Vector2(-96, -904)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1780773830]
+
+[node name="Inv_UI" parent="CanvasLayer" unique_id=228588046 instance=ExtResource("13_1i7os")]
+offset_left = 526.99994
+offset_top = 166.99998
+offset_right = 623.99994
+offset_bottom = 240.99998
+scale = Vector2(10, 10)

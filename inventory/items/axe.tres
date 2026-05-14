@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="InvItem" format=3 uid="uid://gh5xdkvqmbo7"]
+
+[ext_resource type="Script" uid="uid://by0khe2xbsbyd" path="res://inventory/inventory_item.gd" id="1_m3h8r"]
+[ext_resource type="Texture2D" uid="uid://f5qtnov6iluw" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Icons/Weapons/RPG/5.png" id="2_6e0sr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5lo3o"]
+atlas = ExtResource("2_6e0sr")
+region = Rect2(47, 0, 16, 16)
+
+[resource]
+script = ExtResource("1_m3h8r")
+name = "axe"
+texture = SubResource("AtlasTexture_5lo3o")
+metadata/_custom_type_script = "uid://by0khe2xbsbyd"

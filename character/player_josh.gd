@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+@export var inv: Inv
 @export var walk_speed: float = 100
 @export var run_speed: float = 200
 @export var character_name: String = "Player"
