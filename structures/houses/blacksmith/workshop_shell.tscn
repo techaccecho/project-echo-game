@@ -3,32 +3,54 @@
 [ext_resource type="Texture2D" uid="uid://mh6ly8uo2gbu" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Exterior/Houses/NPCS houses/Blacksmith.png" id="1_8jdbb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ts3pn"]
-size = Vector2(27, 12)
+size = Vector2(27, 13)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r7875"]
 size = Vector2(5, 3)
 
-[node name="WorkshopShell" type="Sprite2D" unique_id=2097110525]
+[node name="WorkshopShellRoot" type="Node2D" unique_id=1778060997]
+
+[node name="Furnace" type="Sprite2D" parent="." unique_id=954622499]
+z_index = -1
+position = Vector2(40, -6)
 texture = ExtResource("1_8jdbb")
-offset = Vector2(0, -23)
 region_enabled = true
-region_rect = Rect2(368, 8, 144, 88)
+region_rect = Rect2(462.3404, 70.11577, 34.629242, 15.939026)
+
+[node name="WorkshopShellLeft" type="Sprite2D" parent="." unique_id=2097110525]
+position = Vector2(-26, 5)
+texture = ExtResource("1_8jdbb")
+offset = Vector2(0, -37)
+region_enabled = true
+region_rect = Rect2(368, 8, 92, 88)
+
+[node name="WorkshopShellRight" type="Sprite2D" parent="." unique_id=726847910]
+position = Vector2(46, -32)
+texture = ExtResource("1_8jdbb")
+region_enabled = true
+region_rect = Rect2(460, 32, 52, 40)
+
+[node name="WorkshipShellRightPillar" type="Sprite2D" parent="." unique_id=1674674510]
+position = Vector2(68, 0)
+texture = ExtResource("1_8jdbb")
+region_enabled = true
+region_rect = Rect2(504, 72, 8, 24)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1319658843]
 position = Vector2(0, 14)
 
 [node name="Furnace" type="CollisionShape2D" parent="StaticBody2D" unique_id=277939553]
-position = Vector2(40, -17)
+position = Vector2(40, -24.5)
 shape = SubResource("RectangleShape2D_ts3pn")
 
 [node name="PillarL" type="CollisionShape2D" parent="StaticBody2D" unique_id=300881309]
-position = Vector2(-65, 2.5)
+position = Vector2(-65, -5.5)
 shape = SubResource("RectangleShape2D_r7875")
 
 [node name="PillarM" type="CollisionShape2D" parent="StaticBody2D" unique_id=435030928]
-position = Vector2(14.5, 2.5)
+position = Vector2(14.5, -5.5)
 shape = SubResource("RectangleShape2D_r7875")
 
 [node name="PillarR" type="CollisionShape2D" parent="StaticBody2D" unique_id=1151656077]
-position = Vector2(68.5, 2.5)
+position = Vector2(68.5, -5.5)
 shape = SubResource("RectangleShape2D_r7875")

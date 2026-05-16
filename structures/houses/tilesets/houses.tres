@@ -532,8 +532,10 @@ texture = ExtResource("1_splpj")
 32:19/0 = 0
 33:19/0 = 0
 34:19/0 = 0
+34:19/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4.1051254, 1.054019, -6.012285, -1.2838731, -5.9912605, 8, -4.1051254, 8)
 35:19/0 = 0
 36:19/0 = 0
+36:19/0/physics_layer_0/polygon_0/points = PackedVector2Array(4.1051254, 1.054019, 5.935787, -1.1649675, 5.935787, 8, 4.1051254, 8)
 0:20/0 = 0
 1:20/0 = 0
 2:20/0 = 0
@@ -556,8 +558,10 @@ texture = ExtResource("1_splpj")
 31:20/0 = 0
 32:20/0 = 0
 34:20/0 = 0
+34:20/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4.1605988, -8, -5.9912605, -8, -5.9912605, -5.7693624)
 35:20/0 = 0
 36:20/0 = 0
+36:20/0/physics_layer_0/polygon_0/points = PackedVector2Array(4.1605988, -8, 5.9912605, -8, 5.9912605, -5.7693624)
 0:21/0 = 0
 4:21/0 = 0
 6:21/0 = 0
@@ -1564,4 +1568,5 @@ texture = ExtResource("1_splpj")
 42:48/0 = 0
 
 [resource]
+physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_p0luf")

@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://5xvypv6jcbq3" path="res://character/npc_blacksmith.tscn" id="10_druaq"]
 [ext_resource type="PackedScene" uid="uid://ntcl7tkfgme1" path="res://base_terrain/scenes/water_border.tscn" id="10_hdkfl"]
 [ext_resource type="PackedScene" uid="uid://d2qstdm4lgcpa" path="res://structures/houses/blacksmith/blacksmith_house.tscn" id="11_uce4y"]
+[ext_resource type="PackedScene" uid="uid://doa04urw7iidr" path="res://inventory/inv_ui.tscn" id="13_1i7os"]
 [ext_resource type="PackedScene" uid="uid://dfo2onkt5unk" path="res://structures/houses/blacksmith/workshop_shell.tscn" id="14_qu7vk"]
 [ext_resource type="PackedScene" uid="uid://wvbxyfgl33vp" path="res://character/player_josh.tscn" id="15_8cpu7"]
 [ext_resource type="PackedScene" uid="uid://cjv2qoon2uq34" path="res://base_terrain/scenes/tree_border.tscn" id="17_esbob"]
@@ -16,16 +17,13 @@
 [node name="GameWorld" type="Node2D" unique_id=906258989]
 y_sort_enabled = true
 
-[node name="NpcBlacksmith" parent="." unique_id=1996695969 instance=ExtResource("10_druaq")]
-position = Vector2(-1131, -850)
-
 [node name="AnvilWhiteGray" parent="." unique_id=572894837 instance=ExtResource("30_65dot")]
 z_index = 5
 position = Vector2(-230, -782)
 frame_progress = 0.35702416
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1409798256]
-position = Vector2(-182, -763)
+position = Vector2(-207, -865)
 zoom = Vector2(3, 3)
 
 [node name="GameLevel1" type="Node2D" parent="." unique_id=154145874]
@@ -37,7 +35,8 @@ tile_map_data = PackedByteArray("AAD6//z/BAAJAAIAAAD6//3/BAAJAAIAAAD6//7/BAAJAAI
 tile_set = ExtResource("3_u30do")
 
 [node name="BlacksmithHouse" parent="GameLevel1" unique_id=738775331 instance=ExtResource("11_uce4y")]
-position = Vector2(-467, -835)
+z_index = 5
+position = Vector2(-452, -865)
 
 [node name="GroundItems0" type="TileMapLayer" parent="GameLevel1" unique_id=1743550438]
 tile_map_data = PackedByteArray("AAD0/8z/AAANAAIAAAD0/83/AAANAAMAAAD1/8z/AAAOAAIAAAD1/83/AAAOAAMAAADy/8z/AAANAAIAAADy/83/AAANAAMAAADz/8z/AAAOAAIAAADz/83/AAAOAAMAAADs/8v/AAADAAEAAADs/8z/AAAPAAMAAADx/8z/AAADAAEAAAD4/8//AwAFAAEAAAD3/8//AwAFAAEAAAD2/8//AwALAAEAAAD5/8v/AwAFAAEAAADu/83/AwAFAAEAAADt/83/AwALAAEAAADs/8f/AwAFAAEAAADv/8b/AwAFAAEAAAD0/8b/AwAFAAEAAAD1/8b/AwAFAAEAAAD4/8n/AwAFAAEAAAA=")
@@ -54,16 +53,20 @@ tile_set = ExtResource("10_ccgqp")
 [node name="WorkshopGround" parent="GameLevel1" unique_id=691895347 instance=ExtResource("24_6rc46")]
 position = Vector2(-228, -874)
 
+[node name="NpcBlacksmith" parent="GameLevel1" unique_id=1996695969 instance=ExtResource("10_druaq")]
+z_index = 5
+position = Vector2(-392, -702)
+
 [node name="PlayerJosh" parent="GameLevel1" unique_id=1395837091 instance=ExtResource("15_8cpu7")]
 z_index = 5
-position = Vector2(-182, -763)
+position = Vector2(-207, -865)
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="GameLevel1/PlayerJosh" unique_id=493444989]
 remote_path = NodePath("../../../Camera2D")
 
 [node name="WorkshopShell" parent="GameLevel1" unique_id=2097110525 instance=ExtResource("14_qu7vk")]
 z_index = 5
-position = Vector2(-205, -860)
+position = Vector2(-204, -851)
 
 [node name="River" parent="GameLevel1" unique_id=347155084 instance=ExtResource("9_druaq")]
 
@@ -98,3 +101,12 @@ position = Vector2(-115, -918)
 [node name="PineTreeLarge7" parent="." unique_id=21135125 instance=ExtResource("22_q8vt7")]
 z_index = 5
 position = Vector2(-96, -904)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1780773830]
+
+[node name="Inv_UI" parent="CanvasLayer" unique_id=228588046 instance=ExtResource("13_1i7os")]
+offset_left = 526.99994
+offset_top = 166.99998
+offset_right = 623.99994
+offset_bottom = 240.99998
+scale = Vector2(10, 10)

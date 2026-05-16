@@ -1,11 +1,15 @@
 ~ start
-Nathan: [[Hi|Hello|Howdy]], this is [wave]some[/wave] [wait=1]dialogue.
-Nathan: Here are some [speed=0.5]choices.
-- First one
-	Nathan: You picked the first one.
-- Second one
-	Nathan: You picked the second one.
-- Start again => start
-- End the conversation => END
-Nathan: For more information see the online documentation.
+do start_talking()
+do disable_movement()
+NPCBlacksmith: [[Hi|Hello|Hey]] there visitor, welcome to our world! Have you seen our vast forests?
+- Yes, they seem mystical!
+	NPCBlacksmith: They do indeed, [[be careful around the fragile trees - they could break and hurt you!|enjoy the exploration!|there's always more to see!]].
+- No, I have not
+	NPCBlacksmith: You should go check it out, the forest is full of surprises.
+	NPCBlacksmith: To truly explore these, you would need an [wave]axe[/wave]. Let me see if I have a spare lying around.
+	NPCBlacksmith: [wait=1] Ahaa! Here take this one, it is a bit rusty but should get the job done for the smaller trees!
+	NPCBlacksmith: You can view your axe in your inventory by pressing "I". Safe exploring!
+	do collect(axe)
+do stop_talking()
+do enable_movement()
 => END

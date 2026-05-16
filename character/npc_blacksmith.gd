@@ -1,9 +1,12 @@
 extends CharacterBody2D
 
-enum SMITH_STATE { IDLE, WALK, SMITHING }
+enum SMITH_STATE { IDLE, SMITHING, TALKING, WALK }
 @export var walk_speed: float = 20
 @export var idle_duration: float = 3.0
 @export var walk_duration: float = 2.0
+@export var character_name: String = "NPCBlacksmith"
+# Inventory: Blacksmith gives player the axe
+@export var axe: InvItem
 
 @onready var animated_sprite = $Movement
 @onready var state_timer = $StateTimer
@@ -11,20 +14,34 @@ enum SMITH_STATE { IDLE, WALK, SMITHING }
 
 var move_direction: Vector2 = Vector2(0, 1) # Default to down
 var current_state: SMITH_STATE = SMITH_STATE.IDLE
+# Dialogue
+var dialogue_resource = load("res://dialogue/greet.dialogue")
+# Player
+var player: CharacterBody2D
 
 func _ready():
+	player = get_tree().get_first_node_in_group("player")
+	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
 	interaction_area.interact = Callable(self, "_on_interact")
+
 	motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
 	pick_new_state()
 
 func _on_interact():
-	if current_state != SMITH_STATE.IDLE && current_state != SMITH_STATE.WALK:
+	
+	## Code for hitting the smith table
+	#if current_state != SMITH_STATE.IDLE && current_state != SMITH_STATE.WALK:
+		#return
+	#current_state = SMITH_STATE.SMITHING
+	#animated_sprite.play("hit")
+	#
+	#await animated_sprite.animation_finished
+	if current_state != SMITH_STATE.IDLE && current_state != SMITH_STATE.SMITHING && current_state != SMITH_STATE.WALK:
 		return
-	current_state = SMITH_STATE.SMITHING
-	animated_sprite.play("hit")
-	
-	await animated_sprite.animation_finished
-	
+	# Player talks to NPC, NPC hands player axe
+	#player.collect(axe)
+	current_state = SMITH_STATE.TALKING
+	DialogueManager.show_dialogue_balloon(dialogue_resource, "start", [self, player])
 	current_state = SMITH_STATE.IDLE
 	pick_new_state()
 
@@ -55,6 +72,8 @@ func select_new_direction():
 
 # Switch from walking to idling
 func pick_new_state():
+	if current_state == SMITH_STATE.SMITHING or current_state == SMITH_STATE.TALKING:
+		return
 	if (current_state == SMITH_STATE.IDLE):
 		current_state = SMITH_STATE.WALK
 		select_new_direction()
@@ -69,10 +88,21 @@ func pick_new_state():
 func update_animation():
 	var suffix = get_direction_suffix()
 	
-	if (current_state == SMITH_STATE.IDLE):
+	if (current_state == SMITH_STATE.IDLE or current_state == SMITH_STATE.TALKING):
 		animated_sprite.play("idle_" + suffix)
 	elif (current_state == SMITH_STATE.WALK):
 		animated_sprite.play("walk_" + suffix)
+	
+func start_talking():
+	state_timer.stop()
+	current_state = SMITH_STATE.TALKING
+	move_direction = Vector2.DOWN
+	velocity = Vector2.ZERO
+	update_animation()
+
+func stop_talking():
+	current_state = SMITH_STATE.IDLE
+	pick_new_state()
 
 func get_direction_suffix():
 	if (abs(move_direction.x) > abs(move_direction.y)):
@@ -82,3 +112,13 @@ func get_direction_suffix():
 
 func _on_state_timer_timeout():
 	pick_new_state()
+
+#func _unhandled_input(event: InputEvent):
+	#if event.is_action_pressed("talk"):
+		#DialogueManager.show_dialogue_balloon(dialogue_resource, "start", [self, player])
+
+func _on_dialogue_ended(_resource):
+	if current_state == SMITH_STATE.TALKING:
+		stop_talking()
+	if player:
+		player.enable_movement()

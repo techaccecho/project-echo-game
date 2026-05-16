@@ -1,14 +1,18 @@
 extends CharacterBody2D
 
+@export var inv: Inv
 @export var walk_speed: float = 100
 @export var run_speed: float = 200
-
+@export var character_name: String = "Player"
 @onready var animated_sprite = $Movement
 
 # Track last direction so idle plays the correct facing animation
 var last_direction: Vector2 = Vector2(0, 1) # default face down
+var movement_enabled: bool = true
 
 func _physics_process(_delta):
+	if (!movement_enabled):
+		return
 	var input_direction = Vector2(
 		Input.get_action_strength("right") - Input.get_action_strength("left"),
 		Input.get_action_strength("down") - Input.get_action_strength("up")
@@ -55,3 +59,16 @@ func get_direction_suffix(dir: Vector2) -> String:
 			return "up"
 		else:
 			return "down"
+
+func disable_movement():
+	movement_enabled = false
+	
+	update_animation(Vector2.ZERO, false)  # snap to idle animation immediately
+
+func enable_movement():
+	movement_enabled = true
+
+# Inventory
+# Our player has access to the inventory. This function puts an item into the inventory by calling inventory.insert
+func collect(item):
+	inv.insert(item)
