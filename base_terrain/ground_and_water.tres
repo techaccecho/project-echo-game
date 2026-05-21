@@ -1,6 +1,7 @@
 [gd_resource type="TileSet" format=3 uid="uid://7n6dyiw5jy4m"]
 
 [ext_resource type="Texture2D" uid="uid://qpq0bytt1wgt" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Tileset/Water Ground animations tiles.png" id="1_rhgpf"]
+[ext_resource type="Texture2D" uid="uid://bw4f14gqc8kan" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Tileset/Beach animations tiles.png" id="2_6pnlw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_i05or"]
 texture = ExtResource("1_rhgpf")
@@ -656,5 +657,9 @@ texture = ExtResource("1_rhgpf")
 23:3/animation_frame_3/duration = 1.0
 23:3/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3fd50"]
+texture = ExtResource("2_6pnlw")
+
 [resource]
 sources/0 = SubResource("TileSetAtlasSource_i05or")
+sources/1 = SubResource("TileSetAtlasSource_3fd50")
