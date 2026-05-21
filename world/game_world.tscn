@@ -23,13 +23,13 @@ position = Vector2(-230, -782)
 frame_progress = 0.35702416
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1409798256]
-position = Vector2(-207, -865)
+position = Vector2(-1036, -871)
 zoom = Vector2(3, 3)
 
 [node name="GameLevel1" type="Node2D" parent="." unique_id=154145874]
 y_sort_enabled = true
 
-[node name="BaseGrass" parent="GameLevel1" unique_id=1540939719 instance=ExtResource("2_1i7os")]
+[node name="BaseGrassRoot" parent="GameLevel1" unique_id=1980249847 instance=ExtResource("2_1i7os")]
 
 [node name="BlacksmithHouse" parent="GameLevel1" unique_id=738775331 instance=ExtResource("11_uce4y")]
 z_index = 5
@@ -56,7 +56,7 @@ position = Vector2(-392, -702)
 
 [node name="PlayerJosh" parent="GameLevel1" unique_id=1395837091 instance=ExtResource("15_8cpu7")]
 z_index = 5
-position = Vector2(-207, -865)
+position = Vector2(-1036, -871)
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="GameLevel1/PlayerJosh" unique_id=493444989]
 remote_path = NodePath("../../../Camera2D")
