@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://bi1uxhled4jfl"]
+
+[ext_resource type="Texture2D" uid="uid://ka5bqri1wdt3" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/UI/Inventory/inventory.png" id="1_dfngl"]
+[ext_resource type="Script" uid="uid://csf5k2urp7qip" path="res://inventory/inv_ui_slot.gd" id="1_fcwim"]
+
+[node name="inv_UI_slot" type="Panel" unique_id=507980434]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(18, 18)
+offset_right = 18.0
+offset_bottom = 18.0
+script = ExtResource("1_fcwim")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=65404187]
+texture_filter = 1
+texture = ExtResource("1_dfngl")
+centered = false
+region_enabled = true
+region_rect = Rect2(71, 41, 18, 18)
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1358912369]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 0
+offset_right = 18.0
+offset_bottom = 18.0
+
+[node name="Panel" type="Panel" parent="CenterContainer" unique_id=1819021371]
+layout_mode = 2
+
+[node name="item_display" type="Sprite2D" parent="CenterContainer/Panel" unique_id=108336907]
+
+[node name="Label" type="Label" parent="CenterContainer/Panel" unique_id=654927102]
+custom_minimum_size = Vector2(20, 23)
+layout_mode = 0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 21.0
+offset_bottom = 24.0
+scale = Vector2(0.3, 0.3)
+theme_override_colors/font_color = Color(0.5163938, 0.5163938, 0.5163937, 1)
+text = "99"
+horizontal_alignment = 2

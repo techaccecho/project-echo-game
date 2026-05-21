@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cb7cttwqs7bbr" path="res://character/player_josh.gd" id="1_1n21y"]
 [ext_resource type="Texture2D" uid="uid://u6e65mvu1k6n" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Character and Portrait/Character/Pre-made/Josh/Idle.png" id="1_sj6nb"]
+[ext_resource type="Resource" uid="uid://dd653a22271cg" path="res://inventory/player_inv.tres" id="2_p735x"]
 [ext_resource type="Texture2D" uid="uid://cyk86p7ch4w21" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Character and Portrait/Character/Pre-made/Josh/Walk.png" id="3_3jgtt"]
 [ext_resource type="Texture2D" uid="uid://b57o8ecif1pg3" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Character and Portrait/Character/Pre-made/Josh/Run.png" id="4_0mckw"]
 
@@ -432,10 +433,11 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sj6nb"]
-size = Vector2(7, 10)
+size = Vector2(9, 10)
 
 [node name="PlayerJosh" type="CharacterBody2D" unique_id=1395837091 groups=["player"]]
 script = ExtResource("1_1n21y")
+inv = ExtResource("2_p735x")
 
 [node name="Movement" type="AnimatedSprite2D" parent="." unique_id=1394448707]
 sprite_frames = SubResource("SpriteFrames_ts7kp")

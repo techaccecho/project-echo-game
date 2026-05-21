@@ -1,6 +1,110 @@
 [gd_resource type="TileSet" format=3 uid="uid://ntlw4jtedjch"]
 
+[ext_resource type="Texture2D" uid="uid://bq1bt3puan2gf" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Tree/Common/Shadow/Pine Tree Animation.png" id="1_orufi"]
 [ext_resource type="Texture2D" uid="uid://ca1swagedlp5s" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Tree/Old/Common/Pine Tree copiar.png" id="1_u5axs"]
+[ext_resource type="Texture2D" uid="uid://crbc54x1aehcx" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Tree/TREE TRUNKS copiar.png" id="2_0vj43"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_51j58"]
+texture = ExtResource("1_orufi")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+7:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+6:4/0 = 0
+7:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+0:6/0 = 0
+1:6/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+4:6/0 = 0
+5:6/0 = 0
+6:6/0 = 0
+7:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+3:7/0 = 0
+4:7/0 = 0
+5:7/0 = 0
+6:7/0 = 0
+7:7/0 = 0
+0:8/0 = 0
+1:8/0 = 0
+2:8/0 = 0
+3:8/0 = 0
+4:8/0 = 0
+5:8/0 = 0
+6:8/0 = 0
+7:8/0 = 0
+0:11/0 = 0
+1:11/0 = 0
+2:11/0 = 0
+3:11/0 = 0
+4:11/0 = 0
+5:11/0 = 0
+6:11/0 = 0
+7:11/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mj6tk"]
+texture = ExtResource("2_0vj43")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nk86h"]
 texture = ExtResource("1_u5axs")
@@ -73,3 +177,5 @@ texture = ExtResource("1_u5axs")
 [resource]
 physics_layer_0/collision_layer = 1
 sources/2 = SubResource("TileSetAtlasSource_nk86h")
+sources/0 = SubResource("TileSetAtlasSource_51j58")
+sources/1 = SubResource("TileSetAtlasSource_mj6tk")
