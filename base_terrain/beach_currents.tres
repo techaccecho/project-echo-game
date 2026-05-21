@@ -1,6 +1,6 @@
 [gd_resource type="TileSet" format=3 uid="uid://bfn4hxvytx80x"]
 
-[ext_resource type="Texture2D" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Tileset/beach_currents.png" id="1_cysfr"]
+[ext_resource type="Texture2D" uid="uid://ckwiwa8k8lqxq" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Tileset/beach_currents.png" id="1_cysfr"]
 [ext_resource type="Texture2D" uid="uid://bw4f14gqc8kan" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Tileset/Beach animations tiles.png" id="2_7m07p"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7m07p"]
