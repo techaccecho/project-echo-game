@@ -2,6 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://cyr3hbhw5wa1q" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Tree/Common/Effects/FX Effects Dark Forest leafs 2.png" id="1_epkks"]
 [ext_resource type="Texture2D" uid="uid://c8ykgeghdacey" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Tree/Common/Shadow/Maple Tree Animation.png" id="2_62wib"]
+[ext_resource type="Script" uid="uid://b0u18tvdf240j" path="res://objects/maple_tree_hittable_light.gd" id="3_28dd7"]
+[ext_resource type="PackedScene" uid="uid://bibupx3yvo61" path="res://interaction/interaction_area/interaction_area.tscn" id="4_73c18"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_28dd7"]
 atlas = ExtResource("1_epkks")
@@ -53,23 +55,35 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_2w0uh")
 }],
-"loop": true,
+"loop": false,
 "name": &"shake",
-"speed": 2.0
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7wgjd"]
 size = Vector2(9, 8)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4wtfe"]
+radius = 17.0
 
 [node name="tree_hittable" type="AnimatedSprite2D" unique_id=106629565]
 z_index = 5
 y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_qessd")
 animation = &"shake"
+frame = 3
+frame_progress = 1.0
 offset = Vector2(0, -11)
+script = ExtResource("3_28dd7")
 
 [node name="tree_body" type="StaticBody2D" parent="." unique_id=450878321]
 
 [node name="collision_shape" type="CollisionShape2D" parent="tree_body" unique_id=1290334748]
 position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_7wgjd")
+
+[node name="InteractionArea" parent="." unique_id=720283725 instance=ExtResource("4_73c18")]
+action_name = "hit"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=1355441097]
+shape = SubResource("CircleShape2D_4wtfe")
