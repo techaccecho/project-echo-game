@@ -441,7 +441,7 @@ inv = ExtResource("2_p735x")
 
 [node name="Movement" type="AnimatedSprite2D" parent="." unique_id=1394448707]
 sprite_frames = SubResource("SpriteFrames_ts7kp")
-animation = &"idle_up"
+animation = &"idle_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=574768998]
 position = Vector2(0.5, 5)
