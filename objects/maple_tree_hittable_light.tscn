@@ -3,7 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://cyr3hbhw5wa1q" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Tree/Common/Effects/FX Effects Dark Forest leafs 2.png" id="1_epkks"]
 [ext_resource type="Texture2D" uid="uid://c8ykgeghdacey" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Tree/Common/Shadow/Maple Tree Animation.png" id="2_62wib"]
 [ext_resource type="Script" uid="uid://b0u18tvdf240j" path="res://objects/maple_tree_hittable_light.gd" id="3_28dd7"]
-[ext_resource type="PackedScene" uid="uid://bibupx3yvo61" path="res://interaction/interaction_area/interaction_area.tscn" id="4_73c18"]
+[ext_resource type="PackedScene" uid="uid://bwscujgphetvn" path="res://components/hurt_component.tscn" id="4_73c18"]
+[ext_resource type="PackedScene" uid="uid://d16se0xbu72m2" path="res://components/damage_component.tscn" id="5_4wtfe"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_28dd7"]
 atlas = ExtResource("1_epkks")
@@ -63,8 +64,8 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7wgjd"]
 size = Vector2(9, 8)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_4wtfe"]
-radius = 17.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6qgdq"]
+size = Vector2(10, 14)
 
 [node name="tree_hittable" type="AnimatedSprite2D" unique_id=106629565]
 z_index = 5
@@ -82,8 +83,12 @@ script = ExtResource("3_28dd7")
 position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_7wgjd")
 
-[node name="InteractionArea" parent="." unique_id=720283725 instance=ExtResource("4_73c18")]
-action_name = "hit"
+[node name="HurtComponent" parent="." unique_id=862619382 instance=ExtResource("4_73c18")]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=1355441097]
-shape = SubResource("CircleShape2D_4wtfe")
+[node name="HurtComponentCollisionShape2D" type="CollisionShape2D" parent="HurtComponent" unique_id=525579675]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_6qgdq")
+debug_color = Color(0.8427732, 0.24108443, 0.7361931, 0.41960785)
+
+[node name="DamageComponent" parent="." unique_id=1266352200 instance=ExtResource("5_4wtfe")]
+max_damage = 3

@@ -56,22 +56,46 @@ process_material = SubResource("ParticleProcessMaterial_36ubq")
 y_sort_enabled = true
 
 [node name="tree_hittable" parent="HittableTrees" unique_id=106629565 instance=ExtResource("1_36ubq")]
+position = Vector2(-99, -464)
+frame = 0
+frame_progress = 0.0
+script = null
+
+[node name="tree_hittable7" parent="HittableTrees" unique_id=210242299 instance=ExtResource("1_36ubq")]
 position = Vector2(-99, -385)
+frame = 0
+frame_progress = 0.0
+script = null
 
 [node name="tree_hittable2" parent="HittableTrees" unique_id=1172867078 instance=ExtResource("1_36ubq")]
 position = Vector2(-253, -396)
+frame = 0
+frame_progress = 0.0
+script = null
 
 [node name="tree_hittable3" parent="HittableTrees" unique_id=787262342 instance=ExtResource("1_36ubq")]
 position = Vector2(-378, -310)
+frame = 0
+frame_progress = 0.0
+script = null
 
 [node name="tree_hittable4" parent="HittableTrees" unique_id=328975644 instance=ExtResource("1_36ubq")]
 position = Vector2(-550, -159)
+frame = 0
+frame_progress = 0.0
+script = null
 
 [node name="tree_hittable5" parent="HittableTrees" unique_id=1768365063 instance=ExtResource("1_36ubq")]
 position = Vector2(-715, -65)
+frame = 0
+frame_progress = 0.0
+script = null
 
 [node name="tree_hittable6" parent="HittableTrees" unique_id=1555812215 instance=ExtResource("1_36ubq")]
 position = Vector2(-98, -62)
+frame = 0
+frame_progress = 0.0
+script = null
 
 [node name="NonHittableTrees" type="Node2D" parent="." unique_id=1023877989]
 y_sort_enabled = true
