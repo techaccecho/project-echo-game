@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://d4i77i7kr7twl"]
 
 [ext_resource type="PackedScene" uid="uid://dqp5std4t6fek" path="res://world/base_grass_level_1.tscn" id="2_1i7os"]
+[ext_resource type="PackedScene" uid="uid://bey33j4ma35bh" path="res://world/blacksmith_front_yard.tscn" id="4_4054t"]
 [ext_resource type="PackedScene" uid="uid://bl8bydys1a8qm" path="res://base_terrain/scenes/river.tscn" id="9_druaq"]
 [ext_resource type="TileSet" uid="uid://bu48edd5oif51" path="res://tilesets/rock_flower_tree_grass.tres" id="10_ccgqp"]
 [ext_resource type="PackedScene" uid="uid://5xvypv6jcbq3" path="res://character/npc_blacksmith.tscn" id="10_druaq"]
@@ -19,7 +20,7 @@ y_sort_enabled = true
 
 [node name="AnvilWhiteGray" parent="." unique_id=572894837 instance=ExtResource("30_65dot")]
 z_index = 5
-position = Vector2(-230, -782)
+position = Vector2(-225, -781)
 frame_progress = 0.35702416
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1409798256]
@@ -35,19 +36,23 @@ y_sort_enabled = true
 z_index = 5
 position = Vector2(-452, -865)
 
+[node name="BlacksmithFrontYard" parent="GameLevel1" unique_id=1582565861 instance=ExtResource("4_4054t")]
+position = Vector2(-520, -736)
+
 [node name="GroundItems0" type="TileMapLayer" parent="GameLevel1" unique_id=1743550438]
-tile_map_data = PackedByteArray("AAD0/8z/AAANAAIAAAD0/83/AAANAAMAAAD1/8z/AAAOAAIAAAD1/83/AAAOAAMAAADy/8z/AAANAAIAAADy/83/AAANAAMAAADz/8z/AAAOAAIAAADz/83/AAAOAAMAAADs/8v/AAADAAEAAADs/8z/AAAPAAMAAADx/8z/AAADAAEAAAD4/8//AwAFAAEAAAD3/8//AwAFAAEAAAD2/8//AwALAAEAAAD5/8v/AwAFAAEAAADu/83/AwAFAAEAAADt/83/AwALAAEAAADs/8f/AwAFAAEAAADv/8b/AwAFAAEAAAD0/8b/AwAFAAEAAAD1/8b/AwAFAAEAAAD4/8n/AwAFAAEAAAA=")
+tile_map_data = PackedByteArray("AAD0/8z/AAANAAIAAAD0/83/AAANAAMAAAD1/8z/AAAOAAIAAAD1/83/AAAOAAMAAADy/8z/AAANAAIAAADy/83/AAANAAMAAADz/8z/AAAOAAIAAADz/83/AAAOAAMAAADs/8v/AAADAAEAAADs/8z/AAAPAAMAAADx/8z/AAADAAEAAAD5/8v/AwAFAAEAAADu/83/AwAFAAEAAADt/83/AwALAAEAAADs/8f/AwAFAAEAAADv/8b/AwAFAAEAAAD0/8b/AwAFAAEAAAD1/8b/AwAFAAEAAAD4/8n/AwAFAAEAAAD3/9H/AwALAAEAAAD4/9H/AwAFAAEAAAD5/9H/AwAFAAEAAAA=")
 tile_set = ExtResource("10_ccgqp")
 
 [node name="GroundItems1" type="TileMapLayer" parent="GameLevel1" unique_id=1918723622]
-tile_map_data = PackedByteArray("AAD1/8z/AwAKAAEAAADw/8z/AwAKAAEAABD4/8n/AwAKAAEAABD3/8//AQACAAAAAAD4/8//AQADAAAAAAD4/8v/AQACAAAAAAD5/8v/AQADAAAAAADt/83/AQACAAAAAADu/83/AQADAAAAAAD0/8b/AQACAAAAAAD1/8b/AQADAAAAAADz/83/AQAAAAAAAADs/8f/AQAAAAAAAADt/8f/AQABAAAAAADs/8b/AAADAAEAAADt/8b/AAADAAEAAADv/8X/AAADAAEAAADw/8X/AAADAAEAAADx/8X/AAADAAEAAADy/8X/AAADAAEAAADz/8X/AAADAAEAAAD0/8X/AAADAAEAAAD1/8X/AAADAAEAAAD2/8X/AAADAAEAAAD3/8X/AAADAAEAAAA=")
+tile_map_data = PackedByteArray("AAD1/8z/AwAKAAEAAADw/8z/AwAKAAEAABD4/8n/AwAKAAEAABD4/8v/AQACAAAAAAD5/8v/AQADAAAAAADt/83/AQACAAAAAADu/83/AQADAAAAAAD0/8b/AQACAAAAAAD1/8b/AQADAAAAAADz/83/AQAAAAAAAADs/8f/AQAAAAAAAADt/8f/AQABAAAAAADs/8b/AAADAAEAAADt/8b/AAADAAEAAADv/8X/AAADAAEAAADw/8X/AAADAAEAAADx/8X/AAADAAEAAADy/8X/AAADAAEAAADz/8X/AAADAAEAAAD0/8X/AAADAAEAAAD1/8X/AAADAAEAAAD2/8X/AAADAAEAAAD3/8X/AAADAAEAAAD4/9H/AQACAAAAAAD5/9H/AQADAAAAAAA=")
 tile_set = ExtResource("10_ccgqp")
 
 [node name="GroundItems2" type="TileMapLayer" parent="GameLevel1" unique_id=1552360505]
-tile_map_data = PackedByteArray("AAD0/83/AQABAAAAAADz/83/AAADAAEAAADt/8f/AAADAAEAAADt/8X/AAALAAIAAADt/8b/AAALAAMAAAD2/8//AAANAAIAAAD2/9D/AAANAAMAAAD3/8//AAAOAAIAAAD3/9D/AAAOAAMAAAD4/8//AwALAAEAAAD1/8X/AwALAAEAAADu/8X/AwALAAAAAAD1/8b/AwALAAAAAAD2/8X/AwALAAAAAAA=")
+tile_map_data = PackedByteArray("AAD0/83/AQABAAAAAADz/83/AAADAAEAAADt/8f/AAADAAEAAADt/8X/AAALAAIAAADt/8b/AAALAAMAAAD1/8X/AwALAAEAAADu/8X/AwALAAAAAAD1/8b/AwALAAAAAAD2/8X/AwALAAAAAAD3/9H/AAANAAIAAAD3/9L/AAANAAMAAAD4/9H/AAAOAAIAAAD4/9L/AAAOAAMAAAD5/9H/AwALAAEAAAA=")
 tile_set = ExtResource("10_ccgqp")
 
 [node name="WorkshopGround" parent="GameLevel1" unique_id=691895347 instance=ExtResource("24_6rc46")]
+z_index = 1
 position = Vector2(-228, -874)
 
 [node name="NpcBlacksmith" parent="GameLevel1" unique_id=1996695969 instance=ExtResource("10_druaq")]
