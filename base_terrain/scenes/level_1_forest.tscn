@@ -55,47 +55,47 @@ process_material = SubResource("ParticleProcessMaterial_36ubq")
 [node name="HittableTrees" type="Node2D" parent="." unique_id=2127645315]
 y_sort_enabled = true
 
-[node name="tree_hittable" parent="HittableTrees" unique_id=106629565 instance=ExtResource("1_36ubq")]
-position = Vector2(-99, -464)
-frame = 0
-frame_progress = 0.0
-script = null
+[node name="tree_hittable" parent="HittableTrees" unique_id=912617466 instance=ExtResource("1_36ubq")]
+position = Vector2(-394, -299)
 
-[node name="tree_hittable7" parent="HittableTrees" unique_id=210242299 instance=ExtResource("1_36ubq")]
-position = Vector2(-99, -385)
-frame = 0
-frame_progress = 0.0
-script = null
+[node name="tree_hittable7" parent="HittableTrees" unique_id=106629565 instance=ExtResource("1_36ubq")]
+position = Vector2(-535, -179)
 
-[node name="tree_hittable2" parent="HittableTrees" unique_id=1172867078 instance=ExtResource("1_36ubq")]
-position = Vector2(-253, -396)
-frame = 0
-frame_progress = 0.0
-script = null
+[node name="tree_hittable8" parent="HittableTrees" unique_id=974303519 instance=ExtResource("1_36ubq")]
+position = Vector2(-511, -191)
 
-[node name="tree_hittable3" parent="HittableTrees" unique_id=787262342 instance=ExtResource("1_36ubq")]
-position = Vector2(-378, -310)
-frame = 0
-frame_progress = 0.0
-script = null
+[node name="tree_hittable12" parent="HittableTrees" unique_id=608104012 instance=ExtResource("1_36ubq")]
+position = Vector2(-534, -187)
 
-[node name="tree_hittable4" parent="HittableTrees" unique_id=328975644 instance=ExtResource("1_36ubq")]
-position = Vector2(-550, -159)
-frame = 0
-frame_progress = 0.0
-script = null
+[node name="tree_hittable13" parent="HittableTrees" unique_id=2085544460 instance=ExtResource("1_36ubq")]
+position = Vector2(-539, -169)
 
-[node name="tree_hittable5" parent="HittableTrees" unique_id=1768365063 instance=ExtResource("1_36ubq")]
-position = Vector2(-715, -65)
-frame = 0
-frame_progress = 0.0
-script = null
+[node name="tree_hittable11" parent="HittableTrees" unique_id=275076078 instance=ExtResource("1_36ubq")]
+position = Vector2(-501, -199)
 
-[node name="tree_hittable6" parent="HittableTrees" unique_id=1555812215 instance=ExtResource("1_36ubq")]
-position = Vector2(-98, -62)
-frame = 0
-frame_progress = 0.0
-script = null
+[node name="tree_hittable2" parent="HittableTrees" unique_id=1803544258 instance=ExtResource("1_36ubq")]
+position = Vector2(-549, -176)
+
+[node name="tree_hittable14" parent="HittableTrees" unique_id=900388362 instance=ExtResource("1_36ubq")]
+position = Vector2(-498, -209)
+
+[node name="tree_hittable3" parent="HittableTrees" unique_id=1205157206 instance=ExtResource("1_36ubq")]
+position = Vector2(-561, -153)
+
+[node name="tree_hittable4" parent="HittableTrees" unique_id=29204725 instance=ExtResource("1_36ubq")]
+position = Vector2(-552, -163)
+
+[node name="tree_hittable5" parent="HittableTrees" unique_id=587300907 instance=ExtResource("1_36ubq")]
+position = Vector2(-379, -300)
+
+[node name="tree_hittable6" parent="HittableTrees" unique_id=1132311288 instance=ExtResource("1_36ubq")]
+position = Vector2(-83, -390)
+
+[node name="tree_hittable9" parent="HittableTrees" unique_id=1546944898 instance=ExtResource("1_36ubq")]
+position = Vector2(-105, -395)
+
+[node name="tree_hittable10" parent="HittableTrees" unique_id=668964658 instance=ExtResource("1_36ubq")]
+position = Vector2(-102, -381)
 
 [node name="NonHittableTrees" type="Node2D" parent="." unique_id=1023877989]
 y_sort_enabled = true
@@ -465,16 +465,6 @@ z_index = 5
 y_sort_enabled = true
 position = Vector2(-387, -184)
 
-[node name="TreeUnhittable81" parent="NonHittableTrees" unique_id=190105582 instance=ExtResource("2_gphni")]
-z_index = 5
-y_sort_enabled = true
-position = Vector2(-499, -208)
-
-[node name="TreeUnhittable82" parent="NonHittableTrees" unique_id=1110873765 instance=ExtResource("2_gphni")]
-z_index = 5
-y_sort_enabled = true
-position = Vector2(-513, -206)
-
 [node name="TreeUnhittable83" parent="NonHittableTrees" unique_id=2105954122 instance=ExtResource("2_gphni")]
 z_index = 5
 y_sort_enabled = true
@@ -669,11 +659,6 @@ position = Vector2(-87, -279)
 z_index = 5
 y_sort_enabled = true
 position = Vector2(-69, -273)
-
-[node name="TreeUnhittable141" parent="NonHittableTrees" unique_id=1996283495 instance=ExtResource("2_gphni")]
-z_index = 5
-y_sort_enabled = true
-position = Vector2(-532, -171)
 
 [node name="TreeUnhittable142" parent="NonHittableTrees" unique_id=1894237645 instance=ExtResource("2_gphni")]
 z_index = 5
@@ -1018,6 +1003,7 @@ tile_map_data = PackedByteArray("AADj//X/BgABAAMAAADm//X/BgABAAMAAADn//X/BgAFAAA
 tile_set = ExtResource("9_sf5q6")
 
 [node name="REMOVE_GrassBackground" type="Node2D" parent="." unique_id=1027331573]
+visible = false
 z_index = -10
 
 [node name="TileMapLayer" type="TileMapLayer" parent="REMOVE_GrassBackground" unique_id=2099847168]

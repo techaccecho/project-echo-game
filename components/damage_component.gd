@@ -8,6 +8,7 @@ signal max_damage_reached
 
 func apply_damage(damage: int) -> void:
 	current_damage = clamp(current_damage + damage, 0, max_damage)
-	
+	print("Current damage: ", current_damage)
 	if current_damage == max_damage:
+		print("Max damage reached")
 		max_damage_reached.emit()

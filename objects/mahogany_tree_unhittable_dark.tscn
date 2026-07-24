@@ -1,8 +1,7 @@
 [gd_scene format=3 uid="uid://dugw7qjqmfrdc"]
 
 [ext_resource type="Texture2D" uid="uid://bfy0m0eo3uwok" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Tree/Common/Shadow/Mahogany Tree Animation.png" id="1_ol3v5"]
-[ext_resource type="Script" path="res://objects/mahogany_tree_unhittable_dark.gd" id="2_tree"]
-[ext_resource type="PackedScene" uid="uid://bibupx3yvo61" path="res://interaction/interaction_area/interaction_area.tscn" id="3_ia"]
+[ext_resource type="Script" uid="uid://bu6jokeakgh4b" path="res://objects/mahogany_tree_unhittable_dark.gd" id="2_tree"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vevwo"]
 atlas = ExtResource("1_ol3v5")
@@ -39,27 +38,16 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vk50o"]
 size = Vector2(13.5, 9)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ia"]
-radius = 20.0
-
 [node name="TreeUnhittable" type="AnimatedSprite2D" unique_id=46041949]
-script = ExtResource("2_tree")
 sprite_frames = SubResource("SpriteFrames_rxk8x")
 animation = &"hit"
 frame = 3
 frame_progress = 1.0
 offset = Vector2(0, -11)
+script = ExtResource("2_tree")
 
 [node name="TreeCollision" type="StaticBody2D" parent="." unique_id=1372797949]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TreeCollision" unique_id=1386720175]
 position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_vk50o")
-
-[node name="InteractionArea" parent="." instance=ExtResource("3_ia")]
-action_name = "shake"
-input_action = &"interact_alt"
-key_prompt = "B / Click"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
-shape = SubResource("CircleShape2D_ia")

@@ -30,6 +30,30 @@ region = Rect2(64, 48, 32, 48)
 atlas = ExtResource("2_62wib")
 region = Rect2(96, 48, 32, 48)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_qessd"]
+atlas = ExtResource("2_62wib")
+region = Rect2(0, 48, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7wgjd"]
+atlas = ExtResource("2_62wib")
+region = Rect2(32, 48, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i6fsg"]
+atlas = ExtResource("2_62wib")
+region = Rect2(32, 240, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jrwrk"]
+atlas = ExtResource("2_62wib")
+region = Rect2(64, 240, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bib2c"]
+atlas = ExtResource("2_62wib")
+region = Rect2(96, 240, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_my47a"]
+atlas = ExtResource("2_62wib")
+region = Rect2(0, 240, 32, 48)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_qessd"]
 animations = [{
 "frames": [{
@@ -44,20 +68,46 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 2.5,
 "texture": SubResource("AtlasTexture_4wtfe")
 }, {
 "duration": 0.5,
 "texture": SubResource("AtlasTexture_6qgdq")
 }, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": SubResource("AtlasTexture_8qalj")
 }, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": SubResource("AtlasTexture_2w0uh")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_4wtfe")
 }],
 "loop": false,
 "name": &"shake",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 2.5,
+"texture": SubResource("AtlasTexture_qessd")
+}, {
+"duration": 0.25,
+"texture": SubResource("AtlasTexture_7wgjd")
+}, {
+"duration": 0.25,
+"texture": SubResource("AtlasTexture_i6fsg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jrwrk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bib2c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_my47a")
+}],
+"loop": false,
+"name": &"trunk",
 "speed": 5.0
 }]
 
@@ -67,19 +117,17 @@ size = Vector2(9, 8)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6qgdq"]
 size = Vector2(10, 14)
 
-[node name="tree_hittable" type="AnimatedSprite2D" unique_id=106629565]
+[node name="TreeHittable" type="AnimatedSprite2D" unique_id=106629565]
 z_index = 5
 y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_qessd")
-animation = &"shake"
-frame = 3
-frame_progress = 1.0
+animation = &"trunk"
 offset = Vector2(0, -11)
 script = ExtResource("3_28dd7")
 
-[node name="tree_body" type="StaticBody2D" parent="." unique_id=450878321]
+[node name="TreeBody" type="StaticBody2D" parent="." unique_id=450878321]
 
-[node name="collision_shape" type="CollisionShape2D" parent="tree_body" unique_id=1290334748]
+[node name="CollisionShape" type="CollisionShape2D" parent="TreeBody" unique_id=1290334748]
 position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_7wgjd")
 
