@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://bu0py87jgq160"]
+
+[ext_resource type="Texture2D" uid="uid://cq4vuodybxthq" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Tree/Deep Forest/bushes.png" id="1_5q04h"]
+[ext_resource type="Texture2D" uid="uid://di6mblxxt64wn" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Tileset/Tilled Soil and wet soil.png" id="2_fppw6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0aweq"]
+atlas = ExtResource("1_5q04h")
+region = Rect2(48, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yxi7h"]
+atlas = ExtResource("1_5q04h")
+region = Rect2(48, 32, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_myffe"]
+atlas = ExtResource("1_5q04h")
+region = Rect2(48, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nc0ip"]
+atlas = ExtResource("1_5q04h")
+region = Rect2(48, 32, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hgydk"]
+atlas = ExtResource("2_fppw6")
+region = Rect2(192, 48, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_oktcr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0aweq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yxi7h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0aweq")
+}],
+"loop": false,
+"name": &"hit_one",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_myffe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nc0ip")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hgydk")
+}],
+"loop": false,
+"name": &"hit_two",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n2omw"]
+size = Vector2(18, 13)
+
+[node name="Bush" type="AnimatedSprite2D" unique_id=1371277669]
+sprite_frames = SubResource("SpriteFrames_oktcr")
+animation = &"hit_one"
+
+[node name="Body" type="StaticBody2D" parent="." unique_id=489911013]
+
+[node name="Rectangle" type="CollisionShape2D" parent="Body" unique_id=598842346]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_n2omw")
