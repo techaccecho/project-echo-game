@@ -70,9 +70,10 @@ position = Vector2(-204, -851)
 
 [node name="Forest" parent="GameLevel1" unique_id=29376356 instance=ExtResource("10_4054t")]
 
-[node name="WaterBorder" parent="." unique_id=1357689819 instance=ExtResource("10_hdkfl")]
+[node name="TreeBorder" parent="GameLevel1" unique_id=1449392446 instance=ExtResource("17_esbob")]
+z_index = 5
 
-[node name="TreeBorder" parent="." unique_id=1449392446 instance=ExtResource("17_esbob")]
+[node name="WaterBorder" parent="." unique_id=1357689819 instance=ExtResource("10_hdkfl")]
 
 [node name="PineTreeLarge" parent="." unique_id=1488782070 instance=ExtResource("22_q8vt7")]
 z_index = 5
