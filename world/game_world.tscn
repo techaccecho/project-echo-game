@@ -15,6 +15,11 @@
 [ext_resource type="PackedScene" uid="uid://yayo4t5ledsq" path="res://objects/pine_tree_large.tscn" id="22_q8vt7"]
 [ext_resource type="PackedScene" uid="uid://c22k3vhlkopgk" path="res://structures/houses/blacksmith/workshop.tscn" id="24_6rc46"]
 [ext_resource type="PackedScene" uid="uid://ccxk7nsx3r1g3" path="res://objects/anvil_white_gray.tscn" id="30_65dot"]
+[ext_resource type="PackedScene" uid="uid://c8q2fr5t7wjm4" path="res://interaction/fishing_spot/fishing_spot.tscn" id="40_fshsp"]
+[ext_resource type="Script" uid="uid://by0khe2xbsbyd" path="res://inventory/inventory_item.gd" id="41_invitem"]
+[ext_resource type="Resource" uid="uid://cq7fj2h8b3xk1" path="res://inventory/items/fish_carp.tres" id="42_carp"]
+[ext_resource type="Resource" uid="uid://dqk3xyram7wl2" path="res://inventory/items/fish_perch.tres" id="43_perch"]
+[ext_resource type="Resource" uid="uid://bx8h5n2p4qty3" path="res://inventory/items/fish_sunfish.tres" id="44_sunfish"]
 
 [node name="GameWorld" type="Node2D" unique_id=906258989]
 y_sort_enabled = true
@@ -74,6 +79,22 @@ position = Vector2(-204, -851)
 [node name="River" parent="GameLevel1" unique_id=347155084 instance=ExtResource("9_druaq")]
 
 [node name="Forest" parent="GameLevel1" unique_id=29376356 instance=ExtResource("10_4054t")]
+
+[node name="FishingSpotNorth" parent="GameLevel1" unique_id=1595381012 instance=ExtResource("40_fshsp")]
+position = Vector2(-736, -778)
+fish_pool = Array[ExtResource("41_invitem")]([ExtResource("42_carp"), ExtResource("43_perch"), ExtResource("44_sunfish")])
+
+[node name="FishingSpotBend" parent="GameLevel1" unique_id=1198392607 instance=ExtResource("40_fshsp")]
+position = Vector2(-713, -501)
+fish_pool = Array[ExtResource("41_invitem")]([ExtResource("42_carp"), ExtResource("43_perch"), ExtResource("44_sunfish")])
+
+[node name="FishingSpotWest" parent="GameLevel1" unique_id=1895247757 instance=ExtResource("40_fshsp")]
+position = Vector2(-839, -320)
+fish_pool = Array[ExtResource("41_invitem")]([ExtResource("42_carp"), ExtResource("43_perch"), ExtResource("44_sunfish")])
+
+[node name="FishingSpotEast" parent="GameLevel1" unique_id=84056509 instance=ExtResource("40_fshsp")]
+position = Vector2(-835, -782)
+fish_pool = Array[ExtResource("41_invitem")]([ExtResource("42_carp"), ExtResource("43_perch"), ExtResource("44_sunfish")])
 
 [node name="WaterBorder" parent="." unique_id=1357689819 instance=ExtResource("10_hdkfl")]
 
