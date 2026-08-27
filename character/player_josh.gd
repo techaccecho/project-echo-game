@@ -116,7 +116,9 @@ func catch_fish(fish_pool: Array, face_direction: Vector2 = Vector2.ZERO, min_wa
 	animated_sprite.play("fish_wait_" + suffix)
 	await get_tree().create_timer(randf_range(min_wait, max_wait)).timeout
 
-	if fish_pool.size() > 0:
+	var caught_bite = await FishingMinigame.play_sequence(3)
+
+	if caught_bite and fish_pool.size() > 0:
 		animated_sprite.play("fish_catch_" + suffix)
 		await animated_sprite.animation_finished
 		collect(fish_pool[randi() % fish_pool.size()])

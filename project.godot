@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 InteractionManager="*uid://cgvfss0eo3an1"
 DialogueManager="*uid://c3rodes2l3gxb"
+FishingMinigame="*uid://dw3n9q6r2xfk8"
 
 [dialogue_manager]
 

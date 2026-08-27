@@ -131,8 +131,8 @@ position = Vector2(-96, -904)
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1780773830]
 
 [node name="Inv_UI" parent="CanvasLayer" unique_id=228588046 instance=ExtResource("13_1i7os")]
-offset_left = 526.99994
-offset_top = 166.99998
-offset_right = 623.99994
-offset_bottom = 240.99998
+offset_left = 527.0
+offset_top = 167.0
+offset_right = 624.0
+offset_bottom = 241.0
 scale = Vector2(10, 10)
