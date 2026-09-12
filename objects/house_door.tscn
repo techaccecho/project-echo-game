@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://ch0us3d00r2ec"]
+
+[ext_resource type="Script" path="res://objects/house_door.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://bibupx3yvo61" path="res://interaction/interaction_area/interaction_area.tscn" id="2_area"]
+
+[sub_resource type="RectangleShape2D" id="RS_step"]
+size = Vector2(26, 16)
+
+[node name="HouseDoor" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="InteractionArea" parent="." instance=ExtResource("2_area")]
+action_name = "enter"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("RS_step")
+
+[node name="FrontDoor" type="Marker2D" parent="." groups=["player_spawn"]]
+position = Vector2(0, 4)
