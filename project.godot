@@ -23,6 +23,7 @@ SceneManager="*res://world/scene_manager.gd"
 EchoLog="*res://core/echo_log.gd"
 FishingMinigame="*uid://dw3n9q6r2xfk8"
 Audio="*res://core/audio.gd"
+PauseMenu="*res://ui/pause_menu.tscn"
 
 [dialogue_manager]
 

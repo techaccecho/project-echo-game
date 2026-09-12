@@ -29,20 +29,6 @@ const TITLE := "ECHO"
 const TAGLINE := "ADVENTURE AWAITS"
 const HINT := "W/S or arrows to move · E or Enter to choose"
 
-# --- the logo's palette, by its role there ---------------------------------
-const NIGHT := Color("14100d")      ## ground the sign hangs against
-const WOOD := Color("5c4033")       ## the board
-const WOOD_LIT := Color("6b4c35")   ## the board, picked out
-const GRAIN := Color("3d2817")      ## grain lines and the shallower shadow
-const FRAME := Color("8b6f47")      ## the board's edging, and the three dots
-const BOLT := Color("3d2817")
-const BOLT_RIM := Color("2d1f12")
-const CARVE := Color("2d1f12")      ## the deepest shadow under carved letters
-const BONE := Color("f4e4c1")       ## the wordmark
-const BONE_DIM := Color("d4b896")   ## the tagline
-const VINE := Color("4a5d3f")
-const LEAF := [Color("6b8e5f"), Color("7fa073"), Color("5d7051")]
-
 # The sign is drawn on a 560x300 canvas with the board inset 28px all round;
 # these keep the re-set wordmark locked to it whatever size the sign is shown.
 const SIGN_ART := Vector2(560, 300)
@@ -65,7 +51,7 @@ func _ready() -> void:
 
 func _build() -> void:
 	var bg := ColorRect.new()
-	bg.color = NIGHT
+	bg.color = WoodUI.NIGHT
 	bg.set_anchors_preset(Control.PRESET_FULL_RECT)
 	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(bg)
@@ -104,9 +90,9 @@ func _build() -> void:
 	# The wordmark, back on the board. Offsets are the SVG's own, scaled: the
 	# title sits at (280,152) on the art, the tagline at (280,227).
 	_carved(TITLE, 80.0 * scale, 12.0 * scale, SIGN_TOP + 152.0 * scale,
-			BONE, 6.0 * scale, 3.0 * scale)
+			WoodUI.BONE, 6.0 * scale, 3.0 * scale)
 	_carved(TAGLINE, 12.0 * scale, 4.5 * scale, SIGN_TOP + 227.0 * scale,
-			BONE_DIM, 1.0 * scale, 0.0)
+			WoodUI.BONE_DIM, 1.0 * scale, 0.0)
 
 	var menu := VBoxContainer.new()
 	menu.set_anchors_preset(Control.PRESET_CENTER_TOP)
@@ -118,111 +104,44 @@ func _build() -> void:
 
 	menu.add_child(_button("Start game", _on_start))
 	menu.add_child(_button("Load game", _on_unbuilt.bind("Load game")))
-	menu.add_child(_button("Settings", _on_unbuilt.bind("Settings")))
+	menu.add_child(_button("Settings", PauseMenu.open_settings))
 
 	# Grain and bolts go over the planks, not under them — they are marks on
 	# the wood's surface, and a Button's own stylebox would bury them.
-	var detail := PlankDetail.new()
+	var detail := WoodUI.PlankDetail.new()
 	detail.planks = _buttons
 	detail.set_anchors_preset(Control.PRESET_FULL_RECT)
 	detail.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(detail)
 
-	_hint = _label(HINT, 18, FRAME)
+	_hint = _label(HINT, 18, WoodUI.FRAME)
 	_hint.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
 	_hint.offset_top = -128
 	_hint.offset_bottom = -92
 	add_child(_hint)
 
-	var credit := _label("Team Echo", 18, WOOD_LIT)
+	var credit := _label("Team Echo", 18, WoodUI.WOOD_LIT)
 	credit.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
 	credit.offset_top = -68
 	credit.offset_bottom = -32
 	add_child(credit)
 
 
-## One line of the wordmark: two offset shadow copies under a bone face, which
-## is how the letters read as cut into the board rather than printed on it.
+## One line of the wordmark, carved into the board.
 func _carved(text: String, size: float, spacing: float, mid_y: float,
 		face: Color, deep: float, shallow: float) -> void:
-	var font := _mono(size, spacing)
-	var layers: Array = [[CARVE, deep]]
-	if shallow > 0.0:
-		layers.append([GRAIN, shallow])
-	layers.append([face, 0.0])
-	for layer in layers:
-		var l := _label(text, int(size), layer[0])
-		l.add_theme_font_override("font", font)
-		l.set_anchors_preset(Control.PRESET_CENTER_TOP)
-		l.offset_left = -SIGN_W * 0.5 + layer[1]
-		l.offset_right = SIGN_W * 0.5 + layer[1]
-		l.offset_top = mid_y - size + layer[1]
-		l.offset_bottom = mid_y + size + layer[1]
+	for l in WoodUI.carved(text, size, spacing, mid_y, SIGN_W, face, deep, shallow):
 		add_child(l)
 
 
-## Bold monospace with the logo's letter-spacing. Taken from the system rather
-## than bundled: the pack ships no font, and this is the one screen that wants
-## a typeface at all.
-func _mono(size: float, spacing: float) -> FontVariation:
-	var sys := SystemFont.new()
-	sys.font_names = PackedStringArray([
-		"Menlo", "Consolas", "DejaVu Sans Mono", "Courier New", "monospace"])
-	sys.font_weight = 700
-	var fv := FontVariation.new()
-	fv.base_font = sys
-	fv.spacing_glyph = int(spacing)
-	# The last glyph's trailing space would pull the line off centre.
-	fv.variation_embolden = 0.02
-	return fv
-
-
 func _button(text: String, pressed: Callable) -> Button:
-	var b := Button.new()
-	b.text = text
-	b.custom_minimum_size = Vector2(0, 72)
-	b.focus_mode = Control.FOCUS_ALL
-	b.add_theme_font_size_override("font_size", 30)
-	b.add_theme_color_override("font_color", BONE_DIM)
-	b.add_theme_color_override("font_hover_color", BONE)
-	b.add_theme_color_override("font_focus_color", BONE)
-	b.add_theme_color_override("font_pressed_color", BONE)
-	# A dark outline is what makes the label read as cut into the plank.
-	b.add_theme_constant_override("outline_size", 6)
-	b.add_theme_color_override("font_outline_color", CARVE)
-	b.add_theme_stylebox_override("normal", _plank(WOOD, GRAIN))
-	b.add_theme_stylebox_override("hover", _plank(WOOD_LIT, FRAME))
-	b.add_theme_stylebox_override("focus", _plank(WOOD_LIT, FRAME))
-	b.add_theme_stylebox_override("pressed", _plank(GRAIN, FRAME))
-	b.pressed.connect(pressed)
-	# Pointer and keyboard drive the same highlight, so the two never disagree
-	# about which plank is selected.
-	b.mouse_entered.connect(b.grab_focus)
+	var b := WoodUI.button(text, pressed)
 	_buttons.append(b)
 	return b
 
 
-func _plank(fill: Color, edge: Color) -> StyleBoxFlat:
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = fill
-	sb.border_color = edge
-	sb.set_border_width_all(3)
-	sb.set_corner_radius_all(3)
-	sb.shadow_color = Color(0, 0, 0, 0.45)
-	sb.shadow_size = 6
-	sb.shadow_offset = Vector2(0, 4)
-	return sb
-
-
 func _label(text: String, size: int, color: Color) -> Label:
-	var l := Label.new()
-	l.text = text
-	l.add_theme_font_size_override("font_size", size)
-	l.add_theme_color_override("font_color", color)
-	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	return l
+	return WoodUI.label(text, size, color)
 
 
 ## Warm specks drifting through the dark, in place of the grey mist the
@@ -263,7 +182,7 @@ func _motes() -> CPUParticles2D:
 func _unhandled_input(event: InputEvent) -> void:
 	# The game moves on WASD and acts on E; the menu should answer to the same
 	# keys, not just to the engine's default arrows and Enter.
-	if _starting or not event.is_pressed() or event.is_echo():
+	if _starting or PauseMenu.is_open or not event.is_pressed() or event.is_echo():
 		return
 	if event.is_action("up"):
 		_step_focus(-1)
@@ -322,35 +241,8 @@ class SignGrain extends Control:
 					continue
 				draw_line(Vector2(top, board.position.y),
 						Vector2(bot, board.end.y),
-						Color(MainMenu.GRAIN, r[3]), r[2])
+						Color(WoodUI.GRAIN, r[3]), r[2])
 			x += step
-
-
-## Grain lines and corner bolts, drawn over the menu planks. Kept as its own
-## node so it sits above the Buttons in the draw order.
-class PlankDetail extends Control:
-	var planks: Array[Button] = []
-
-	func _draw() -> void:
-		for b in planks:
-			var r := Rect2(b.global_position, b.size)
-			# Three lines with a slight lean, the same figure as the logo's
-			# wood-grain pattern.
-			for i in 3:
-				var x := r.position.x + r.size.x * (0.18 + 0.3 * i)
-				draw_line(Vector2(x, r.position.y + 5),
-						Vector2(x - 3 + i * 3, r.end.y - 5),
-						Color(MainMenu.GRAIN, 0.35), 1.0 + i * 0.5)
-			for side in [0.0, 1.0]:
-				var c := Vector2(lerpf(r.position.x + 18, r.end.x - 18, side),
-						r.position.y + r.size.y * 0.5)
-				draw_circle(c, 5.0, MainMenu.BOLT)
-				draw_arc(c, 5.0, 0.0, TAU, 16, MainMenu.BOLT_RIM, 2.0)
-				draw_circle(c + Vector2(-1, -1), 1.5,
-						Color(MainMenu.WOOD_LIT, 0.5))
-
-	func _process(_delta: float) -> void:
-		queue_redraw()
 
 
 ## Vines climbing the left and right edges of the screen. Built from the same
@@ -401,7 +293,7 @@ class VineDecor extends Control:
 				lf.rx = rng.randf_range(11.0, 16.0)
 				lf.ry = rng.randf_range(6.5, 9.5)
 				lf.rot = deg_to_rad(rng.randf_range(-46.0, 46.0))
-				lf.tint = MainMenu.LEAF[rng.randi() % MainMenu.LEAF.size()]
+				lf.tint = WoodUI.LEAF[rng.randi() % WoodUI.LEAF.size()]
 				lf.speed = rng.randf_range(2.4, 3.7)
 				lf.phase = rng.randf() * TAU
 				_leaves.append(lf)
@@ -423,14 +315,14 @@ class VineDecor extends Control:
 			var swung := PackedVector2Array()
 			for p in stem:
 				swung.append(_rock(p, pivot, angle))
-			draw_polyline(swung, MainMenu.VINE, 5.0, true)
+			draw_polyline(swung, WoodUI.VINE, 5.0, true)
 		# Twigs and leaves belong to whichever vine they grew from: left half of
 		# the screen to the left stem, right half to the right.
 		for tw in _twigs:
 			var i := 0 if tw[0].x < 960.0 else 1
 			var angle: float = sin(_t / (4.2 + i * 0.4) * TAU) * SWAY
 			draw_line(_rock(tw[0], _pivots[i], angle),
-					_rock(tw[1], _pivots[i], angle), MainMenu.VINE, 3.0, true)
+					_rock(tw[1], _pivots[i], angle), WoodUI.VINE, 3.0, true)
 		for lf in _leaves:
 			var i := 0 if lf.at.x < 960.0 else 1
 			var angle: float = sin(_t / (4.2 + i * 0.4) * TAU) * SWAY

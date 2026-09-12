@@ -51,6 +51,9 @@ func _build_fade_overlay() -> void:
 
 func _fade_to(alpha: float) -> void:
 	var t := get_tree().create_tween()
+	# The pause menu quits to the title with the tree still paused, so the
+	# fade must keep ticking while everything else is stopped.
+	t.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	t.tween_property(_fade, "color:a", alpha, FADE_TIME)
 	await t.finished
 
@@ -96,6 +99,22 @@ func start_game(level_path: String, intro: PackedScene = null) -> void:
 	get_tree().change_scene_to_file(level_path)
 	# change_scene_to_file is deferred; wait for the new root to exist so the
 	# fade lifts on the level rather than on one last frame of the menu.
+	await get_tree().process_frame
+	await get_tree().process_frame
+	await _fade_to(0.0)
+
+
+## Abandon the run and go back to the title screen, from the pause menu.
+## Fades out with the tree still paused, so the world does not lurch back
+## into motion for a third of a second before it goes.
+func quit_to_title(title_scene: String) -> void:
+	await _fade_to(1.0)
+	incoming = false
+	_arriving = false
+	level_holder = null
+	player = null
+	get_tree().paused = false
+	get_tree().change_scene_to_file(title_scene)
 	await get_tree().process_frame
 	await get_tree().process_frame
 	await _fade_to(0.0)
