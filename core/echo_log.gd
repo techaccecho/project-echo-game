@@ -123,7 +123,21 @@ func _restore_inventory() -> void:
 
 ## Wipe progress. Handy while building levels; not wired to any UI.
 func reset() -> void:
+	restore([])
+
+
+## The ids of every page found so far, for SaveGame.
+func found_ids() -> Array:
+	return _found.keys()
+
+
+## Replace the record wholesale — loading a save, or starting a new game with
+## an empty list. Inventory is the caller's business: SaveGame rebuilds the bag
+## itself, pages included, so this must not re-give them.
+func restore(ids: Array) -> void:
 	_found.clear()
+	for id in ids:
+		_found[str(id)] = true
 	_save()
 	changed.emit()
 

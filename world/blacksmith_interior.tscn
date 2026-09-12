@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://wvbxyfgl33vp" path="res://character/player_josh.tscn" id="player"]
 [ext_resource type="PackedScene" uid="uid://blvlaud102ec" path="res://objects/level_audio.tscn" id="levelaudio"]
 [ext_resource type="PackedScene" uid="uid://doa04urw7iidr" path="res://inventory/inv_ui.tscn" id="invui"]
+[ext_resource type="PackedScene" uid="uid://bibupx3yvo61" path="res://interaction/interaction_area/interaction_area.tscn" id="iarea"]
 [ext_resource type="Texture2D" uid="uid://v62e5q2h2y8d" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Interior/Blacksmith.png" id="tex_smith"]
 [ext_resource type="Texture2D" uid="uid://cdksipt2be5yq" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Interior/Fireplace.png" id="tex_fire"]
 [ext_resource type="Texture2D" uid="uid://b2xsxgve06jf0" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Interior/Beds.png" id="tex_beds"]
@@ -61,6 +62,30 @@ size = Vector2(32, 16)
 
 [sub_resource type="RectangleShape2D" id="RS_16"]
 size = Vector2(48, 32)
+
+[sub_resource type="RectangleShape2D" id="RS_17"]
+size = Vector2(52, 68)
+
+[sub_resource type="RectangleShape2D" id="RS_18"]
+size = Vector2(36, 52)
+
+[sub_resource type="RectangleShape2D" id="RS_19"]
+size = Vector2(36, 52)
+
+[sub_resource type="RectangleShape2D" id="RS_20"]
+size = Vector2(52, 52)
+
+[sub_resource type="RectangleShape2D" id="RS_21"]
+size = Vector2(52, 52)
+
+[sub_resource type="RectangleShape2D" id="RS_22"]
+size = Vector2(52, 52)
+
+[sub_resource type="RectangleShape2D" id="RS_23"]
+size = Vector2(52, 52)
+
+[sub_resource type="RectangleShape2D" id="RS_24"]
+size = Vector2(68, 52)
 
 [sub_resource type="RectangleShape2D" id="RS_exit"]
 size = Vector2(32, 12)
@@ -323,6 +348,64 @@ shape = SubResource("RS_15")
 [node name="Prop19" type="CollisionShape2D" parent="Solids"]
 position = Vector2(72.0, 192.0)
 shape = SubResource("RS_16")
+
+[node name="Interact" type="Node2D" parent="."]
+
+[node name="Bed" parent="Interact" instance=ExtResource("iarea")]
+position = Vector2(208, 88)
+action_name = "sleep"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact/Bed"]
+shape = SubResource("RS_17")
+
+[node name="ChairL" parent="Interact" instance=ExtResource("iarea")]
+position = Vector2(104, 128)
+action_name = "sit"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact/ChairL"]
+shape = SubResource("RS_18")
+
+[node name="ChairR" parent="Interact" instance=ExtResource("iarea")]
+position = Vector2(152, 128)
+action_name = "sit"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact/ChairR"]
+shape = SubResource("RS_19")
+
+[node name="Hearth" parent="Interact" instance=ExtResource("iarea")]
+position = Vector2(48, 64)
+action_name = "warm up"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact/Hearth"]
+shape = SubResource("RS_20")
+
+[node name="Desk" parent="Interact" instance=ExtResource("iarea")]
+position = Vector2(208, 176)
+action_name = "read"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact/Desk"]
+shape = SubResource("RS_21")
+
+[node name="Swords" parent="Interact" instance=ExtResource("iarea")]
+position = Vector2(192, 48)
+action_name = "look"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact/Swords"]
+shape = SubResource("RS_22")
+
+[node name="Barrel" parent="Interact" instance=ExtResource("iarea")]
+position = Vector2(112, 80)
+action_name = "look"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact/Barrel"]
+shape = SubResource("RS_23")
+
+[node name="Crates" parent="Interact" instance=ExtResource("iarea")]
+position = Vector2(72, 192)
+action_name = "look"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact/Crates"]
+shape = SubResource("RS_24")
 
 [node name="Exit" type="Area2D" parent="."]
 position = Vector2(128.0, 206)

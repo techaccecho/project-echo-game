@@ -13,6 +13,13 @@ const FOOTSTEPS := [
 	"res://audio/sfx/footstep_4.wav",
 	"res://audio/sfx/footstep_5.wav",
 ]
+## Still frames borrowed from the pack's collapse sheet: its kneeling frames
+## read as sitting, and there is no other sitting art for Josh. (Its final
+## lying-down frames are a 13px heap and are not worth using.)
+const POSES := preload("res://art/Farm RPG - Tiny Asset Pack - (All in One)/Character and Portrait/Character/Pre-made/Josh/Dead.png")
+const POSE_SIT_SIDE := Vector2i(2, 2)     ## kneeling, facing right
+const POSE_SIT_DOWN := Vector2i(2, 0)     ## kneeling, facing the camera
+
 const FALL_TIME := 0.6
 const SINK_TIME := 0.5
 
@@ -40,6 +47,7 @@ var last_direction: Vector2 = Vector2(0, 1) # default face down
 var movement_enabled: bool = true
 
 var is_dying: bool = false
+var _pose: Sprite2D = null
 var is_chopping: bool = true
 var _step_accum: float = 0.0
 
@@ -125,6 +133,27 @@ func play_weapon_logic():
 		await animated_sprite.animation_finished
 		hit_component_collision_shape.disabled = true
 		enable_movement()
+
+## Show one still frame from the pose sheet in place of the animation — for
+## sitting and sleeping. release_pose() puts the animation back.
+func hold_pose(cell: Vector2i, flip: bool = false, turn_degrees: float = 0.0) -> void:
+	if _pose == null:
+		_pose = Sprite2D.new()
+		_pose.texture = POSES
+		_pose.region_enabled = true
+		add_child(_pose)
+	_pose.region_rect = Rect2(cell.x * 32, cell.y * 32, 32, 32)
+	_pose.flip_h = flip
+	_pose.rotation_degrees = turn_degrees
+	_pose.visible = true
+	animated_sprite.visible = false
+
+
+func release_pose() -> void:
+	if _pose:
+		_pose.visible = false
+	animated_sprite.visible = true
+
 
 ## Walk to a world point under script control, for cutscenes and the opening
 ## arrival. Await it. Input stays locked out for the duration, but everything

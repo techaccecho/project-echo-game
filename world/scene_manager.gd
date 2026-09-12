@@ -27,6 +27,9 @@ var _next_spawn: String = ""
 ## True while a transition is in flight, so a freshly loaded scene knows it
 ## should place the player at the pending spawn (instead of its authored start).
 var incoming: bool = false
+## Where to put the player on the next placement instead of a spawn marker —
+## a loaded save's exact position. Consumed once.
+var pending_position: Vector2 = Vector2.INF
 ## Set by start_game() and consumed by the level, so the opening arrival plays
 ## once on a new game and never when returning to Level 1 from Level 2.
 var _arriving: bool = false
@@ -56,6 +59,12 @@ func _fade_to(alpha: float) -> void:
 	t.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	t.tween_property(_fade, "color:a", alpha, FADE_TIME)
 	await t.finished
+
+
+## Fade the screen to black (1.0) or back (0.0) without changing scene — for
+## a sleep, a knock-out, anything in-level that wants a blink.
+func fade(alpha: float) -> void:
+	await _fade_to(alpha)
 
 
 # --- Cutscenes --------------------------------------------------------------
@@ -93,6 +102,8 @@ func start_game(level_path: String, intro: PackedScene = null) -> void:
 	incoming = false
 	_arriving = true
 	_next_spawn = ""
+	pending_position = Vector2.INF
+	SaveGame.new_game()
 	await _fade_to(1.0)
 	if intro != null:
 		await play_cutscene(intro)
@@ -204,6 +215,10 @@ func _place_player(spawn: String) -> void:
 	if player == null or not is_instance_valid(player):
 		player = get_tree().get_first_node_in_group("player")
 	if player == null:
+		return
+	if pending_position != Vector2.INF:
+		player.global_position = pending_position
+		pending_position = Vector2.INF
 		return
 	var marker := _find_spawn(spawn)
 	if marker:

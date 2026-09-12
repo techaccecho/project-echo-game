@@ -128,7 +128,16 @@ func _on_sound() -> void:
 
 
 func _on_save() -> void:
-	_hint.text = "Save game is not available yet."
+	if not SaveGame.can_save():
+		_flash("Not now — wait until you're on your feet.")
+	elif SaveGame.save():
+		_flash("Saved.")
+	else:
+		_flash("Could not save.")
+
+
+func _flash(text: String) -> void:
+	_hint.text = text
 	var t := create_tween()
 	t.tween_interval(2.0)
 	t.tween_callback(func() -> void:

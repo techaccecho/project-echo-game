@@ -103,7 +103,7 @@ func _build() -> void:
 	add_child(menu)
 
 	menu.add_child(_button("Start game", _on_start))
-	menu.add_child(_button("Load game", _on_unbuilt.bind("Load game")))
+	menu.add_child(_button("Load game", _on_load))
 	menu.add_child(_button("Settings", PauseMenu.open_settings))
 
 	# Grain and bolts go over the planks, not under them — they are marks on
@@ -212,8 +212,19 @@ func _on_start() -> void:
 	SceneManager.start_game(NEW_GAME, INTRO)
 
 
-func _on_unbuilt(what: String) -> void:
-	_hint.text = "%s is not available yet." % what
+func _on_load() -> void:
+	if _starting:
+		return
+	if not SaveGame.has_save():
+		_flash("No saved game yet.")
+		return
+	_starting = true
+	_hint.text = ""
+	SaveGame.load_and_resume()
+
+
+func _flash(text: String) -> void:
+	_hint.text = text
 	var t := create_tween()
 	t.tween_interval(2.0)
 	t.tween_callback(func() -> void: _hint.text = HINT)
