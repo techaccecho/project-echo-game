@@ -19,7 +19,9 @@ const SINK_TIME := 0.5
 @export var inv: Inv
 @export var walk_speed: float = 100
 @export var run_speed: float = 200
-@export var character_name: String = "Player"
+## The name over his speech bubble. He is never named in the story, so this is
+## what he is called when he talks to himself.
+@export var character_name: String = "Traveller"
 
 @export_group("Footsteps")
 ## Pixels between footfalls. Distance rather than time, so running steps speed
@@ -123,6 +125,33 @@ func play_weapon_logic():
 		await animated_sprite.animation_finished
 		hit_component_collision_shape.disabled = true
 		enable_movement()
+
+## Walk to a world point under script control, for cutscenes and the opening
+## arrival. Await it. Input stays locked out for the duration, but everything
+## else is the ordinary walk — real collision, the right facing animation and
+## footfalls at the usual spacing.
+func walk_to_point(target: Vector2, speed: float = -1.0) -> void:
+	movement_enabled = false
+	var v: float = speed if speed > 0.0 else walk_speed
+	# A cap, so a path that turns out to be blocked ends the walk instead of
+	# hanging the sequence that is awaiting it.
+	var guard := 900
+	while global_position.distance_to(target) > 2.0 and guard > 0:
+		guard -= 1
+		var dir := global_position.direction_to(target)
+		velocity = dir * v
+		move_and_slide()
+		last_direction = dir
+		_step_accum += velocity.length() * get_physics_process_delta_time()
+		if _step_accum >= step_distance:
+			_step_accum = 0.0
+			Audio.sfx(FOOTSTEPS[randi() % FOOTSTEPS.size()],
+					step_volume_db, step_pitch_spread)
+		update_animation(dir, false)
+		await get_tree().physics_frame
+	velocity = Vector2.ZERO
+	update_animation(Vector2.ZERO, false)
+
 
 func disable_movement():
 	movement_enabled = false

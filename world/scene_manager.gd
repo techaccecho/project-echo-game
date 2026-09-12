@@ -27,6 +27,9 @@ var _next_spawn: String = ""
 ## True while a transition is in flight, so a freshly loaded scene knows it
 ## should place the player at the pending spawn (instead of its authored start).
 var incoming: bool = false
+## Set by start_game() and consumed by the level, so the opening arrival plays
+## once on a new game and never when returning to Level 1 from Level 2.
+var _arriving: bool = false
 
 var _fade: ColorRect
 
@@ -85,6 +88,7 @@ func play_cutscene(scene: PackedScene) -> void:
 ## leaves the screen black afterwards, so the level swap is never seen.
 func start_game(level_path: String, intro: PackedScene = null) -> void:
 	incoming = false
+	_arriving = true
 	_next_spawn = ""
 	await _fade_to(1.0)
 	if intro != null:
@@ -126,6 +130,15 @@ func exit_to(scene_path: String, spawn: String = "") -> void:
 	player = null
 	await _fade_to(1.0)
 	get_tree().change_scene_to_file(scene_path)
+
+
+## True exactly once per new game, for the level that opens it. Consuming it
+## here rather than letting the level read a flag means a reload part-way
+## through Level 1 cannot replay the arrival.
+func take_arrival() -> bool:
+	var was := _arriving
+	_arriving = false
+	return was
 
 
 ## Called from a standalone scene's _ready to finish an incoming transition:
