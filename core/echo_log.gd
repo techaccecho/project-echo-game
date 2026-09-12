@@ -21,6 +21,9 @@ const PLAYER_INV := preload("res://inventory/player_inv.tres")
 const MANIFEST := [
 	"res://fragments/fragment_01_hollow_stump.tres",
 	"res://fragments/fragment_02_the_ledge_gives.tres",
+	"res://fragments/fragment_03_the_colour_goes.tres",
+	"res://fragments/fragment_04_the_villager.tres",
+	"res://fragments/fragment_05_green_before_the_last.tres",
 ]
 
 ## The fragments that actually exist, in MANIFEST order.

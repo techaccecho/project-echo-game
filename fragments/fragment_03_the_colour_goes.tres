@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="Fragment" format=3 uid="uid://bqechofrag03x"]
+
+[ext_resource type="Script" uid="uid://b4sep75xygsp3" path="res://core/fragment.gd" id="1_frag"]
+[ext_resource type="Texture2D" uid="uid://7g7rmeqwftkm" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Icons/Weapons/Books and Potions/Books.png" id="2_icon"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_page"]
+atlas = ExtResource("2_icon")
+region = Rect2(0, 48, 16, 16)
+
+[resource]
+script = ExtResource("1_frag")
+id = "f03_the_colour_goes"
+title = "the colour goes"
+entry_label = "ENTRY 17"
+level = 3
+found_at = "a dead end in the grove, under a blue mushroom"
+body = "Past the cave the trees are the wrong colour. Not dead — [i]wrong[/i]. Teal, where they should be green. The ground between them doesn't take a footprint.
+
+There is a clearing at the far side with four stones in it, each with a glass in the top like an eye. I have walked around them for an hour. They hum if you get close, and the hum changes when I touch one.
+
+I tried them in the order I found them and the whole row went dark and the hum stopped, which I take as a no.
+
+The [b]blue one[/b] answered first, though. I'm sure of that much. Blue first."
+footer = "— a smear of something dark across the lower corner, not ink."
+name = "a torn page"
+texture = SubResource("AtlasTexture_page")
+metadata/_custom_type_script = "res://core/fragment.gd"

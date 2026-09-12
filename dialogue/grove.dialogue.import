@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://bm7768iex0i3x"
+path="res://.godot/imported/grove.dialogue-740ae85634472f665784cd7e5fc5da01.tres"
+
+[deps]
+
+source_file="res://dialogue/grove.dialogue"
+dest_files=["res://.godot/imported/grove.dialogue-740ae85634472f665784cd7e5fc5da01.tres"]
+
+[params]
+
+defaults=true

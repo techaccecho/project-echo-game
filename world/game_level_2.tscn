@@ -1186,6 +1186,7 @@ position = Vector2(1224, 130)
 [node name="CaveEntrance" parent="Entities" instance=ExtResource("caveent")]
 position = Vector2(1224, 102)
 rubble_path = NodePath("../RubbleWall")
+target_spawn = "GroveEntrance"
 
 [node name="Fragment2" parent="Entities" instance=ExtResource("fragpick")]
 z_index = 5

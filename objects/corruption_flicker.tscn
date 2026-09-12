@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cc0rrupt10n2e"]
+
+[ext_resource type="Script" path="res://objects/corruption_flicker.gd" id="1_script"]
+
+[node name="CorruptionFlicker" type="CanvasLayer"]
+script = ExtResource("1_script")

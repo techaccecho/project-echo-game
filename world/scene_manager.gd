@@ -213,6 +213,10 @@ func change_level(level_path: String, spawn: String = "",
 
 func _load_into_holder(level_path: String, spawn: String) -> void:
 	for child in level_holder.get_children():
+		# Out of the tree now, not at frame end: its spawn markers must be
+		# gone from the group before the new level's are searched, or a
+		# marker of the same name in the old level wins.
+		level_holder.remove_child(child)
 		child.queue_free()
 	var level := (load(level_path) as PackedScene).instantiate()
 	level_holder.add_child(level)

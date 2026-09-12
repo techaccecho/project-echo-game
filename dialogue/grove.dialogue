@@ -1,0 +1,36 @@
+~ villager
+do start_talking()
+Villager: [[The path was here. The path was here.|It gets behind you. It gets behind you if you let it.|I only came in as far as the stones.]]
+Villager: [[Have you seen the — no. No, you haven't.|Don't look at the trees for long.|It was green when I came in.]]
+Villager: [[Go back the way you — which way did you come?|I'll wait here. Someone's coming.|Red. No. That's not one of mine.]]
+do stop_talking()
+=> END
+
+~ pedestal_hum
+The stone hums under your hand, and the glass in its top brightens.
+=> END
+
+~ pedestal_wrong
+The hum cuts out. Down the row, every glass goes dark at once.
+=> END
+
+~ pedestal_done
+The last stone takes up the note the others are holding. Behind you, something in the gate lets go.
+=> END
+
+~ pedestal_dark
+A stone with a glass set in the top. Cold, and quiet. It is not the one that wants touching next.
+=> END
+
+~ gate_shut
+Two uprights and a lintel, and between them stone as solid as the rest. Four stones in a row nearby, each with a glass in the top like an eye.
+=> END
+
+~ gate_open
+The stone between the uprights is gone. The air past it is pale, and it moves.
+Whatever is on the other side is not ready for you yet.
+=> END
+
+~ log
+The log is hollow the whole way through. That is how you came in. The far end is dark.
+=> END
