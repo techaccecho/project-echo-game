@@ -1,0 +1,31 @@
+~ bed
+Traveller: Nobody has slept here in a long while. Nobody is going to mind.
+=> END
+
+~ woke
+Traveller: Gulls. Morning, then.
+=> END
+
+~ bed_again
+Traveller: [[Same straw as last night.|Getting to know this bed.|It'll do again.]]
+=> END
+
+~ woke_again
+Traveller: [[Morning.|Light out. Up, then.|Another day of it.]]
+=> END
+
+~ chair
+Traveller: It'll hold.
+=> END
+
+~ rack
+Fish, dried to leather, still on the line. Whoever hung them meant to come back.
+=> END
+
+~ crates
+Hooks, line, a cork float split down the middle. A fisherman's kit, left in a hurry.
+=> END
+
+~ table
+Rings from a mug, long dry. A knife mark where somebody cut bait and didn't wipe it up.
+=> END

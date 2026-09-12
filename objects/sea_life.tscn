@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cs3a11f3l1ech"]
+
+[ext_resource type="Script" path="res://objects/sea_life.gd" id="1_script"]
+
+[node name="SeaLife" type="Node2D"]
+script = ExtResource("1_script")

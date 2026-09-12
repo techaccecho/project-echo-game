@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://b1acksm1th1nt"]
 
-[ext_resource type="Script" path="res://world/blacksmith_interior.gd" id="script"]
+[ext_resource type="Script" path="res://world/house_interior.gd" id="script"]
 [ext_resource type="TileSet" uid="uid://c1nt3r10rh0us" path="res://tilesets/interior_house.tres" id="houseset"]
 [ext_resource type="PackedScene" uid="uid://wvbxyfgl33vp" path="res://character/player_josh.tscn" id="player"]
 [ext_resource type="PackedScene" uid="uid://blvlaud102ec" path="res://objects/level_audio.tscn" id="levelaudio"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://b5hpqvanp7b40" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Interior/Part 11 copiar.png" id="tex_rugs"]
 [ext_resource type="Texture2D" uid="uid://cmccj4lwok6x" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Interior/Part 1 copiar.png" id="tex_decor"]
 [ext_resource type="Texture2D" uid="uid://bk37do8hebwcf" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Interior/Doors, windows and curtains.png" id="tex_curt"]
+[ext_resource type="Texture2D" uid="uid://k3stjt34xto6" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Exterior/Beach/Fish.png" id="tex_fish"]
 
 [sub_resource type="RectangleShape2D" id="RS_1"]
 size = Vector2(256, 64)
@@ -93,6 +94,12 @@ size = Vector2(32, 12)
 [node name="BlacksmithInterior" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("script")
+story = "res://dialogue/blacksmith_house.dialogue"
+outside_spawn = "FrontDoor"
+seats = {"ChairL": {"at": Vector2(108, 132), "face": Vector2(1, 0)}, "ChairR": {"at": Vector2(148, 132), "face": Vector2(-1, 0)}}
+bed_sit = Vector2(208, 85)
+bed_rise = Vector2(190, 118)
+lines = {"Hearth": "hearth", "Desk": "desk", "Swords": "swords", "Barrel": "barrel", "Crates": "crates"}
 
 [node name="Backdrop" type="Polygon2D" parent="."]
 z_index = -10

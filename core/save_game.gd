@@ -3,7 +3,9 @@ extends Node
 ##
 ## What a save is: where the player is (which scene, and if it is the shell,
 ## which level inside it, plus his position), what he is carrying, and which
-## of Cedric's pages he has found. That is everything the game keeps between
+## of Cedric's pages he has found, what day and hour it is, and the world
+## flags — the rubble cleared, the trees felled, the axe handed over. That is
+## everything the game keeps between
 ## scenes today, so it is everything a save needs. What it does not keep —
 ## trees chopped, a cleared rubble wall, a chest already opened — is rebuilt
 ## fresh when a level loads, which is also what happens when you walk back
@@ -69,6 +71,9 @@ func save() -> bool:
 			slots.append({"item": slot.item.resource_path, "amount": slot.amount})
 	cfg.set_value("inventory", "slots", slots)
 	cfg.set_value("echo", "found", EchoLog.found_ids())
+	cfg.set_value("flags", "set", Flags.all())
+	cfg.set_value("clock", "day", Clock.day)
+	cfg.set_value("clock", "hour", Clock.hour)
 	return cfg.save(PATH) == OK
 
 
@@ -79,6 +84,10 @@ func load_and_resume() -> void:
 		return
 	_restore_inventory(cfg.get_value("inventory", "slots", []))
 	EchoLog.restore(cfg.get_value("echo", "found", []))
+	Flags.restore(cfg.get_value("flags", "set", []))
+	Clock.set_time(int(cfg.get_value("clock", "day", 1)),
+			float(cfg.get_value("clock", "hour", Clock.WAKE_HOUR)))
+	Clock.running = true
 	var at := Vector2(cfg.get_value("where", "x", 0.0), cfg.get_value("where", "y", 0.0))
 	var scene: String = cfg.get_value("where", "scene", "")
 	var level: String = cfg.get_value("where", "level", "")
@@ -96,6 +105,7 @@ func load_and_resume() -> void:
 func new_game() -> void:
 	_restore_inventory([])
 	EchoLog.restore([])
+	Flags.restore([])
 
 
 # --- helpers ----------------------------------------------------------------

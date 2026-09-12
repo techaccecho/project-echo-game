@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cday1ight2ech"]
+
+[ext_resource type="Script" path="res://objects/day_light.gd" id="1_script"]
+
+[node name="DayLight" type="CanvasModulate"]
+script = ExtResource("1_script")

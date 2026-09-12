@@ -10,12 +10,16 @@ class_name HouseDoor
 @export_file("*.tscn") var interior: String = "res://world/blacksmith_interior.tscn"
 ## Spawn marker inside the interior to arrive on.
 @export var interior_spawn: String = "Entrance"
+## Name of this door's own marker (the one the interior sends you back to).
+## Two doors in one level need two different names.
+@export var marker_name: String = "FrontDoor"
 
 @onready var area: InteractionArea = $InteractionArea
 
 
 func _ready() -> void:
 	area.interact = Callable(self, "_enter")
+	$FrontDoor.name = marker_name
 
 
 func _enter() -> void:

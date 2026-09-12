@@ -6,6 +6,14 @@ Traveller: Not my bed. He'll be at the forge till dark — he won't miss it.
 Traveller: ...That's better. First proper sleep since the boat.
 => END
 
+~ bed_again
+Traveller: [[He still won't miss it.|Not the first time.|His loss.]]
+=> END
+
+~ woke_again
+Traveller: [[Morning.|Up, then.|Slept like a stone.]]
+=> END
+
 ~ chair
 Traveller: A good chair. Somebody sat here a long time, wearing it in.
 => END

@@ -76,9 +76,17 @@ func fade(alpha: float) -> void:
 ## It leaves the screen black: this takes the blackout over on the fade overlay
 ## before freeing the cutscene, otherwise the old level would flash back for a
 ## frame between the two.
-func play_cutscene(scene: PackedScene) -> void:
+## Pass `once` to play it a single time per run: a flag of that name is set
+## when it has been seen, and a later call with the same name returns at once
+## — so the story card between two levels does not replay every time the
+## player walks back and forth.
+func play_cutscene(scene: PackedScene, once: String = "") -> void:
 	if scene == null:
 		return
+	if once != "":
+		if Flags.has(once):
+			return
+		Flags.set_flag(once)
 	var cs := scene.instantiate()
 	add_child(cs)
 	if cs.has_method("play"):
@@ -104,9 +112,10 @@ func start_game(level_path: String, intro: PackedScene = null) -> void:
 	_next_spawn = ""
 	pending_position = Vector2.INF
 	SaveGame.new_game()
+	Clock.start()
 	await _fade_to(1.0)
 	if intro != null:
-		await play_cutscene(intro)
+		await play_cutscene(intro, "cutscene.intro")
 	get_tree().change_scene_to_file(level_path)
 	# change_scene_to_file is deferred; wait for the new root to exist so the
 	# fade lifts on the level rather than on one last frame of the menu.
@@ -125,6 +134,7 @@ func quit_to_title(title_scene: String) -> void:
 	level_holder = null
 	player = null
 	get_tree().paused = false
+	Clock.running = false
 	get_tree().change_scene_to_file(title_scene)
 	await get_tree().process_frame
 	await get_tree().process_frame

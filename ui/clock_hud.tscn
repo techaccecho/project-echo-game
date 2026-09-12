@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cc1ockhud2ech"]
+
+[ext_resource type="Script" path="res://ui/clock_hud.gd" id="1_script"]
+
+[node name="ClockHud" type="CanvasLayer"]
+script = ExtResource("1_script")
