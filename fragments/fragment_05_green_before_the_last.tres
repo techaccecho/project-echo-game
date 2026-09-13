@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="Fragment" format=3 uid="uid://bqechofrag05x"]
+
+[ext_resource type="Script" uid="uid://b4sep75xygsp3" path="res://core/fragment.gd" id="1_frag"]
+[ext_resource type="Texture2D" uid="uid://7g7rmeqwftkm" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Icons/Weapons/Books and Potions/Books.png" id="2_icon"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_page"]
+atlas = ExtResource("2_icon")
+region = Rect2(0, 48, 16, 16)
+
+[resource]
+script = ExtResource("1_frag")
+id = "f05_green_before_the_last"
+title = "green before the last"
+entry_label = "ENTRY 19"
+level = 3
+found_at = "a dead end in the grove, on the far side"
+body = "I've stopped writing the date. It doesn't hold in here — I wrote the same one twice and I'm not sure either was right.
+
+Blue, red, and then it wants green. I could feel it want green, the way you feel a step in the dark before your foot finds it. The purple one is last. It is the only one that doesn't hum at all until the others have, and then it hums like it's been waiting.
+
+The gate behind them has something on the other side of it. I can hear it breathing, or I can hear me. Going through in the morning, if there is one."
+footer = "— the last line is written over itself three times."
+name = "a torn page"
+texture = SubResource("AtlasTexture_page")
+metadata/_custom_type_script = "res://core/fragment.gd"

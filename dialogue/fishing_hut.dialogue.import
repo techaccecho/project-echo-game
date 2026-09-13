@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://b1phx5f81fj5"
+path="res://.godot/imported/fishing_hut.dialogue-5a5b81a01088b557fe87a65379a1bbec.tres"
+
+[deps]
+
+source_file="res://dialogue/fishing_hut.dialogue"
+dest_files=["res://.godot/imported/fishing_hut.dialogue-5a5b81a01088b557fe87a65379a1bbec.tres"]
+
+[params]
+
+defaults=true

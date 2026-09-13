@@ -37,6 +37,10 @@ func _process(_delta):
 		label.hide()
 
 func _sort_by_distance_to_player(area1, area2):
+	# The player is a different node in every scene; the one grabbed at startup
+	# is long gone by the time the third level loads.
+	if player == null or not is_instance_valid(player):
+		player = get_tree().get_first_node_in_group("player")
 	if area1 == null or area2 == null or player == null:
 		return false
 
