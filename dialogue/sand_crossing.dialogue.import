@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://b18le3uy6x80f"
+path="res://.godot/imported/sand_crossing.dialogue-cceef2917d541d7fa64aff36aa497721.tres"
+
+[deps]
+
+source_file="res://dialogue/sand_crossing.dialogue"
+dest_files=["res://.godot/imported/sand_crossing.dialogue-cceef2917d541d7fa64aff36aa497721.tres"]
+
+[params]
+
+defaults=true
