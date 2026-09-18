@@ -9,7 +9,19 @@ extends CharacterBody2D
 ## The order is held by three flags, all set from greet.dialogue:
 ##   blacksmith.quest_offered  he has named his price (and unlocks the hut)
 ##   blacksmith.fish_paid      the three fish have changed hands
-##   blacksmith.axe_given      the axe is the player's
+##   blacksmith.axe_given      he has thrown the axe down
+##   blacksmith.axe_taken      the player has picked it up (set by the pickup)
+##
+## He does not hand the axe over, he lobs it at your feet — so it is the
+## pickup on the ground that puts it in the bag, and until it is picked up he
+## has opinions about that.
+
+const DROPPED_ITEM := preload("res://objects/item_pickup.tscn")
+## Where the axe comes to rest, relative to him: just in front of his boots,
+## between the two of you.
+const AXE_LANDS := Vector2(0, 16)
+## Set by the pickup once it is in the bag.
+const AXE_TAKEN := "blacksmith.axe_taken"
 
 enum SMITH_STATE { IDLE, SMITHING, TALKING, WALK }
 @export var walk_speed: float = 20
@@ -44,6 +56,9 @@ func _ready():
 	player = get_tree().get_first_node_in_group("player")
 	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
 	interaction_area.interact = Callable(self, "_on_interact")
+	# Thrown on an earlier visit and never picked up: it is still lying there.
+	if Flags.has("blacksmith.axe_given") and not Flags.has(AXE_TAKEN):
+		_drop_axe_here()
 
 	motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
 	pick_new_state()
@@ -81,6 +96,34 @@ func has_rod() -> bool:
 	if rod_item == null or player == null or player.inv == null:
 		return false
 	return player.inv.has(rod_item)
+
+
+## Lob the spare axe at the player's feet. Called from greet.dialogue, which
+## has already said "heads up".
+func drop_axe() -> void:
+	if axe == null or Flags.has(AXE_TAKEN):
+		return
+	Flags.set_flag("blacksmith.axe_given")
+	var drop := _drop_axe_here()
+	if drop != null:
+		# From about chest height, so it comes off his hands rather than the grass.
+		await drop.toss_from(global_position + Vector2(0, -12))
+
+
+## Put the axe on the ground beside him, wherever he has wandered to.
+func _drop_axe_here() -> ItemPickup:
+	if axe == null:
+		return null
+	var drop: ItemPickup = DROPPED_ITEM.instantiate()
+	drop.item = axe
+	drop.taken_flag = AXE_TAKEN
+	drop.prompt = "take the axe"
+	var host := get_parent()
+	if host == null:
+		return null
+	host.add_child(drop)
+	drop.position = position + AXE_LANDS
+	return drop
 
 
 ## Take the payment. The dialogue checks the count before calling this, and the
