@@ -310,9 +310,68 @@ func fall_through_and_drown(sea_y: float, respawn_scene: String, spawn: String) 
 	is_dying = false
 
 
+## Quicksand: he sinks where he stands. Slow — a couple of seconds of
+## struggling while the ground takes him a little at a time, then under.
+## The sand's own animation (the darkening, the rings) is the patch's
+## business; this is only what happens to him.
+##
+## Done with a stand-in: the live sprite is hidden and a copy of its current
+## frame is put under a clipping rectangle whose bottom edge is the surface
+## of the sand, then slid down through it. That is what makes him go *into*
+## the ground rather than shrink or fade.
+func sink_in_sand(respawn_scene: String, spawn: String) -> void:
+	if is_dying:
+		return
+	is_dying = true
+	movement_enabled = false
+	velocity = Vector2.ZERO
+	$CollisionShape2D.set_deferred("disabled", true)
+	InteractionManager.can_interact = false
+	update_animation(Vector2.ZERO, false)
+
+	var surface := 9.0                      # sand line, relative to the origin
+	var clip := Polygon2D.new()
+	clip.clip_children = CanvasItem.CLIP_CHILDREN_ONLY
+	clip.polygon = PackedVector2Array([Vector2(-20, -60), Vector2(20, -60), Vector2(20, surface), Vector2(-20, surface)])
+	# Drawn above the sand patches, which y-sort over his feet otherwise.
+	clip.z_index = 1
+	add_child(clip)
+	var frames: SpriteFrames = animated_sprite.sprite_frames
+	var ghost := Sprite2D.new()
+	ghost.texture = frames.get_frame_texture(animated_sprite.animation, animated_sprite.frame)
+	ghost.flip_h = animated_sprite.flip_h
+	ghost.offset = animated_sprite.offset
+	ghost.position = animated_sprite.position
+	clip.add_child(ghost)
+	animated_sprite.visible = false
+	Audio.sfx("res://audio/sfx/stone_crumble.wav", -14.0, 0.3)
+
+	var y0 := ghost.position.y
+	var t := create_tween()
+	t.tween_method(func(v: float) -> void:
+		# v 0..1: pulled down on a curve that starts slow, with a jerk each
+		# time he tries to get a leg free.
+		var pull := pow(v, 1.6) * 30.0
+		var struggle := sin(v * 19.0) * 1.2 * (1.0 - v)
+		ghost.position.y = y0 + pull + struggle
+		ghost.rotation_degrees = sin(v * 13.0) * 5.0 * (1.0 - v), 0.0, 1.0, 2.6)
+	await t.finished
+	await get_tree().create_timer(0.35).timeout
+	clip.queue_free()
+
+	drowned.emit()
+	if SceneManager.level_holder == null or respawn_scene == "":
+		get_tree().reload_current_scene()
+		return
+	await SceneManager.change_level(respawn_scene, spawn, _revive)
+	await get_tree().physics_frame
+	is_dying = false
+
+
 ## Undo everything the death animation did. Called while the screen is black.
 func _revive() -> void:
 	terrain_speed = 1.0
+	animated_sprite.visible = true
 	scale = Vector2.ONE
 	rotation_degrees = 0.0
 	modulate.a = 1.0

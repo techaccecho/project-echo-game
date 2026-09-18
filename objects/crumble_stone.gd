@@ -28,28 +28,38 @@ func is_broken() -> bool:
 	return _broken
 
 
-## The sand darkens and sags for a moment, then pours away into the drop.
+## Quicksand: the patch darkens and wets, and rings spread from where he
+## went in, slowly, for as long as he is going under. It does not open a
+## hole — the sand is still there afterwards, just not to be trusted.
 func give_way() -> void:
 	if _broken:
 		return
 	_broken = true
-	Audio.sfx("res://audio/sfx/stone_crumble.wav", -8.0, 0.25)
-
 	var sag := create_tween()
 	sag.set_parallel()
-	sag.tween_property(slab, "modulate", Color(0.6, 0.5, 0.4), 0.22)
-	sag.tween_property(slab, "position:y", slab.position.y + 2.0, 0.22)
-	await sag.finished
-
-	hole.visible = true
-	hole.modulate.a = 0.0
-	var open := create_tween()
-	open.set_parallel()
-	open.tween_property(hole, "modulate:a", 1.0, 0.25)
-	open.tween_property(slab, "scale", Vector2(0.15, 0.15), 0.38) \
-		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-	open.tween_property(slab, "modulate:a", 0.0, 0.38)
-
+	sag.tween_property(slab, "modulate", Color(0.62, 0.52, 0.42), 0.4)
+	sag.tween_property(slab, "position:y", slab.position.y + 1.0, 0.4)
+	await get_tree().create_timer(0.3).timeout
 	gave_way.emit()
-	await open.finished
-	slab.visible = false
+	for i in 4:
+		_ring(0.9 + i * 0.15)
+		await get_tree().create_timer(0.7).timeout
+
+
+## One ring of disturbed sand, growing and fading.
+func _ring(seconds: float) -> void:
+	var r := Polygon2D.new()
+	var pts := PackedVector2Array()
+	for k in 14:
+		var a := TAU * k / 14.0
+		pts.append(Vector2(cos(a), sin(a) * 0.55))
+	r.polygon = pts
+	r.color = Color(0.9, 0.82, 0.68, 0.7)
+	r.scale = Vector2(2, 2)
+	r.position = Vector2(0, 2)
+	add_child(r)
+	var t := create_tween()
+	t.set_parallel()
+	t.tween_property(r, "scale", Vector2(9, 9), seconds).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	t.tween_property(r, "color:a", 0.0, seconds)
+	t.chain().tween_callback(r.queue_free)
