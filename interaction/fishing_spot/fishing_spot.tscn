@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dxk8h3n2q7fsp" path="res://interaction/fishing_spot/fishing_spot.gd" id="1_fshsp"]
 [ext_resource type="PackedScene" uid="uid://bibupx3yvo61" path="res://interaction/interaction_area/interaction_area.tscn" id="2_fshsp"]
 [ext_resource type="Texture2D" uid="uid://betnucvh881ck" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Fish/Fish point small.png" id="3_fishpt"]
+[ext_resource type="Texture2D" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Character and Portrait/Character/Others/Shine.png" id="4_shine"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fp00"]
 atlas = ExtResource("3_fishpt")
@@ -89,6 +90,28 @@ animations = [{
 "speed": 4.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_sh0"]
+atlas = ExtResource("4_shine")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sh1"]
+atlas = ExtResource("4_shine")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_shine"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sh0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sh1")
+}],
+"loop": true,
+"name": &"twinkle",
+"speed": 3.0
+}]
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_fshsp"]
 radius = 24.0
 
@@ -108,3 +131,11 @@ sprite_frames = SubResource("SpriteFrames_fishpt")
 animation = &"swim"
 autoplay = "swim"
 frame_progress = 0.4
+
+[node name="Glint" type="AnimatedSprite2D" parent="."]
+visible = false
+z_index = -1
+position = Vector2(0, -4)
+sprite_frames = SubResource("SpriteFrames_shine")
+animation = &"twinkle"
+autoplay = "twinkle"

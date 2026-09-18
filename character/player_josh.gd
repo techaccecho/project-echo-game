@@ -327,22 +327,30 @@ func _revive() -> void:
 # Called by a FishingSpot when the player interacts with it. Plays the cast/wait/catch
 # sequence facing the spot, then drops a random fish from the pool into the inventory.
 func catch_fish(fish_pool: Array, face_direction: Vector2 = Vector2.ZERO, min_wait: float = 0.8, max_wait: float = 1.8) -> void:
+	await cast_line(face_direction, min_wait, max_wait)
+	var caught_bite = await FishingMinigame.play_sequence(3)
+	await reel_in(caught_bite)
+	if caught_bite and fish_pool.size() > 0:
+		collect(fish_pool[randi() % fish_pool.size()])
+	enable_movement()
+
+
+## Turn to the water and put the line in, then hold it there. Await it, run
+## whatever the water is hiding, and finish with reel_in(). Split out of
+## catch_fish so the forest pond can hang its own minigame off the same cast.
+func cast_line(face_direction: Vector2 = Vector2.ZERO, min_wait: float = 0.8, max_wait: float = 1.8) -> void:
 	disable_movement()
 	if face_direction != Vector2.ZERO:
 		last_direction = face_direction
-	var suffix = get_direction_suffix(last_direction)
-
-	animated_sprite.play("fish_cast_" + suffix)
+	animated_sprite.play("fish_cast_" + get_direction_suffix(last_direction))
 	await animated_sprite.animation_finished
-
-	animated_sprite.play("fish_wait_" + suffix)
+	animated_sprite.play("fish_wait_" + get_direction_suffix(last_direction))
 	await get_tree().create_timer(randf_range(min_wait, max_wait)).timeout
 
-	var caught_bite = await FishingMinigame.play_sequence(3)
 
-	if caught_bite and fish_pool.size() > 0:
-		animated_sprite.play("fish_catch_" + suffix)
+## Bring the line back in. Plays the catch on a hit; on a miss he just stops
+## fishing. Leaves movement disabled — the caller decides when he is free.
+func reel_in(caught: bool) -> void:
+	if caught:
+		animated_sprite.play("fish_catch_" + get_direction_suffix(last_direction))
 		await animated_sprite.animation_finished
-		collect(fish_pool[randi() % fish_pool.size()])
-
-	enable_movement()

@@ -21,6 +21,7 @@
 [ext_resource type="Resource" uid="uid://dqk3xyram7wl2" path="res://inventory/items/fish_perch.tres" id="43_perch"]
 [ext_resource type="Resource" uid="uid://bx8h5n2p4qty3" path="res://inventory/items/fish_sunfish.tres" id="44_sunfish"]
 [ext_resource type="Resource" uid="uid://bq3rw8k5fnd2x" path="res://inventory/items/fishing_rod.tres" id="45_rod"]
+[ext_resource type="Resource" uid="uid://cskstfx5pwpfm" path="res://inventory/items/forest_key.tres" id="46_key"]
 [ext_resource type="PackedScene" uid="uid://bmu3ciwxqewdw" path="res://objects/blocked_path.tscn" id="blockedpath"]
 [ext_resource type="Script" uid="uid://cpwnfxebcpy1u" path="res://world/game_world.gd" id="gw_script"]
 [ext_resource type="PackedScene" uid="uid://blvlaud102ec" path="res://objects/level_audio.tscn" id="lvlaudio"]
@@ -116,6 +117,13 @@ required_item = ExtResource("45_rod")
 position = Vector2(-856, -776)
 fish_pool = Array[ExtResource("41_invitem")]([ExtResource("42_carp"), ExtResource("43_perch"), ExtResource("44_sunfish")])
 required_item = ExtResource("45_rod")
+
+[node name="FishingSpotPond" parent="GameLevel1" unique_id=225313781 instance=ExtResource("40_fshsp")]
+position = Vector2(-547, -98)
+fish_pool = Array[ExtResource("41_invitem")]([ExtResource("42_carp"), ExtResource("43_perch"), ExtResource("44_sunfish")])
+required_item = ExtResource("45_rod")
+prize = ExtResource("46_key")
+prize_flag = "forest.key_found"
 
 [node name="WaterBorder" parent="." unique_id=1357689819 instance=ExtResource("10_hdkfl")]
 
