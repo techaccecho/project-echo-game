@@ -159,6 +159,7 @@ func _blob() -> GradientTexture2D:
 ## the screen left black so the caller can change scene without a flash.
 func play() -> void:
 	_running = true
+	UiStack.push("cutscene")
 	get_tree().paused = true
 	if stop_music:
 		Audio.stop_music(1.4)
@@ -182,6 +183,7 @@ func play() -> void:
 	await out.finished
 	_running = false
 	get_tree().paused = false
+	UiStack.pop("cutscene")
 	finished.emit()
 
 
