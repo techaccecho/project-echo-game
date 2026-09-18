@@ -6,6 +6,7 @@ extends Node2D
 ##   • completion of any incoming transition (placing the player at the spawn
 ##     the SceneManager asked for, e.g. when returning from Level 2),
 ##   • the time-of-day light and camera limits,
+##   • Jory, who greets you on the meadow above the landing,
 ##   • the blacksmith's front door and the fishing hut, each with an interior,
 ##   • fish and morning gulls on the western sea, and
 ##   • the opening arrival by boat, on a new game only.
@@ -16,6 +17,10 @@ const CAMERA_BOUNDS := preload("res://objects/camera_bounds.tscn")
 const HOUSE_DOOR := preload("res://objects/house_door.tscn")
 const DAY_LIGHT := preload("res://objects/day_light.tscn")
 const FISHING_HUT := preload("res://objects/fishing_hut.tscn")
+const GREETER := preload("res://character/npc_greeter.tscn")
+## Jory sits by a patch of tall grass on the meadow, up from the landing on
+## the way inland.
+const GREETER_AT := Vector2(-988, -222)
 const SEA_LIFE := preload("res://objects/sea_life.tscn")
 const MORNING_GULLS := preload("res://objects/morning_gulls.tscn")
 ## The hut's y-sort anchor: 20px north of its actual bottom-left (see
@@ -52,6 +57,9 @@ func _ready() -> void:
 	hut.position = HUT_AT
 	hut.z_index = 5
 	$GameLevel1.add_child(hut)
+	var greeter: Node2D = GREETER.instantiate()
+	greeter.position = GREETER_AT
+	$GameLevel1.add_child(greeter)
 	# The sea: fish leaping across the western water, and gulls off the hut's
 	# shore in the mornings. Above the sea layers, below the player.
 	var sea: Node2D = SEA_LIFE.instantiate()
