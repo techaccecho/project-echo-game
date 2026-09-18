@@ -29,13 +29,17 @@ func _process(delta):
 			close()
 		return
 
-	if Input.is_action_just_pressed("inventory"):
-		if is_open:
-			close()
-			player.enable_movement()
-		else:
-			open()
-			player.disable_movement()
+	# [I] opens the bag only when nothing else is up; [I] or [Esc] closes it
+	# while it is the topmost thing.
+	if is_open and UiStack.is_top("inventory") \
+			and (Input.is_action_just_pressed("inventory") or Input.is_action_just_pressed("ui_cancel")):
+		close()
+		player.enable_movement()
+		get_viewport().set_input_as_handled()
+	elif not is_open and UiStack.is_free() and Input.is_action_just_pressed("inventory"):
+		open()
+		player.disable_movement()
+		get_viewport().set_input_as_handled()
 
 # Clicking a recovered page reads it: hand off to the Echo Log, which takes over
 # input from here. Movement stays disabled throughout, so no need to re-enable.
@@ -44,9 +48,11 @@ func _on_read_requested(fragment: Fragment) -> void:
 	EchoLog.open_journal(fragment.id)
 
 func open():
+	UiStack.push("inventory")
 	visible = true
 	is_open = true
 
 func close():
+	UiStack.pop("inventory")
 	visible = false
 	is_open = false
