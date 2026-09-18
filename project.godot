@@ -17,6 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+UiStack="*res://core/ui_stack.gd"
 InteractionManager="*uid://cgvfss0eo3an1"
 DialogueManager="*uid://c3rodes2l3gxb"
 SceneManager="*res://world/scene_manager.gd"
@@ -98,7 +99,7 @@ interact_alt={
 
 [internationalization]
 
-locale/translations_pot_files=PackedStringArray("res://dialogue/greet.dialogue", "res://dialogue/forester.dialogue", "res://dialogue/rubble_wall.dialogue", "res://dialogue/cave_entrance.dialogue", "res://dialogue/old_path.dialogue", "res://dialogue/arrival.dialogue", "res://dialogue/blacksmith_house.dialogue", "res://dialogue/fishing_hut.dialogue", "res://dialogue/grove.dialogue", "res://dialogue/fishing_spot.dialogue")
+locale/translations_pot_files=PackedStringArray("res://dialogue/greet.dialogue", "res://dialogue/forester.dialogue", "res://dialogue/rubble_wall.dialogue", "res://dialogue/cave_entrance.dialogue", "res://dialogue/old_path.dialogue", "res://dialogue/arrival.dialogue", "res://dialogue/blacksmith_house.dialogue", "res://dialogue/fishing_hut.dialogue", "res://dialogue/grove.dialogue", "res://dialogue/greeter.dialogue", "res://dialogue/sand_crossing.dialogue", "res://dialogue/fishing_spot.dialogue")
 
 [layer_names]
 

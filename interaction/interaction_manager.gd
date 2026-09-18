@@ -3,7 +3,7 @@ extends Node2D
 #class_name InteractionManager
 
 @onready var player = get_tree().get_first_node_in_group("player")
-@onready var label = $Label
+@onready var prompt: InteractionPrompt = $Prompt
 
 var active_areas = []
 var can_interact = true
@@ -27,14 +27,11 @@ func _process(_delta):
 		if closest == null:
 			return
 
-		# Prompt reflects each area's own button + action, e.g. "[B / Click] to shake"
-		label.text = "[" + closest.key_prompt + "] to " + closest.action_name
-		label.global_position = closest.global_position
-		label.global_position.y -= 36
-		#label.global_position.x = label.size.x / 2
-		label.show()
+		# Prompt reflects each area's own button + action, e.g. "B · shake"
+		prompt.set_prompt(closest.key_prompt, closest.action_name)
+		prompt.show_at(closest.global_position)
 	else:
-		label.hide()
+		prompt.hide_prompt()
 
 func _sort_by_distance_to_player(area1, area2):
 	# The player is a different node in every scene; the one grabbed at startup
@@ -58,7 +55,7 @@ func _input(event):
 	var closest = active_areas[0]
 	if closest != null and event.is_action_pressed(closest.input_action):
 		can_interact = false
-		label.hide()
+		prompt.hide_prompt()
 
 		await closest.interact.call()
 

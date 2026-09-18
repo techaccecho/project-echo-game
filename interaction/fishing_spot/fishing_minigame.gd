@@ -46,6 +46,7 @@ func _unhandled_input(event: InputEvent) -> void:
 # Finishes with a standalone result screen (never overlapping the last
 # letter). Returns true only if every letter in the sequence was hit.
 func play_sequence(length: int = 3) -> bool:
+	UiStack.push("fishing")
 	_clear_panel()
 	await _show_panel()
 	await _play_countdown()
@@ -86,6 +87,7 @@ func play_sequence(length: int = 3) -> bool:
 	await get_tree().create_timer(RESULT_HOLD).timeout
 
 	await _hide_panel()
+	UiStack.pop("fishing")
 	return all_hit
 
 # "Fishing starting in 3.. 2.. 1.. GO!" beat before the letters start,

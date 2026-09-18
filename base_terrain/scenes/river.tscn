@@ -272,7 +272,7 @@ script = ExtResource("18_watcol")
 water_layer = NodePath("../Water")
 bank_layers = Array[NodePath]([NodePath("../GrassSand"), NodePath("../GroundWater"), NodePath("../GrassCliffWater")])
 crossing_layers = Array[NodePath]([NodePath("../Bridge/BridgeTopRail"), NodePath("../Bridge/BridgeBottomRail")])
-debug_draw = true
+debug_draw = false
 
 [node name="Carve" type="Node2D" parent="WaterCollision"]
 

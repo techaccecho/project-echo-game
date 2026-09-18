@@ -60,6 +60,7 @@ func close() -> void:
 		return
 	is_open = false
 	_root.visible = false
+	UiStack.pop("pause")
 	if not _settings_only:
 		get_tree().paused = false
 
@@ -84,6 +85,7 @@ func _show(settings_only: bool) -> void:
 	_ring_focus()
 	if not settings_only:
 		get_tree().paused = true
+	UiStack.push("pause")
 	_root.visible = true
 	(_back if settings_only else _resume).grab_focus()
 
@@ -107,12 +109,13 @@ func _ring_focus() -> void:
 		shown[i].focus_neighbor_right = shown[i].get_path_to(shown[i])
 
 
-## Whether Esc may open the menu right now: not on the title screen, and not
-## while something else (a cutscene) has the tree paused.
+## Whether Esc may open the menu right now: not on the title screen, not
+## while something else (a cutscene) has the tree paused, and not while any
+## other screen — journal, bag, minigame, balloon — has the keys.
 func _can_open() -> bool:
 	if get_tree().current_scene is MainMenu:
 		return false
-	return not get_tree().paused
+	return not get_tree().paused and UiStack.is_free()
 
 
 # --- actions ----------------------------------------------------------------
@@ -150,6 +153,7 @@ func _on_quit() -> void:
 	_busy = true
 	_root.visible = false
 	is_open = false
+	UiStack.pop("pause")
 	await SceneManager.quit_to_title(TITLE_SCENE)
 	_busy = false
 
@@ -216,7 +220,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			return
 		get_viewport().set_input_as_handled()
 		return
-	if not is_open:
+	if not is_open or not UiStack.is_top("pause"):
 		return
 	# The game moves on WASD and acts on E; the menu answers to the same keys.
 	if event.is_action("up"):

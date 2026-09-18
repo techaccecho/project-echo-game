@@ -51,6 +51,9 @@ var last_direction: Vector2 = Vector2(0, 1) # default face down
 var movement_enabled: bool = true
 
 var is_dying: bool = false
+## Ground drag: 1.0 on firm ground, less on sand. Set by whatever he is
+## standing on; reset when he revives.
+var terrain_speed: float = 1.0
 var _pose: Sprite2D = null
 var is_chopping: bool = true
 var _step_accum: float = 0.0
@@ -70,7 +73,7 @@ func _physics_process(_delta):
 	var is_running = Input.is_action_pressed("run")
 	var current_speed = run_speed if is_running else walk_speed
 	
-	velocity = input_direction * current_speed
+	velocity = input_direction * current_speed * terrain_speed
 	move_and_slide()
 	
 	if input_direction != Vector2.ZERO:
@@ -309,6 +312,7 @@ func fall_through_and_drown(sea_y: float, respawn_scene: String, spawn: String) 
 
 ## Undo everything the death animation did. Called while the screen is black.
 func _revive() -> void:
+	terrain_speed = 1.0
 	scale = Vector2.ONE
 	rotation_degrees = 0.0
 	modulate.a = 1.0

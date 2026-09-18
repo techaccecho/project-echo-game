@@ -1,0 +1,6 @@
+~ sand
+do disable_movement()
+The path gives out into sand here — deep, dry, and wider than it looks. Every step sinks to the ankle.
+Some of it will hold. Some of it is only pretending to.
+do enable_movement()
+=> END

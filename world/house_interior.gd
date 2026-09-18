@@ -9,10 +9,21 @@ class_name HouseInterior
 ## player between here and the level, and the shared inventory resource means
 ## whatever he is carrying comes with him.
 ##
+## The props under `Props` and `WallDressing` y-sort against him individually:
+## both groups are y_sort_enabled under a y_sort_enabled room, which flattens
+## them into one pool with the player. Each prop sprite is centered = false
+## with its `offset` a further 16px up from its base, so its origin — the sort
+## key — sits a tile above the floor it stands on. That is deliberate: the
+## player's own key is his node origin, which his collision box puts 10px
+## above his feet, so anchoring a prop at its true base would draw it over his
+## head while he stood in front of it. Moving a prop in the editor moves the
+## anchor, not the base; the sprite hangs 16px below the handle.
+##
 ## The furniture answers to E through InteractionAreas under `Interact`,
 ## wired up here by name: a name in `seats` is a chair, `bed` is the bed, a
 ## name in `pickups` is something to take away, and anything in `lines` just
 ## says its line — once; see _say() for repeats.
+## A look with nothing left to say stops offering its prompt; see _hide_spent().
 ## Sleeping moves the Clock on to the next morning.
 
 ## Level scene and spawn marker to return to.
@@ -57,6 +68,8 @@ func _ready() -> void:
 	if interact:
 		for area in interact.get_children():
 			area.interact = Callable(self, "_on_interact").bind(area.name)
+			# Looks he has already read stay read across visits and saves.
+			_hide_spent(area.name)
 	for what in pickups:
 		if Flags.has(_pickup_flag(str(what))):
 			_clear_pickup(str(what))
@@ -95,6 +108,7 @@ func _on_interact(what: String) -> void:
 			await _sit(what)
 	elif lines.has(what):
 		await _say(str(lines[what]))
+		_hide_spent(what)
 
 
 func _sit(chair: String) -> void:
@@ -193,6 +207,10 @@ func _clear_pickup(what: String) -> void:
 	if lines.has(what):
 		area.action_name = "look"
 	else:
+		# He is standing in it as he takes it, so the manager is holding it.
+		# Hand it back before it goes, the way _hide_spent() does, or the
+		# prompt is left pointing at a freed node.
+		InteractionManager.deregister_area(area)
 		area.queue_free()
 
 
@@ -207,6 +225,33 @@ func _slide(to: Vector2, seconds: float) -> void:
 	t.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	t.tween_property(_player, "global_position", to, seconds)
 	await t.finished
+
+
+## Take down the prompt on a look that has nothing left to say: its line has
+## been heard and the dialogue has no `<title>_again` to follow it with. The
+## chairs and the bed keep theirs whatever they have said, because sitting
+## down is the point of them, not the line. Deregistering as well as going
+## quiet matters for the one he is standing in when he reads it — no exit
+## signal fires for an area that stops monitoring under his feet.
+func _hide_spent(area_name: String) -> void:
+	if not lines.has(area_name):
+		return
+	var area := get_node_or_null("Interact/" + area_name)
+	if area == null or not _spent(str(lines[area_name])):
+		return
+	InteractionManager.deregister_area(area)
+	area.set_deferred("monitoring", false)
+
+
+func _spent(title: String) -> bool:
+	if story == "":
+		return false
+	var res = load(story)
+	if res == null:
+		return false
+	if not Flags.has("%s.%s" % [story.get_file().get_basename(), title]):
+		return false
+	return not res.titles.has(title + "_again")
 
 
 ## A line plays in full the first time and is remembered as a flag; after
