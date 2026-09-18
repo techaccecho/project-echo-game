@@ -255,12 +255,14 @@ func open(focus_id: String = "") -> void:
 	is_open = true
 	_list.grab_focus()
 	_set_world_input(false)
+	UiStack.push("journal")
 
 
 func close() -> void:
 	visible = false
 	is_open = false
 	_set_world_input(true)
+	UiStack.pop("journal")
 
 
 func toggle() -> void:
@@ -284,9 +286,19 @@ func _set_world_input(enabled: bool) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	# [J] opens the journal only when nothing else is up (or from the
+	# inventory, which hands over), and closes it only when it is on top.
 	if event.is_action_pressed("journal"):
-		toggle()
+		if is_open:
+			if UiStack.is_top("journal"):
+				close()
+			else:
+				return
+		elif UiStack.is_free() or UiStack.is_top("inventory"):
+			open()
+		else:
+			return
 		get_viewport().set_input_as_handled()
-	elif is_open and event.is_action_pressed("ui_cancel"):
+	elif is_open and UiStack.is_top("journal") and event.is_action_pressed("ui_cancel"):
 		close()
 		get_viewport().set_input_as_handled()
