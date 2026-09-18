@@ -25,8 +25,9 @@ func update(slot: InvSlot):
 	else:
 		item_visual.visible = true
 		item_visual.texture = slot.item.texture
-		if slot.amount > 1:
-			amount_text.visible = true
+		# A "1" in the corner tells the player nothing — the icon already says
+		# he has one. The count only earns its place once things stack.
+		amount_text.visible = slot.amount > 1
 		amount_text.text = str(slot.amount)
 		# Pages are readable; everything else is just carried.
 		if slot.item is Fragment:

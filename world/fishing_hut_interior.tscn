@@ -1,20 +1,21 @@
 [gd_scene format=4 uid="uid://cf1sh1nghut1n"]
 
-[ext_resource type="Script" path="res://world/house_interior.gd" id="script"]
 [ext_resource type="TileSet" uid="uid://c1nt3r10rh0us" path="res://tilesets/interior_house.tres" id="houseset"]
-[ext_resource type="PackedScene" uid="uid://wvbxyfgl33vp" path="res://character/player_josh.tscn" id="player"]
-[ext_resource type="PackedScene" uid="uid://blvlaud102ec" path="res://objects/level_audio.tscn" id="levelaudio"]
-[ext_resource type="PackedScene" uid="uid://doa04urw7iidr" path="res://inventory/inv_ui.tscn" id="invui"]
 [ext_resource type="PackedScene" uid="uid://bibupx3yvo61" path="res://interaction/interaction_area/interaction_area.tscn" id="iarea"]
-[ext_resource type="Texture2D" uid="uid://v62e5q2h2y8d" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Interior/Blacksmith.png" id="tex_smith"]
-[ext_resource type="Texture2D" uid="uid://cdksipt2be5yq" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Interior/Fireplace.png" id="tex_fire"]
+[ext_resource type="PackedScene" uid="uid://doa04urw7iidr" path="res://inventory/inv_ui.tscn" id="invui"]
+[ext_resource type="Resource" uid="uid://bq3rw8k5fnd2x" path="res://inventory/items/fishing_rod.tres" id="item_rod"]
+[ext_resource type="PackedScene" uid="uid://blvlaud102ec" path="res://objects/level_audio.tscn" id="levelaudio"]
+[ext_resource type="PackedScene" uid="uid://wvbxyfgl33vp" path="res://character/player_josh.tscn" id="player"]
+[ext_resource type="Script" uid="uid://culo7uyxvr1r3" path="res://world/house_interior.gd" id="script"]
 [ext_resource type="Texture2D" uid="uid://b2xsxgve06jf0" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Interior/Beds.png" id="tex_beds"]
-[ext_resource type="Texture2D" uid="uid://c60rk4uqrxx83" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Interior/Tables and desks.png" id="tex_tables"]
 [ext_resource type="Texture2D" uid="uid://b124hyeqx04ge" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Interior/Chairs.png" id="tex_chairs"]
-[ext_resource type="Texture2D" uid="uid://b5hpqvanp7b40" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Interior/Part 11 copiar.png" id="tex_rugs"]
-[ext_resource type="Texture2D" uid="uid://cmccj4lwok6x" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Interior/Part 1 copiar.png" id="tex_decor"]
 [ext_resource type="Texture2D" uid="uid://bk37do8hebwcf" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Interior/Doors, windows and curtains.png" id="tex_curt"]
+[ext_resource type="Texture2D" uid="uid://cmccj4lwok6x" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Interior/Part 1 copiar.png" id="tex_decor"]
 [ext_resource type="Texture2D" uid="uid://k3stjt34xto6" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Exterior/Beach/Fish.png" id="tex_fish"]
+[ext_resource type="Texture2D" uid="uid://f5qtnov6iluw" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Icons/Weapons/RPG/5.png" id="tex_rod"]
+[ext_resource type="Texture2D" uid="uid://b5hpqvanp7b40" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Interior/Part 11 copiar.png" id="tex_rugs"]
+[ext_resource type="Texture2D" uid="uid://v62e5q2h2y8d" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Interior/Blacksmith.png" id="tex_smith"]
+[ext_resource type="Texture2D" uid="uid://c60rk4uqrxx83" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Interior/Tables and desks.png" id="tex_tables"]
 
 [sub_resource type="RectangleShape2D" id="RS_1"]
 size = Vector2(192, 64)
@@ -61,41 +62,57 @@ size = Vector2(52, 52)
 [sub_resource type="RectangleShape2D" id="RS_15"]
 size = Vector2(68, 52)
 
+[sub_resource type="RectangleShape2D" id="RS_rod"]
+size = Vector2(36, 36)
+
 [sub_resource type="RectangleShape2D" id="RS_exit"]
 size = Vector2(32, 12)
 
-[node name="FishingHutInterior" type="Node2D"]
+[node name="FishingHutInterior" type="Node2D" unique_id=1396710685]
 y_sort_enabled = true
 script = ExtResource("script")
-story = "res://dialogue/fishing_hut.dialogue"
 outside_spawn = "HutDoor"
-seats = {"Chair": {"at": Vector2(72, 82), "face": Vector2(0, 1)}}
+story = "res://dialogue/fishing_hut.dialogue"
+seats = {
+"Chair": {
+"at": Vector2(72, 82),
+"face": Vector2(0, 1)
+}
+}
 bed_sit = Vector2(144, 85)
 bed_rise = Vector2(126, 118)
-lines = {"Rack": "rack", "Table": "table", "Crates": "crates"}
+lines = {
+"Crates": "crates",
+"Rack": "rack",
+"Table": "table"
+}
+pickups = {
+"Rod": {
+"item": ExtResource("item_rod"),
+"line": "rod_found",
+"prop": "Props/FishingRod"
+}
+}
 
-[node name="Backdrop" type="Polygon2D" parent="."]
+[node name="Backdrop" type="Polygon2D" parent="." unique_id=987962324]
 z_index = -10
 color = Color(0.02, 0.02, 0.025, 1)
 polygon = PackedVector2Array(-2000, -2000, 2500, -2000, 2500, 2500, -2000, 2500)
 
-[node name="Floor" type="TileMapLayer" parent="."]
+[node name="Floor" type="TileMapLayer" parent="." unique_id=294785552]
 z_index = -2
 tile_map_data = PackedByteArray("AAABAAQAAAAZAAAAAAACAAQAAAAZAAAAAAADAAQAAAAZAAAAAAAEAAQAAAAZAAAAAAAFAAQAAAAZAAAAAAAGAAQAAAAZAAAAAAAHAAQAAAAZAAAAAAAIAAQAAAAZAAAAAAAJAAQAAAAZAAAAAAAKAAQAAAAZAAAAAAABAAUAAAAZAAAAAAACAAUAAAAZAAAAAAADAAUAAAAZAAAAAAAEAAUAAAAZAAAAAAAFAAUAAAAZAAAAAAAGAAUAAAAZAAAAAAAHAAUAAAAZAAAAAAAIAAUAAAAZAAAAAAAJAAUAAAAZAAAAAAAKAAUAAAAZAAAAAAABAAYAAAAZAAAAAAACAAYAAAAZAAAAAAADAAYAAAAZAAAAAAAEAAYAAAAZAAAAAAAFAAYAAAAZAAAAAAAGAAYAAAAZAAAAAAAHAAYAAAAZAAAAAAAIAAYAAAAZAAAAAAAJAAYAAAAZAAAAAAAKAAYAAAAZAAAAAAABAAcAAAAZAAAAAAACAAcAAAAZAAAAAAADAAcAAAAZAAAAAAAEAAcAAAAZAAAAAAAFAAcAAAAZAAAAAAAGAAcAAAAZAAAAAAAHAAcAAAAZAAAAAAAIAAcAAAAZAAAAAAAJAAcAAAAZAAAAAAAKAAcAAAAZAAAAAAABAAgAAAAZAAAAAAACAAgAAAAZAAAAAAADAAgAAAAZAAAAAAAEAAgAAAAZAAAAAAAFAAgAAAAZAAAAAAAGAAgAAAAZAAAAAAAHAAgAAAAZAAAAAAAIAAgAAAAZAAAAAAAJAAgAAAAZAAAAAAAKAAgAAAAZAAAAAAABAAkAAAAZAAAAAAACAAkAAAAZAAAAAAADAAkAAAAZAAAAAAAEAAkAAAAZAAAAAAAFAAkAAAAZAAAAAAAGAAkAAAAZAAAAAAAHAAkAAAAZAAAAAAAIAAkAAAAZAAAAAAAJAAkAAAAZAAAAAAAKAAkAAAAZAAAAAAAFAAoAAAAZAAAAAAAGAAoAAAAZAAAAAAA=")
 tile_set = ExtResource("houseset")
 
-[node name="Walls" type="TileMapLayer" parent="."]
+[node name="Walls" type="TileMapLayer" parent="." unique_id=1256528693]
 z_index = -1
 tile_map_data = PackedByteArray("AAAAAAAAAAAGAAEAAAALAAAAAAAGAAEAAAAAAAEAAAAGAAEAAAALAAEAAAAGAAEAAAAAAAIAAAAGAAEAAAALAAIAAAAGAAEAAAAAAAMAAAAGAAEAAAALAAMAAAAGAAEAAAAAAAQAAAAGAAEAAAALAAQAAAAGAAEAAAAAAAUAAAAGAAEAAAALAAUAAAAGAAEAAAAAAAYAAAAGAAEAAAALAAYAAAAGAAEAAAAAAAcAAAAGAAEAAAALAAcAAAAGAAEAAAAAAAgAAAAGAAEAAAALAAgAAAAGAAEAAAAAAAkAAAAGAAEAAAALAAkAAAAGAAEAAAAAAAoAAAAGAAEAAAALAAoAAAAGAAEAAAABAAoAAAAGAAEAAAABAAAAAAAJAAUAAAABAAEAAAAJAAYAAAABAAIAAAAJAAcAAAABAAMAAAAJABcAAAACAAoAAAAGAAEAAAACAAAAAAAKAAUAAAACAAEAAAAKAAYAAAACAAIAAAAKAAcAAAACAAMAAAAKABcAAAADAAoAAAAGAAEAAAADAAAAAAAKAAUAAAADAAEAAAAKAAYAAAADAAIAAAAKAAcAAAADAAMAAAAKABcAAAAEAAoAAAAGAAEAAAAEAAAAAAAKAAUAAAAEAAEAAAAKAAYAAAAEAAIAAAAKAAcAAAAEAAMAAAAKABcAAAAFAAAAAAAKAAUAAAAFAAEAAAAKAAYAAAAFAAIAAAAKAAcAAAAFAAMAAAAKABcAAAAGAAAAAAAKAAUAAAAGAAEAAAAKAAYAAAAGAAIAAAAKAAcAAAAGAAMAAAAKABcAAAAHAAoAAAAGAAEAAAAHAAAAAAAKAAUAAAAHAAEAAAAKAAYAAAAHAAIAAAAKAAcAAAAHAAMAAAAKABcAAAAIAAoAAAAGAAEAAAAIAAAAAAAKAAUAAAAIAAEAAAAKAAYAAAAIAAIAAAAKAAcAAAAIAAMAAAAKABcAAAAJAAoAAAAGAAEAAAAJAAAAAAAKAAUAAAAJAAEAAAAKAAYAAAAJAAIAAAAKAAcAAAAJAAMAAAAKABcAAAAKAAoAAAAGAAEAAAAKAAAAAAALAAUAAAAKAAEAAAALAAYAAAAKAAIAAAALAAcAAAAKAAMAAAALABcAAAA=")
 tile_set = ExtResource("houseset")
 
-[node name="WallDressing" type="Node2D" parent="."]
+[node name="WallDressing" type="Node2D" parent="." unique_id=970157659]
 y_sort_enabled = true
 
-[node name="Props" type="Node2D" parent="."]
-y_sort_enabled = true
-
-[node name="WallDressing1" type="Sprite2D" parent="WallDressing"]
+[node name="WallDressing1" type="Sprite2D" parent="WallDressing" unique_id=2072018185]
 position = Vector2(16, 80)
 texture = ExtResource("tex_fish")
 centered = false
@@ -103,7 +120,7 @@ offset = Vector2(0, -48)
 region_enabled = true
 region_rect = Rect2(0, 0, 48, 48)
 
-[node name="WallDressing2" type="Sprite2D" parent="WallDressing"]
+[node name="WallDressing2" type="Sprite2D" parent="WallDressing" unique_id=292698669]
 position = Vector2(96, 32)
 texture = ExtResource("tex_curt")
 centered = false
@@ -111,7 +128,7 @@ offset = Vector2(0, -16)
 region_enabled = true
 region_rect = Rect2(208, 16, 32, 16)
 
-[node name="WallDressing3" type="Sprite2D" parent="WallDressing"]
+[node name="WallDressing3" type="Sprite2D" parent="WallDressing" unique_id=971236570]
 position = Vector2(144, 32)
 texture = ExtResource("tex_decor")
 centered = false
@@ -119,7 +136,10 @@ offset = Vector2(0, -16)
 region_enabled = true
 region_rect = Rect2(160, 0, 16, 16)
 
-[node name="Props4" type="Sprite2D" parent="Props"]
+[node name="Props" type="Node2D" parent="." unique_id=1728414706]
+y_sort_enabled = true
+
+[node name="Props4" type="Sprite2D" parent="Props" unique_id=681267837]
 position = Vector2(128, 112)
 texture = ExtResource("tex_beds")
 centered = false
@@ -127,7 +147,7 @@ offset = Vector2(0, -48)
 region_enabled = true
 region_rect = Rect2(320, 48, 32, 48)
 
-[node name="Props5" type="Sprite2D" parent="Props"]
+[node name="Props5" type="Sprite2D" parent="Props" unique_id=1472185965]
 position = Vector2(64, 96)
 texture = ExtResource("tex_chairs")
 centered = false
@@ -135,7 +155,7 @@ offset = Vector2(0, -32)
 region_enabled = true
 region_rect = Rect2(144, 0, 16, 32)
 
-[node name="Props6" type="Sprite2D" parent="Props"]
+[node name="Props6" type="Sprite2D" parent="Props" unique_id=690355876]
 position = Vector2(64, 128)
 texture = ExtResource("tex_tables")
 centered = false
@@ -143,7 +163,7 @@ offset = Vector2(0, -32)
 region_enabled = true
 region_rect = Rect2(0, 352, 32, 32)
 
-[node name="Props7" type="Sprite2D" parent="Props"]
+[node name="Props7" type="Sprite2D" parent="Props" unique_id=343169407]
 position = Vector2(80, 112)
 texture = ExtResource("tex_smith")
 centered = false
@@ -151,7 +171,7 @@ offset = Vector2(0, -32)
 region_enabled = true
 region_rect = Rect2(64, 32, 16, 32)
 
-[node name="Props8" type="Sprite2D" parent="Props"]
+[node name="Props8" type="Sprite2D" parent="Props" unique_id=1897978992]
 position = Vector2(16, 160)
 texture = ExtResource("tex_smith")
 centered = false
@@ -159,7 +179,7 @@ offset = Vector2(0, -32)
 region_enabled = true
 region_rect = Rect2(208, 0, 48, 32)
 
-[node name="Props9" type="Sprite2D" parent="Props"]
+[node name="Props9" type="Sprite2D" parent="Props" unique_id=331488686]
 position = Vector2(80, 160)
 texture = ExtResource("tex_rugs")
 centered = false
@@ -167,7 +187,7 @@ offset = Vector2(0, -16)
 region_enabled = true
 region_rect = Rect2(272, 16, 16, 16)
 
-[node name="Props10" type="Sprite2D" parent="Props"]
+[node name="Props10" type="Sprite2D" parent="Props" unique_id=1192430740]
 position = Vector2(96, 160)
 texture = ExtResource("tex_rugs")
 centered = false
@@ -175,111 +195,126 @@ offset = Vector2(0, -16)
 region_enabled = true
 region_rect = Rect2(272, 16, 16, 16)
 
-[node name="Solids" type="StaticBody2D" parent="."]
+[node name="FishingRod" type="Sprite2D" parent="Props" unique_id=1320088166]
+position = Vector2(160, 152)
+texture = ExtResource("tex_rod")
+centered = false
+offset = Vector2(0, -16)
+region_enabled = true
+region_rect = Rect2(63.75528, 16.818724, 17.236221, 14.555035)
 
-[node name="BackWall" type="CollisionShape2D" parent="Solids"]
-position = Vector2(96.0, 32.0)
+[node name="Solids" type="StaticBody2D" parent="." unique_id=100692340]
+
+[node name="BackWall" type="CollisionShape2D" parent="Solids" unique_id=1674246622]
+position = Vector2(96, 32)
 shape = SubResource("RS_1")
 
-[node name="LeftWall" type="CollisionShape2D" parent="Solids"]
-position = Vector2(8.0, 88.0)
+[node name="LeftWall" type="CollisionShape2D" parent="Solids" unique_id=1328185938]
+position = Vector2(8, 88)
 shape = SubResource("RS_2")
 
-[node name="RightWall" type="CollisionShape2D" parent="Solids"]
-position = Vector2(184.0, 88.0)
+[node name="RightWall" type="CollisionShape2D" parent="Solids" unique_id=1220881083]
+position = Vector2(184, 88)
 shape = SubResource("RS_3")
 
-[node name="BottomLeft" type="CollisionShape2D" parent="Solids"]
-position = Vector2(48.0, 168.0)
+[node name="BottomLeft" type="CollisionShape2D" parent="Solids" unique_id=2079945327]
+position = Vector2(48, 168)
 shape = SubResource("RS_4")
 
-[node name="BottomRight" type="CollisionShape2D" parent="Solids"]
-position = Vector2(144.0, 168.0)
+[node name="BottomRight" type="CollisionShape2D" parent="Solids" unique_id=638454835]
+position = Vector2(144, 168)
 shape = SubResource("RS_5")
 
-[node name="Prop1" type="CollisionShape2D" parent="Solids"]
-position = Vector2(40.0, 72.0)
+[node name="Prop1" type="CollisionShape2D" parent="Solids" unique_id=1792721281]
+position = Vector2(40, 72)
 shape = SubResource("RS_6")
 
-[node name="Prop4" type="CollisionShape2D" parent="Solids"]
-position = Vector2(144.0, 88.0)
+[node name="Prop4" type="CollisionShape2D" parent="Solids" unique_id=1709452523]
+position = Vector2(144, 88)
 shape = SubResource("RS_7")
 
-[node name="Prop5" type="CollisionShape2D" parent="Solids"]
-position = Vector2(72.0, 88.0)
+[node name="Prop5" type="CollisionShape2D" parent="Solids" unique_id=1604710166]
+position = Vector2(72, 88)
 shape = SubResource("RS_8")
 
-[node name="Prop6" type="CollisionShape2D" parent="Solids"]
-position = Vector2(80.0, 112.0)
+[node name="Prop6" type="CollisionShape2D" parent="Solids" unique_id=909726834]
+position = Vector2(80, 112)
 shape = SubResource("RS_9")
 
-[node name="Prop8" type="CollisionShape2D" parent="Solids"]
-position = Vector2(40.0, 144.0)
+[node name="Prop8" type="CollisionShape2D" parent="Solids" unique_id=837482164]
+position = Vector2(40, 144)
 shape = SubResource("RS_10")
 
-[node name="Interact" type="Node2D" parent="."]
+[node name="Interact" type="Node2D" parent="." unique_id=1884544914]
 
-[node name="Bed" parent="Interact" instance=ExtResource("iarea")]
+[node name="Bed" parent="Interact" unique_id=1709734301 instance=ExtResource("iarea")]
 position = Vector2(144, 88)
 action_name = "sleep"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact/Bed"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact/Bed" unique_id=967216514]
 shape = SubResource("RS_11")
 
-[node name="Chair" parent="Interact" instance=ExtResource("iarea")]
+[node name="Chair" parent="Interact" unique_id=219718257 instance=ExtResource("iarea")]
 position = Vector2(72, 80)
 action_name = "sit"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact/Chair"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact/Chair" unique_id=1839914073]
 shape = SubResource("RS_12")
 
-[node name="Rack" parent="Interact" instance=ExtResource("iarea")]
+[node name="Rack" parent="Interact" unique_id=488846492 instance=ExtResource("iarea")]
 position = Vector2(40, 56)
 action_name = "look"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact/Rack"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact/Rack" unique_id=1379189723]
 shape = SubResource("RS_13")
 
-[node name="Table" parent="Interact" instance=ExtResource("iarea")]
+[node name="Table" parent="Interact" unique_id=1341499185 instance=ExtResource("iarea")]
 position = Vector2(80, 112)
 action_name = "look"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact/Table"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact/Table" unique_id=2076112838]
 shape = SubResource("RS_14")
 
-[node name="Crates" parent="Interact" instance=ExtResource("iarea")]
+[node name="Crates" parent="Interact" unique_id=2104910687 instance=ExtResource("iarea")]
 position = Vector2(40, 144)
 action_name = "look"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact/Crates"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact/Crates" unique_id=1671067944]
 shape = SubResource("RS_15")
 
-[node name="Exit" type="Area2D" parent="."]
-position = Vector2(96.0, 158)
+[node name="Rod" parent="Interact" unique_id=1650706936 instance=ExtResource("iarea")]
+position = Vector2(168, 144)
+action_name = "take the rod"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Exit"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact/Rod" unique_id=818958941]
+shape = SubResource("RS_rod")
+
+[node name="Exit" type="Area2D" parent="." unique_id=1746687207]
+position = Vector2(96, 158)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Exit" unique_id=1204913157]
 shape = SubResource("RS_exit")
 
-[node name="Entrance" type="Marker2D" parent="." groups=["player_spawn"]]
+[node name="Entrance" type="Marker2D" parent="." unique_id=1224174735 groups=["player_spawn"]]
 position = Vector2(96, 130)
 
-[node name="PlayerJosh" parent="." instance=ExtResource("player")]
+[node name="PlayerJosh" parent="." unique_id=1694447419 instance=ExtResource("player")]
 position = Vector2(96, 130)
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1346692522]
 position = Vector2(96, 88)
 zoom = Vector2(4, 4)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=812374681]
 
-[node name="Inv_UI" parent="CanvasLayer" instance=ExtResource("invui")]
+[node name="Inv_UI" parent="CanvasLayer" unique_id=1385868548 instance=ExtResource("invui")]
 offset_left = 527.0
 offset_top = 167.0
 offset_right = 624.0
 offset_bottom = 241.0
 scale = Vector2(10, 10)
 
-[node name="LevelAudio" parent="." instance=ExtResource("levelaudio")]
+[node name="LevelAudio" parent="." unique_id=854216268 instance=ExtResource("levelaudio")]
 music = "res://audio/music/hearth_hollow_bed.wav"
 music_volume_db = -10.0
 

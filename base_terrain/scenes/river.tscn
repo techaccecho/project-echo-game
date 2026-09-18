@@ -11,6 +11,7 @@
 [ext_resource type="TileSet" uid="uid://dcxw2dwxs4ck0" path="res://land_features/land_props.tres" id="11_8w07x"]
 [ext_resource type="TileSet" uid="uid://chwb2fblpo70u" path="res://structures/bridges/bridges.tres" id="16_ixy7d"]
 [ext_resource type="TileSet" uid="uid://bfn4hxvytx80x" path="res://base_terrain/beach_currents.tres" id="17_sihb4"]
+[ext_resource type="Script" uid="uid://bl7l2xprdm7po" path="res://base_terrain/water_collision.gd" id="18_watcol"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ufdml"]
 size = Vector2(187, 9.5)
@@ -265,3 +266,14 @@ tile_set = ExtResource("16_ixy7d")
 z_index = 6
 tile_map_data = PackedByteArray("AADN/+b/AgAHAAQAAADL/+b/AgAGAAQAAADM/+b/AgAHAAQAAADR/+b/AgAHAAQAAAA=")
 tile_set = ExtResource("6_ufdml")
+
+[node name="WaterCollision" type="StaticBody2D" parent="." unique_id=1774100201]
+script = ExtResource("18_watcol")
+water_layer = NodePath("../Water")
+bank_layers = Array[NodePath]([NodePath("../GrassSand"), NodePath("../GroundWater"), NodePath("../GrassCliffWater")])
+crossing_layers = Array[NodePath]([NodePath("../Bridge/BridgeTopRail"), NodePath("../Bridge/BridgeBottomRail")])
+debug_draw = true
+
+[node name="Carve" type="Node2D" parent="WaterCollision"]
+
+[node name="Block" type="Node2D" parent="WaterCollision"]

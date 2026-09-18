@@ -61,3 +61,7 @@ shape = SubResource("RS_walls")
 position = Vector2(55, 6)
 interior = "res://world/fishing_hut_interior.tscn"
 marker_name = "HutDoor"
+required_flag = "blacksmith.quest_offered"
+locked_story = "res://dialogue/fishing_hut.dialogue"
+locked_title = "locked"
+locked_action = "try the door"

@@ -10,8 +10,9 @@ class_name HouseInterior
 ## whatever he is carrying comes with him.
 ##
 ## The furniture answers to E through InteractionAreas under `Interact`,
-## wired up here by name: a name in `seats` is a chair, `bed` is the bed, and
-## anything in `lines` just says its line — once; see _say() for repeats.
+## wired up here by name: a name in `seats` is a chair, `bed` is the bed, a
+## name in `pickups` is something to take away, and anything in `lines` just
+## says its line — once; see _say() for repeats.
 ## Sleeping moves the Clock on to the next morning.
 
 ## Level scene and spawn marker to return to.
@@ -29,6 +30,11 @@ class_name HouseInterior
 @export var bed_rise: Vector2 = Vector2.ZERO
 ## Area name -> dialogue title, for the things that are just worth a look.
 @export var lines: Dictionary = {}
+## Area name -> {"item": InvItem, "line": dialogue title, "prop": NodePath of
+## the sprite to clear}, for something in this room to be carried off. Taking
+## it is remembered as a flag, so it is gone on every later visit — and an area
+## that also appears in `lines` goes back to being just something to look at.
+@export var pickups: Dictionary = {}
 ## Dialogue titles for the bed's two lines.
 @export var bed_line: String = "bed"
 @export var woke_line: String = "woke"
@@ -51,6 +57,9 @@ func _ready() -> void:
 	if interact:
 		for area in interact.get_children():
 			area.interact = Callable(self, "_on_interact").bind(area.name)
+	for what in pickups:
+		if Flags.has(_pickup_flag(str(what))):
+			_clear_pickup(str(what))
 
 
 func _process(_delta: float) -> void:
@@ -77,6 +86,8 @@ func _on_interact(what: String) -> void:
 		return
 	if what == bed:
 		await _sleep()
+	elif pickups.has(what) and not Flags.has(_pickup_flag(what)):
+		await _take(what)
 	elif seats.has(what):
 		if _seated == what:
 			_stand()
@@ -150,6 +161,43 @@ func _sleep() -> void:
 	await _say(woke_line)
 	_player.movement_enabled = true
 	_busy = false
+
+
+## Take something the room was holding: into the bag, off the floor, and
+## remembered, so it is gone the next time he comes in.
+func _take(what: String) -> void:
+	_busy = true
+	var pickup: Dictionary = pickups[what]
+	var item: InvItem = pickup.get("item")
+	if item != null and _player != null:
+		_player.collect(item)
+	Flags.set_flag(_pickup_flag(what))
+	_clear_pickup(what)
+	if pickup.has("line"):
+		await _say(str(pickup["line"]))
+	_busy = false
+
+
+## Clear it away — on taking it, and on walking back in later. An area that is
+## also in `lines` stays put and goes back to its own line; one that was only
+## ever the pickup goes with it.
+func _clear_pickup(what: String) -> void:
+	var pickup: Dictionary = pickups[what]
+	if pickup.has("prop"):
+		var prop := get_node_or_null(NodePath(str(pickup["prop"])))
+		if prop != null:
+			prop.queue_free()
+	var area := get_node_or_null(NodePath("Interact/" + what))
+	if area == null:
+		return
+	if lines.has(what):
+		area.action_name = "look"
+	else:
+		area.queue_free()
+
+
+func _pickup_flag(what: String) -> String:
+	return "pickup.%s.%s" % [scene_file_path.get_file().get_basename(), what]
 
 
 # --- helpers ----------------------------------------------------------------

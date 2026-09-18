@@ -1,12 +1,33 @@
 extends CharacterBody2D
 
+## The smith at Hearth Hollow, and the only man left who remembers the way
+## through once the old ridge road was shut.
+##
+## He is the gate on the whole opening act. He will not part with the way — or
+## with his spare axe — until he has been paid three fish, and the rod for
+## catching them is in the abandoned hut, which stays shut until he has asked.
+## The order is held by three flags, all set from greet.dialogue:
+##   blacksmith.quest_offered  he has named his price (and unlocks the hut)
+##   blacksmith.fish_paid      the three fish have changed hands
+##   blacksmith.axe_given      the axe is the player's
+
 enum SMITH_STATE { IDLE, SMITHING, TALKING, WALK }
 @export var walk_speed: float = 20
 @export var idle_duration: float = 3.0
 @export var walk_duration: float = 2.0
-@export var character_name: String = "NPCBlacksmith"
+@export var character_name: String = "Blacksmith"
 # Inventory: Blacksmith gives player the axe
 @export var axe: InvItem
+
+@export_group("The trade")
+## What he will take in payment. Any three of these, in any mix — he counts
+## fish, not species.
+@export var fish_items: Array[InvItem] = []
+## How many he wants. Three, and he will tell you so at length.
+@export var fish_price: int = 3
+## The rod that catches them, so he can tell whether the player has been to
+## the hut yet.
+@export var rod_item: InvItem
 
 @onready var animated_sprite = $Movement
 @onready var state_timer = $StateTimer
@@ -44,6 +65,33 @@ func _on_interact():
 	DialogueManager.show_dialogue_balloon(dialogue_resource, "start", [self, player])
 	current_state = SMITH_STATE.IDLE
 	pick_new_state()
+
+# --- the trade --------------------------------------------------------------
+# Called from greet.dialogue, which is where the whole exchange is written.
+
+## Fish in the player's bag, of any of the kinds he will accept.
+func fish_count() -> int:
+	if player == null or player.inv == null:
+		return 0
+	return player.inv.count_any(fish_items)
+
+
+## Whether the player has been to the hut and come out with the rod.
+func has_rod() -> bool:
+	if rod_item == null or player == null or player.inv == null:
+		return false
+	return player.inv.has(rod_item)
+
+
+## Take the payment. The dialogue checks the count before calling this, and the
+## check is repeated here so a wrong branch can never take a part-payment and
+## leave the player with neither the fish nor the road.
+func take_fish() -> bool:
+	if player == null or player.inv == null or fish_count() < fish_price:
+		return false
+	player.inv.remove_any(fish_items, fish_price)
+	return true
+
 
 func _physics_process(_delta):
 	if (current_state == SMITH_STATE.WALK):
