@@ -17,6 +17,7 @@ extends Node2D
 @export var empty_handed_title: String = "no_rod"
 
 @onready var interaction_area: InteractionArea = $InteractionArea
+@onready var fish: AnimatedSprite2D = $Fish
 
 var dialogue_resource = load("res://dialogue/fishing_spot.dialogue")
 var player: CharacterBody2D
@@ -25,6 +26,11 @@ var busy: bool = false
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
 	interaction_area.interact = Callable(self, "_on_interact")
+	# Every spot is the same scene, so without this they all turn in step and
+	# the river reads as clockwork rather than fish.
+	if fish != null:
+		fish.frame = randi() % fish.sprite_frames.get_frame_count(fish.animation)
+		fish.speed_scale = randf_range(0.85, 1.15)
 	# The prompt has to change the moment the rod goes in the bag, not on the
 	# next cast — the player may well walk here holding it before touching
 	# anything else.

@@ -98,22 +98,22 @@ z_index = 5
 position = Vector2(-858, -11)
 
 [node name="FishingSpotNorth" parent="GameLevel1" unique_id=1595381012 instance=ExtResource("40_fshsp")]
-position = Vector2(-736, -778)
+position = Vector2(-712, -776)
 fish_pool = Array[ExtResource("41_invitem")]([ExtResource("42_carp"), ExtResource("43_perch"), ExtResource("44_sunfish")])
 required_item = ExtResource("45_rod")
 
 [node name="FishingSpotBend" parent="GameLevel1" unique_id=1198392607 instance=ExtResource("40_fshsp")]
-position = Vector2(-732, -522)
+position = Vector2(-744, -520)
 fish_pool = Array[ExtResource("41_invitem")]([ExtResource("42_carp"), ExtResource("43_perch"), ExtResource("44_sunfish")])
 required_item = ExtResource("45_rod")
 
 [node name="FishingSpotWest" parent="GameLevel1" unique_id=1895247757 instance=ExtResource("40_fshsp")]
-position = Vector2(-834, -310)
+position = Vector2(-824, -312)
 fish_pool = Array[ExtResource("41_invitem")]([ExtResource("42_carp"), ExtResource("43_perch"), ExtResource("44_sunfish")])
 required_item = ExtResource("45_rod")
 
 [node name="FishingSpotEast" parent="GameLevel1" unique_id=84056509 instance=ExtResource("40_fshsp")]
-position = Vector2(-835, -782)
+position = Vector2(-856, -776)
 fish_pool = Array[ExtResource("41_invitem")]([ExtResource("42_carp"), ExtResource("43_perch"), ExtResource("44_sunfish")])
 required_item = ExtResource("45_rod")
 
