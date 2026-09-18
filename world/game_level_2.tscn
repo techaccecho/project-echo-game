@@ -1196,7 +1196,7 @@ fragment = ExtResource("frag02")
 [node name="CrumbleBridge" parent="Entities" instance=ExtResource("bridge")]
 origin_tile = Vector2i(26, 9)
 cell_tiles = Vector2i(1, 1)
-pattern = Array[String](["X O X X X", "O X O O X", "X X X X O"])
+pattern = Array[String](["X O O O X", "O O X O X", "X X X O O"])
 sea_y = 268
 respawn_spawn = "BridgeApproach"
 
