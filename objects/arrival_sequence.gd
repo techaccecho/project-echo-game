@@ -56,6 +56,8 @@ const STORY_TITLE := "ashore"
 var _player: Node2D
 var _boat: Node2D
 var _riding := false
+## The player's body shape, switched off for the crossing and back on ashore.
+var _shape: CollisionShape2D
 
 
 func _ready() -> void:
@@ -73,6 +75,13 @@ func play() -> void:
 	if _player == null:
 		return
 	_player.set("movement_enabled", false)
+	# He arrives over open water and lands in the shallows, both of which the
+	# water collision walls off. The ride and the hop are tweens and go through
+	# it regardless, but the walk up the beach is move_and_slide and would start
+	# inside a wall — so he is intangible until he is on the grass.
+	_shape = _player.get_node_or_null("CollisionShape2D")
+	if _shape:
+		_shape.set_deferred("disabled", true)
 
 	# A carrier for the boat, so the hull can keep bobbing and yawing in its
 	# own local space while the carrier is tweened along the course.
@@ -107,6 +116,9 @@ func play() -> void:
 
 	await _player.call("walk_to_point", sand_stop)
 	await _player.call("walk_to_point", walk_to)
+	# Ashore and clear of the water: he can be collided with again.
+	if _shape:
+		_shape.set_deferred("disabled", false)
 	_face(Vector2.RIGHT)
 	await _narrate()
 	_player.set("movement_enabled", true)

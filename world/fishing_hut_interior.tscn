@@ -2,6 +2,8 @@
 
 [ext_resource type="TileSet" uid="uid://c1nt3r10rh0us" path="res://tilesets/interior_house.tres" id="houseset"]
 [ext_resource type="PackedScene" uid="uid://bibupx3yvo61" path="res://interaction/interaction_area/interaction_area.tscn" id="iarea"]
+[ext_resource type="Resource" uid="uid://bq3rw8k5fnd2x" path="res://inventory/items/fishing_rod.tres" id="item_rod"]
+[ext_resource type="Texture2D" uid="uid://f5qtnov6iluw" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Icons/Weapons/RPG/5.png" id="tex_rod"]
 [ext_resource type="PackedScene" uid="uid://doa04urw7iidr" path="res://inventory/inv_ui.tscn" id="invui"]
 [ext_resource type="PackedScene" uid="uid://blvlaud102ec" path="res://objects/level_audio.tscn" id="levelaudio"]
 [ext_resource type="PackedScene" uid="uid://wvbxyfgl33vp" path="res://character/player_josh.tscn" id="player"]
@@ -63,6 +65,9 @@ size = Vector2(52, 52)
 [sub_resource type="RectangleShape2D" id="RS_15"]
 size = Vector2(68, 52)
 
+[sub_resource type="RectangleShape2D" id="RS_rod"]
+size = Vector2(36, 36)
+
 [sub_resource type="RectangleShape2D" id="RS_exit"]
 size = Vector2(32, 12)
 
@@ -83,6 +88,13 @@ lines = {
 "Crates": "crates",
 "Rack": "rack",
 "Table": "table"
+}
+pickups = {
+"Rod": {
+"item": ExtResource("item_rod"),
+"line": "rod_found",
+"prop": "Props/FishingRod"
+}
 }
 
 [node name="Backdrop" type="Polygon2D" parent="." unique_id=1890644097]
@@ -183,6 +195,13 @@ flip_h = true
 region_enabled = true
 region_rect = Rect2(272, 16, 16, 16)
 
+[node name="FishingRod" type="Sprite2D" parent="Props"]
+position = Vector2(160, 136)
+texture = ExtResource("tex_rod")
+centered = false
+region_enabled = true
+region_rect = Rect2(63.75528, 16.818724, 17.236221, 14.555035)
+
 [node name="Solids" type="StaticBody2D" parent="." unique_id=1096795975]
 
 [node name="BackWall" type="CollisionShape2D" parent="Solids" unique_id=1835812525]
@@ -265,6 +284,13 @@ action_name = "look"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interact/Crates" unique_id=601431737]
 shape = SubResource("RS_15")
+
+[node name="Rod" parent="Interact" instance=ExtResource("iarea")]
+position = Vector2(168, 144)
+action_name = "take the rod"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact/Rod"]
+shape = SubResource("RS_rod")
 
 [node name="Exit" type="Area2D" parent="." unique_id=117588817]
 position = Vector2(96, 158)

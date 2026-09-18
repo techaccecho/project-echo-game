@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="InvItem" format=3 uid="uid://bq3rw8k5fnd2x"]
+
+[ext_resource type="Script" uid="uid://by0khe2xbsbyd" path="res://inventory/inventory_item.gd" id="1_m3h8r"]
+[ext_resource type="Texture2D" uid="uid://f5qtnov6iluw" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Icons/Weapons/RPG/5.png" id="2_6e0sr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rod01"]
+atlas = ExtResource("2_6e0sr")
+region = Rect2(64.32982, 16.435694, 15.129578, 15.321091)
+
+[resource]
+script = ExtResource("1_m3h8r")
+name = "fishing rod"
+texture = SubResource("AtlasTexture_rod01")
+metadata/_custom_type_script = "uid://by0khe2xbsbyd"

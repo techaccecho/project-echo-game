@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://5wtjbp4mofme"
+path="res://.godot/imported/fishing_spot.dialogue-8530dba1ad9d6c13f7ae8e983ddd417e.tres"
+
+[deps]
+
+source_file="res://dialogue/fishing_spot.dialogue"
+dest_files=["res://.godot/imported/fishing_spot.dialogue-8530dba1ad9d6c13f7ae8e983ddd417e.tres"]
+
+[params]
+
+defaults=true

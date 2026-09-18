@@ -24,6 +24,10 @@ const FALL_TIME := 0.6
 const SINK_TIME := 0.5
 
 @export var inv: Inv
+## The axe the blacksmith hands over. Swinging is gated on carrying it, so the
+## trees stand until he has been paid his three fish. Leave null to let anyone
+## swing — which is what every scene did before the trade existed.
+@export var axe_item: InvItem
 @export var walk_speed: float = 100
 @export var run_speed: float = 200
 ## The name over his speech bubble. He is never named in the story, so this is
@@ -83,7 +87,7 @@ func _physics_process(_delta):
 		# Primed, so the first step after standing still lands immediately.
 		_step_accum = step_distance
 	
-	if Input.is_action_just_pressed("interact_alt"):
+	if Input.is_action_just_pressed("interact_alt") and has_axe():
 		play_weapon_logic()
 		return
 	
@@ -119,6 +123,14 @@ func get_direction_suffix(dir: Vector2) -> String:
 			return "up"
 		else:
 			return "down"
+
+## Whether there is an axe in the bag to swing. An unset `axe_item` means the
+## scene has not opted into the gate, so the swing is always allowed there.
+func has_axe() -> bool:
+	if axe_item == null:
+		return true
+	return inv != null and inv.has(axe_item)
+
 
 func play_weapon_logic():
 		disable_movement()

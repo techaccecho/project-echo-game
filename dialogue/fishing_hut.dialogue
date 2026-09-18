@@ -1,3 +1,12 @@
+~ locked
+Traveller: [[Somebody's home, empty or not. I've no business in it.|A stranger's door. I'd want a reason before I opened one.|Shut. And I've no cause to make it otherwise.]]
+=> END
+
+~ rod_found
+Traveller: A rod. Warped a bit, but the line's good and the hook is sharp.
+Traveller: Three fish, the smith said. [[Let's see what's biting.|Right. The river, then.|He'll get his fish.]]
+=> END
+
 ~ bed
 Traveller: Nobody has slept here in a long while. Nobody is going to mind.
 => END
