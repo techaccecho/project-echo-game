@@ -8,6 +8,9 @@ extends Node2D
 
 signal cleared
 
+## Set once the wall is down, so it stays down.
+const FLAG := "level2.rubble_cleared"
+
 ## Item the player must be carrying to clear this. Leave null to allow anyone.
 @export var required_item: InvItem
 @export var blocked_title: String = "blocked"
@@ -26,7 +29,19 @@ var is_cleared: bool = false
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
 	interaction_area.interact = Callable(self, "_on_interact")
+	if Flags.has(FLAG):
+		_already_cleared()
+		return
 	_refresh_prompt()
+
+
+## Cleared on an earlier visit: no rubble, no prompt, no collision, no fuss.
+func _already_cleared() -> void:
+	is_cleared = true
+	rubble.visible = false
+	body_shape.disabled = true
+	interaction_area.monitoring = false
+	interaction_area.queue_free()
 
 
 ## The prompt doubles as the hint: "clear" only shows once you have the axe.
@@ -50,6 +65,7 @@ func _on_interact() -> void:
 		_refresh_prompt()
 		return
 	is_cleared = true
+	Flags.set_flag(FLAG)
 	DialogueManager.show_dialogue_balloon(dialogue_resource, cleared_title, [self, player])
 	_break_apart()
 

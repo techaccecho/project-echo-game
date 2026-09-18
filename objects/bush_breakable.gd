@@ -14,7 +14,14 @@ func _ready() -> void:
 	hurt_component.hurt.connect(on_hurt)
 	damage_component.max_damage_reached.connect(on_max_damage_reached)
 	ground_mark.visible = false
-	
+	# Cleared on an earlier visit: straight to bare ground.
+	if Flags.has(Flags.key_for(self)):
+		max_reached = true
+		animation = "removed"
+		frame = sprite_frames.get_frame_count("removed") - 1
+		collision_shape.disabled = true
+		ground_mark.visible = true
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func on_hurt(hit_damage: int) -> void:
 	if (being_hit || max_reached):
@@ -35,3 +42,4 @@ func on_max_damage_reached() -> void:
 	max_reached = true
 	collision_shape.disabled = true
 	ground_mark.visible = true
+	Flags.set_flag(Flags.key_for(self))

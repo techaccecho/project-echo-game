@@ -1,0 +1,286 @@
+[gd_scene format=4 uid="uid://cf1sh1nghut1n"]
+
+[ext_resource type="Script" path="res://world/house_interior.gd" id="script"]
+[ext_resource type="TileSet" uid="uid://c1nt3r10rh0us" path="res://tilesets/interior_house.tres" id="houseset"]
+[ext_resource type="PackedScene" uid="uid://wvbxyfgl33vp" path="res://character/player_josh.tscn" id="player"]
+[ext_resource type="PackedScene" uid="uid://blvlaud102ec" path="res://objects/level_audio.tscn" id="levelaudio"]
+[ext_resource type="PackedScene" uid="uid://doa04urw7iidr" path="res://inventory/inv_ui.tscn" id="invui"]
+[ext_resource type="PackedScene" uid="uid://bibupx3yvo61" path="res://interaction/interaction_area/interaction_area.tscn" id="iarea"]
+[ext_resource type="Texture2D" uid="uid://v62e5q2h2y8d" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Interior/Blacksmith.png" id="tex_smith"]
+[ext_resource type="Texture2D" uid="uid://cdksipt2be5yq" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Interior/Fireplace.png" id="tex_fire"]
+[ext_resource type="Texture2D" uid="uid://b2xsxgve06jf0" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Interior/Beds.png" id="tex_beds"]
+[ext_resource type="Texture2D" uid="uid://c60rk4uqrxx83" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Interior/Tables and desks.png" id="tex_tables"]
+[ext_resource type="Texture2D" uid="uid://b124hyeqx04ge" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Interior/Chairs.png" id="tex_chairs"]
+[ext_resource type="Texture2D" uid="uid://b5hpqvanp7b40" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Interior/Part 11 copiar.png" id="tex_rugs"]
+[ext_resource type="Texture2D" uid="uid://cmccj4lwok6x" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Interior/Part 1 copiar.png" id="tex_decor"]
+[ext_resource type="Texture2D" uid="uid://bk37do8hebwcf" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Interior/Doors, windows and curtains.png" id="tex_curt"]
+[ext_resource type="Texture2D" uid="uid://k3stjt34xto6" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Exterior/Beach/Fish.png" id="tex_fish"]
+
+[sub_resource type="RectangleShape2D" id="RS_1"]
+size = Vector2(192, 64)
+
+[sub_resource type="RectangleShape2D" id="RS_2"]
+size = Vector2(16, 176)
+
+[sub_resource type="RectangleShape2D" id="RS_3"]
+size = Vector2(16, 176)
+
+[sub_resource type="RectangleShape2D" id="RS_4"]
+size = Vector2(64, 16)
+
+[sub_resource type="RectangleShape2D" id="RS_5"]
+size = Vector2(64, 16)
+
+[sub_resource type="RectangleShape2D" id="RS_6"]
+size = Vector2(48, 16)
+
+[sub_resource type="RectangleShape2D" id="RS_7"]
+size = Vector2(32, 48)
+
+[sub_resource type="RectangleShape2D" id="RS_8"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RS_9"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RS_10"]
+size = Vector2(48, 32)
+
+[sub_resource type="RectangleShape2D" id="RS_11"]
+size = Vector2(52, 68)
+
+[sub_resource type="RectangleShape2D" id="RS_12"]
+size = Vector2(36, 52)
+
+[sub_resource type="RectangleShape2D" id="RS_13"]
+size = Vector2(68, 68)
+
+[sub_resource type="RectangleShape2D" id="RS_14"]
+size = Vector2(52, 52)
+
+[sub_resource type="RectangleShape2D" id="RS_15"]
+size = Vector2(68, 52)
+
+[sub_resource type="RectangleShape2D" id="RS_exit"]
+size = Vector2(32, 12)
+
+[node name="FishingHutInterior" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("script")
+story = "res://dialogue/fishing_hut.dialogue"
+outside_spawn = "HutDoor"
+seats = {"Chair": {"at": Vector2(72, 82), "face": Vector2(0, 1)}}
+bed_sit = Vector2(144, 85)
+bed_rise = Vector2(126, 118)
+lines = {"Rack": "rack", "Table": "table", "Crates": "crates"}
+
+[node name="Backdrop" type="Polygon2D" parent="."]
+z_index = -10
+color = Color(0.02, 0.02, 0.025, 1)
+polygon = PackedVector2Array(-2000, -2000, 2500, -2000, 2500, 2500, -2000, 2500)
+
+[node name="Floor" type="TileMapLayer" parent="."]
+z_index = -2
+tile_map_data = PackedByteArray("AAABAAQAAAAZAAAAAAACAAQAAAAZAAAAAAADAAQAAAAZAAAAAAAEAAQAAAAZAAAAAAAFAAQAAAAZAAAAAAAGAAQAAAAZAAAAAAAHAAQAAAAZAAAAAAAIAAQAAAAZAAAAAAAJAAQAAAAZAAAAAAAKAAQAAAAZAAAAAAABAAUAAAAZAAAAAAACAAUAAAAZAAAAAAADAAUAAAAZAAAAAAAEAAUAAAAZAAAAAAAFAAUAAAAZAAAAAAAGAAUAAAAZAAAAAAAHAAUAAAAZAAAAAAAIAAUAAAAZAAAAAAAJAAUAAAAZAAAAAAAKAAUAAAAZAAAAAAABAAYAAAAZAAAAAAACAAYAAAAZAAAAAAADAAYAAAAZAAAAAAAEAAYAAAAZAAAAAAAFAAYAAAAZAAAAAAAGAAYAAAAZAAAAAAAHAAYAAAAZAAAAAAAIAAYAAAAZAAAAAAAJAAYAAAAZAAAAAAAKAAYAAAAZAAAAAAABAAcAAAAZAAAAAAACAAcAAAAZAAAAAAADAAcAAAAZAAAAAAAEAAcAAAAZAAAAAAAFAAcAAAAZAAAAAAAGAAcAAAAZAAAAAAAHAAcAAAAZAAAAAAAIAAcAAAAZAAAAAAAJAAcAAAAZAAAAAAAKAAcAAAAZAAAAAAABAAgAAAAZAAAAAAACAAgAAAAZAAAAAAADAAgAAAAZAAAAAAAEAAgAAAAZAAAAAAAFAAgAAAAZAAAAAAAGAAgAAAAZAAAAAAAHAAgAAAAZAAAAAAAIAAgAAAAZAAAAAAAJAAgAAAAZAAAAAAAKAAgAAAAZAAAAAAABAAkAAAAZAAAAAAACAAkAAAAZAAAAAAADAAkAAAAZAAAAAAAEAAkAAAAZAAAAAAAFAAkAAAAZAAAAAAAGAAkAAAAZAAAAAAAHAAkAAAAZAAAAAAAIAAkAAAAZAAAAAAAJAAkAAAAZAAAAAAAKAAkAAAAZAAAAAAAFAAoAAAAZAAAAAAAGAAoAAAAZAAAAAAA=")
+tile_set = ExtResource("houseset")
+
+[node name="Walls" type="TileMapLayer" parent="."]
+z_index = -1
+tile_map_data = PackedByteArray("AAAAAAAAAAAGAAEAAAALAAAAAAAGAAEAAAAAAAEAAAAGAAEAAAALAAEAAAAGAAEAAAAAAAIAAAAGAAEAAAALAAIAAAAGAAEAAAAAAAMAAAAGAAEAAAALAAMAAAAGAAEAAAAAAAQAAAAGAAEAAAALAAQAAAAGAAEAAAAAAAUAAAAGAAEAAAALAAUAAAAGAAEAAAAAAAYAAAAGAAEAAAALAAYAAAAGAAEAAAAAAAcAAAAGAAEAAAALAAcAAAAGAAEAAAAAAAgAAAAGAAEAAAALAAgAAAAGAAEAAAAAAAkAAAAGAAEAAAALAAkAAAAGAAEAAAAAAAoAAAAGAAEAAAALAAoAAAAGAAEAAAABAAoAAAAGAAEAAAABAAAAAAAJAAUAAAABAAEAAAAJAAYAAAABAAIAAAAJAAcAAAABAAMAAAAJABcAAAACAAoAAAAGAAEAAAACAAAAAAAKAAUAAAACAAEAAAAKAAYAAAACAAIAAAAKAAcAAAACAAMAAAAKABcAAAADAAoAAAAGAAEAAAADAAAAAAAKAAUAAAADAAEAAAAKAAYAAAADAAIAAAAKAAcAAAADAAMAAAAKABcAAAAEAAoAAAAGAAEAAAAEAAAAAAAKAAUAAAAEAAEAAAAKAAYAAAAEAAIAAAAKAAcAAAAEAAMAAAAKABcAAAAFAAAAAAAKAAUAAAAFAAEAAAAKAAYAAAAFAAIAAAAKAAcAAAAFAAMAAAAKABcAAAAGAAAAAAAKAAUAAAAGAAEAAAAKAAYAAAAGAAIAAAAKAAcAAAAGAAMAAAAKABcAAAAHAAoAAAAGAAEAAAAHAAAAAAAKAAUAAAAHAAEAAAAKAAYAAAAHAAIAAAAKAAcAAAAHAAMAAAAKABcAAAAIAAoAAAAGAAEAAAAIAAAAAAAKAAUAAAAIAAEAAAAKAAYAAAAIAAIAAAAKAAcAAAAIAAMAAAAKABcAAAAJAAoAAAAGAAEAAAAJAAAAAAAKAAUAAAAJAAEAAAAKAAYAAAAJAAIAAAAKAAcAAAAJAAMAAAAKABcAAAAKAAoAAAAGAAEAAAAKAAAAAAALAAUAAAAKAAEAAAALAAYAAAAKAAIAAAALAAcAAAAKAAMAAAALABcAAAA=")
+tile_set = ExtResource("houseset")
+
+[node name="WallDressing" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Props" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="WallDressing1" type="Sprite2D" parent="WallDressing"]
+position = Vector2(16, 80)
+texture = ExtResource("tex_fish")
+centered = false
+offset = Vector2(0, -48)
+region_enabled = true
+region_rect = Rect2(0, 0, 48, 48)
+
+[node name="WallDressing2" type="Sprite2D" parent="WallDressing"]
+position = Vector2(96, 32)
+texture = ExtResource("tex_curt")
+centered = false
+offset = Vector2(0, -16)
+region_enabled = true
+region_rect = Rect2(208, 16, 32, 16)
+
+[node name="WallDressing3" type="Sprite2D" parent="WallDressing"]
+position = Vector2(144, 32)
+texture = ExtResource("tex_decor")
+centered = false
+offset = Vector2(0, -16)
+region_enabled = true
+region_rect = Rect2(160, 0, 16, 16)
+
+[node name="Props4" type="Sprite2D" parent="Props"]
+position = Vector2(128, 112)
+texture = ExtResource("tex_beds")
+centered = false
+offset = Vector2(0, -48)
+region_enabled = true
+region_rect = Rect2(320, 48, 32, 48)
+
+[node name="Props5" type="Sprite2D" parent="Props"]
+position = Vector2(64, 96)
+texture = ExtResource("tex_chairs")
+centered = false
+offset = Vector2(0, -32)
+region_enabled = true
+region_rect = Rect2(144, 0, 16, 32)
+
+[node name="Props6" type="Sprite2D" parent="Props"]
+position = Vector2(64, 128)
+texture = ExtResource("tex_tables")
+centered = false
+offset = Vector2(0, -32)
+region_enabled = true
+region_rect = Rect2(0, 352, 32, 32)
+
+[node name="Props7" type="Sprite2D" parent="Props"]
+position = Vector2(80, 112)
+texture = ExtResource("tex_smith")
+centered = false
+offset = Vector2(0, -32)
+region_enabled = true
+region_rect = Rect2(64, 32, 16, 32)
+
+[node name="Props8" type="Sprite2D" parent="Props"]
+position = Vector2(16, 160)
+texture = ExtResource("tex_smith")
+centered = false
+offset = Vector2(0, -32)
+region_enabled = true
+region_rect = Rect2(208, 0, 48, 32)
+
+[node name="Props9" type="Sprite2D" parent="Props"]
+position = Vector2(80, 160)
+texture = ExtResource("tex_rugs")
+centered = false
+offset = Vector2(0, -16)
+region_enabled = true
+region_rect = Rect2(272, 16, 16, 16)
+
+[node name="Props10" type="Sprite2D" parent="Props"]
+position = Vector2(96, 160)
+texture = ExtResource("tex_rugs")
+centered = false
+offset = Vector2(0, -16)
+region_enabled = true
+region_rect = Rect2(272, 16, 16, 16)
+
+[node name="Solids" type="StaticBody2D" parent="."]
+
+[node name="BackWall" type="CollisionShape2D" parent="Solids"]
+position = Vector2(96.0, 32.0)
+shape = SubResource("RS_1")
+
+[node name="LeftWall" type="CollisionShape2D" parent="Solids"]
+position = Vector2(8.0, 88.0)
+shape = SubResource("RS_2")
+
+[node name="RightWall" type="CollisionShape2D" parent="Solids"]
+position = Vector2(184.0, 88.0)
+shape = SubResource("RS_3")
+
+[node name="BottomLeft" type="CollisionShape2D" parent="Solids"]
+position = Vector2(48.0, 168.0)
+shape = SubResource("RS_4")
+
+[node name="BottomRight" type="CollisionShape2D" parent="Solids"]
+position = Vector2(144.0, 168.0)
+shape = SubResource("RS_5")
+
+[node name="Prop1" type="CollisionShape2D" parent="Solids"]
+position = Vector2(40.0, 72.0)
+shape = SubResource("RS_6")
+
+[node name="Prop4" type="CollisionShape2D" parent="Solids"]
+position = Vector2(144.0, 88.0)
+shape = SubResource("RS_7")
+
+[node name="Prop5" type="CollisionShape2D" parent="Solids"]
+position = Vector2(72.0, 88.0)
+shape = SubResource("RS_8")
+
+[node name="Prop6" type="CollisionShape2D" parent="Solids"]
+position = Vector2(80.0, 112.0)
+shape = SubResource("RS_9")
+
+[node name="Prop8" type="CollisionShape2D" parent="Solids"]
+position = Vector2(40.0, 144.0)
+shape = SubResource("RS_10")
+
+[node name="Interact" type="Node2D" parent="."]
+
+[node name="Bed" parent="Interact" instance=ExtResource("iarea")]
+position = Vector2(144, 88)
+action_name = "sleep"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact/Bed"]
+shape = SubResource("RS_11")
+
+[node name="Chair" parent="Interact" instance=ExtResource("iarea")]
+position = Vector2(72, 80)
+action_name = "sit"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact/Chair"]
+shape = SubResource("RS_12")
+
+[node name="Rack" parent="Interact" instance=ExtResource("iarea")]
+position = Vector2(40, 56)
+action_name = "look"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact/Rack"]
+shape = SubResource("RS_13")
+
+[node name="Table" parent="Interact" instance=ExtResource("iarea")]
+position = Vector2(80, 112)
+action_name = "look"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact/Table"]
+shape = SubResource("RS_14")
+
+[node name="Crates" parent="Interact" instance=ExtResource("iarea")]
+position = Vector2(40, 144)
+action_name = "look"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact/Crates"]
+shape = SubResource("RS_15")
+
+[node name="Exit" type="Area2D" parent="."]
+position = Vector2(96.0, 158)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Exit"]
+shape = SubResource("RS_exit")
+
+[node name="Entrance" type="Marker2D" parent="." groups=["player_spawn"]]
+position = Vector2(96, 130)
+
+[node name="PlayerJosh" parent="." instance=ExtResource("player")]
+position = Vector2(96, 130)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(96, 88)
+zoom = Vector2(4, 4)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Inv_UI" parent="CanvasLayer" instance=ExtResource("invui")]
+offset_left = 527.0
+offset_top = 167.0
+offset_right = 624.0
+offset_bottom = 241.0
+scale = Vector2(10, 10)
+
+[node name="LevelAudio" parent="." instance=ExtResource("levelaudio")]
+music = "res://audio/music/hearth_hollow_bed.wav"
+music_volume_db = -10.0
+
+[connection signal="body_entered" from="Exit" to="." method="_on_exit_body_entered"]

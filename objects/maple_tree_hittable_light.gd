@@ -11,6 +11,11 @@ var max_reached: bool = false
 func _ready() -> void:
 	hurt_component.hurt.connect(on_hurt)
 	damage_component.max_damage_reached.connect(on_max_damage_reached)
+	# Felled on an earlier visit: straight to the stump.
+	if Flags.has(Flags.key_for(self)):
+		max_reached = true
+		animation = "trunk"
+		collision_shape.disabled = true
 
 func on_hurt(hit_damage: int) -> void:
 	if being_hit || max_reached:
@@ -30,5 +35,5 @@ func on_hurt(hit_damage: int) -> void:
 
 func on_max_damage_reached() -> void:
 	max_reached = true
-	print("max damage reached")
 	collision_shape.disabled = true
+	Flags.set_flag(Flags.key_for(self))

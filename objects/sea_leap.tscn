@@ -1,0 +1,278 @@
+[gd_scene format=3 uid="uid://cs3a1eap2ech0"]
+
+[ext_resource type="Script" path="res://objects/sea_leap.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://bck44e2eeshgk" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Forest Animals/Beach/Fish/best fish point.png" id="fish0"]
+[ext_resource type="Texture2D" uid="uid://c3qkklaak2u2j" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Forest Animals/Beach/Fish/best fish point 2.png" id="fish1"]
+[ext_resource type="Texture2D" uid="uid://dhoupcu63kfvm" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Forest Animals/Beach/Fish/best fish point 3.png" id="fish2"]
+[ext_resource type="Texture2D" uid="uid://13u037itkyxy" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Forest Animals/Beach/Fish/best fish point 4.png" id="fish3"]
+[ext_resource type="Texture2D" uid="uid://bymx4ii07uoyc" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Forest Animals/Beach/Fish/best fish point 5.png" id="fish4"]
+[ext_resource type="Texture2D" uid="uid://b3a0xpu3v7rqg" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Forest Animals/Beach/Fish/best fish point 6.png" id="fish5"]
+[ext_resource type="Texture2D" uid="uid://2tywcf75rjpd" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Forest Animals/Beach/Blue Dolphin.png" id="dolphin"]
+
+[sub_resource type="AtlasTexture" id="AT_f0_0"]
+atlas = ExtResource("fish0")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AT_f0_1"]
+atlas = ExtResource("fish0")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AT_f0_2"]
+atlas = ExtResource("fish0")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AT_f0_3"]
+atlas = ExtResource("fish0")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AT_f1_0"]
+atlas = ExtResource("fish1")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AT_f1_1"]
+atlas = ExtResource("fish1")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AT_f1_2"]
+atlas = ExtResource("fish1")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AT_f1_3"]
+atlas = ExtResource("fish1")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AT_f2_0"]
+atlas = ExtResource("fish2")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AT_f2_1"]
+atlas = ExtResource("fish2")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AT_f2_2"]
+atlas = ExtResource("fish2")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AT_f2_3"]
+atlas = ExtResource("fish2")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AT_f3_0"]
+atlas = ExtResource("fish3")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AT_f3_1"]
+atlas = ExtResource("fish3")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AT_f3_2"]
+atlas = ExtResource("fish3")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AT_f3_3"]
+atlas = ExtResource("fish3")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AT_f4_0"]
+atlas = ExtResource("fish4")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AT_f4_1"]
+atlas = ExtResource("fish4")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AT_f4_2"]
+atlas = ExtResource("fish4")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AT_f4_3"]
+atlas = ExtResource("fish4")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AT_f5_0"]
+atlas = ExtResource("fish5")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AT_f5_1"]
+atlas = ExtResource("fish5")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AT_f5_2"]
+atlas = ExtResource("fish5")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AT_f5_3"]
+atlas = ExtResource("fish5")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AT_d0"]
+atlas = ExtResource("dolphin")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AT_d1"]
+atlas = ExtResource("dolphin")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AT_d2"]
+atlas = ExtResource("dolphin")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AT_d3"]
+atlas = ExtResource("dolphin")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AT_d4"]
+atlas = ExtResource("dolphin")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AT_d5"]
+atlas = ExtResource("dolphin")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AT_d6"]
+atlas = ExtResource("dolphin")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AT_d7"]
+atlas = ExtResource("dolphin")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SF_leap"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AT_f0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AT_f0_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AT_f0_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AT_f0_3")
+}],
+"loop": false,
+"name": &"jump_0",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AT_f1_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AT_f1_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AT_f1_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AT_f1_3")
+}],
+"loop": false,
+"name": &"jump_1",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AT_f2_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AT_f2_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AT_f2_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AT_f2_3")
+}],
+"loop": false,
+"name": &"jump_2",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AT_f3_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AT_f3_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AT_f3_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AT_f3_3")
+}],
+"loop": false,
+"name": &"jump_3",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AT_f4_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AT_f4_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AT_f4_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AT_f4_3")
+}],
+"loop": false,
+"name": &"jump_4",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AT_f5_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AT_f5_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AT_f5_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AT_f5_3")
+}],
+"loop": false,
+"name": &"jump_5",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AT_d0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AT_d1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AT_d2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AT_d3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AT_d4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AT_d5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AT_d6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AT_d7")
+}],
+"loop": false,
+"name": &"dolphin",
+"speed": 9.0
+}]
+
+[node name="SeaLeap" type="AnimatedSprite2D"]
+visible = false
+sprite_frames = SubResource("SF_leap")
+animation = &"jump_0"
+script = ExtResource("1_script")

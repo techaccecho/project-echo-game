@@ -6,10 +6,14 @@ NPCBlacksmith: [[Hi|Hello|Hey]] there visitor, welcome to our world! Have you se
 	NPCBlacksmith: They do indeed, [[be careful around the fragile trees - they could break and hurt you!|enjoy the exploration!|there's always more to see!]].
 - No, I have not
 	NPCBlacksmith: You should go check it out, the forest is full of surprises.
-	NPCBlacksmith: To truly explore these, you would need an [wave]axe[/wave]. Let me see if I have a spare lying around.
-	NPCBlacksmith: [wait=1] Ahaa! Here take this one, it is a bit rusty but should get the job done for the smaller trees!
-	NPCBlacksmith: You can view your axe in your inventory by pressing "I". Safe exploring!
-	do collect(axe)
+	if Flags.has("blacksmith.axe_given")
+		NPCBlacksmith: You've got my spare axe on you already — that's all the help I can give. Mind the fragile trees.
+	else
+		NPCBlacksmith: To truly explore these, you would need an [wave]axe[/wave]. Let me see if I have a spare lying around.
+		NPCBlacksmith: [wait=1] Ahaa! Here take this one, it is a bit rusty but should get the job done for the smaller trees!
+		NPCBlacksmith: You can view your axe in your inventory by pressing "I". Safe exploring!
+		do collect(axe)
+		do Flags.set_flag("blacksmith.axe_given")
 do stop_talking()
 do enable_movement()
 => END
