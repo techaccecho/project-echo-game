@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://dad6tghumo7pm"
+path="res://.godot/imported/echo_cave.dialogue-eee95eae8a0f3a334549359037028f33.tres"
+
+[deps]
+
+source_file="res://dialogue/echo_cave.dialogue"
+dest_files=["res://.godot/imported/echo_cave.dialogue-eee95eae8a0f3a334549359037028f33.tres"]
+
+[params]
+
+defaults=true

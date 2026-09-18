@@ -29,6 +29,9 @@ class_name HouseInterior
 ## Level scene and spawn marker to return to.
 @export_file("*.tscn") var outside: String = "res://world/game_world.tscn"
 @export var outside_spawn: String = "FrontDoor"
+## Set when the level outside lives in the persistent shell (Level 2, 3), so
+## leaving goes back through it rather than to a standalone scene.
+@export var outside_is_shell: bool = false
 ## The .dialogue with this room's lines. Loaded at runtime, not preloaded: a
 ## fresh .dialogue is unloadable until Dialogue Manager has imported it.
 @export_file("*.dialogue") var story: String = ""
@@ -89,7 +92,10 @@ func _on_exit_body_entered(body: Node2D) -> void:
 	if _leaving or not body.is_in_group("player"):
 		return
 	_leaving = true
-	SceneManager.exit_to(outside, outside_spawn)
+	if outside_is_shell:
+		SceneManager.enter_shell(outside, outside_spawn)
+	else:
+		SceneManager.exit_to(outside, outside_spawn)
 
 
 # --- the furniture ----------------------------------------------------------
