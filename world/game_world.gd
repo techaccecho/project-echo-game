@@ -18,9 +18,10 @@ const DAY_LIGHT := preload("res://objects/day_light.tscn")
 const FISHING_HUT := preload("res://objects/fishing_hut.tscn")
 const SEA_LIFE := preload("res://objects/sea_life.tscn")
 const MORNING_GULLS := preload("res://objects/morning_gulls.tscn")
-## Bottom-left of the hut, on the meadow in the map's north-west corner,
-## between the cliff edge and the pines.
-const HUT_AT := Vector2(-1232, -852)
+## The hut's y-sort anchor: 20px north of its actual bottom-left (see
+## FishingHut), on the meadow in the map's north-west corner, between the
+## cliff edge and the pines.
+const HUT_AT := Vector2(-1232, -872)
 ## The blacksmith's front door: the step under the awning, just clear of the
 ## house's own collision so the player can stand on it.
 const BLACKSMITH_DOOR := Vector2(-452, -822)
