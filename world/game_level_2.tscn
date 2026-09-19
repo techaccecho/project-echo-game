@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://ch0us3d00r2ec" path="res://objects/house_door.tscn" id="housedoor"]
 [ext_resource type="PackedScene" uid="uid://c1ant3rn2ech0" path="res://objects/lantern.tscn" id="lantern"]
 [ext_resource type="PackedScene" uid="uid://cn1ght11ght2e" path="res://objects/night_light.tscn" id="nightlight"]
+[ext_resource type="PackedScene" uid="uid://cra1n2ech0000" path="res://objects/rain.tscn" id="rain"]
 [ext_resource type="Texture2D" uid="uid://ba0nvw5cb8yxj" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Props/Mine/Props Mine.png" id="mineprops"]
 [ext_resource type="PackedScene" uid="uid://dygja1kdcercy" path="res://character/npc_forester.tscn" id="forester"]
 [ext_resource type="PackedScene" uid="uid://cq405tqrfraea" path="res://objects/rubble_wall.tscn" id="rubble"]
@@ -451,6 +452,15 @@ size = Vector2(12, 24)
 
 [sub_resource type="RectangleShape2D" id="RS_camp_fire"]
 size = Vector2(16, 10)
+
+[sub_resource type="RectangleShape2D" id="RS_look_s"]
+size = Vector2(28, 26)
+
+[sub_resource type="RectangleShape2D" id="RS_look_ledge"]
+size = Vector2(24, 60)
+
+[sub_resource type="RectangleShape2D" id="RS_rest"]
+size = Vector2(36, 24)
 
 [sub_resource type="RectangleShape2D" id="RS_return"]
 size = Vector2(20, 20)
@@ -1589,6 +1599,42 @@ z_index = 1
 position = Vector2(9, 10)
 region_rect = Rect2(32, 80, 16, 16)
 scale = Vector2(-1, 1)
+
+[node name="Looks" type="Node2D" parent="."]
+
+[node name="Lantern" parent="Looks" instance=ExtResource("iarea")]
+position = Vector2(376, 190)
+action_name = "look"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Looks/Lantern"]
+shape = SubResource("RS_look_s")
+
+[node name="Rope" parent="Looks" instance=ExtResource("iarea")]
+position = Vector2(376, 206)
+action_name = "look"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Looks/Rope"]
+shape = SubResource("RS_look_s")
+
+[node name="Ledge" parent="Looks" instance=ExtResource("iarea")]
+position = Vector2(404, 172)
+action_name = "look"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Looks/Ledge"]
+shape = SubResource("RS_look_ledge")
+
+[node name="Camp" type="Node2D" parent="."]
+
+[node name="RestArea" parent="Camp" instance=ExtResource("iarea")]
+position = Vector2(792, 190)
+action_name = "rest"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Camp/RestArea"]
+shape = SubResource("RS_rest")
+
+[node name="Rain" parent="." instance=ExtResource("rain")]
+area_center = Vector2(576, 208)
+area_size = Vector2(1628, 576)
 
 [node name="Weather" parent="." instance=ExtResource("weather")]
 area_center = Vector2(576, 208)

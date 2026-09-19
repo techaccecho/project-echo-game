@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://2l8w0u0gxjhw"
+path="res://.godot/imported/cliffside.dialogue-d57280d2f2bb87a25408e36607a77000.tres"
+
+[deps]
+
+source_file="res://dialogue/cliffside.dialogue"
+dest_files=["res://.godot/imported/cliffside.dialogue-d57280d2f2bb87a25408e36607a77000.tres"]
+
+[params]
+
+defaults=true

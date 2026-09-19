@@ -1,0 +1,25 @@
+~ arrive
+Traveller: So this is the other side of it.
+Traveller: Nobody's been through in years, he said. Somebody's kept a lamp lit.
+=> END
+
+~ lantern
+Somebody's lantern, left burning by the path. The oil is nearly gone and it has been trimmed recently.
+=> END
+
+~ rope
+A coil of rope, old but sound, tied off to a stake driven into the rock. Whoever left it meant to come back down.
+=> END
+
+~ ledge
+The path has gone to sand here, and past the sand the ground drops away to the sea.
+Some of it will take your weight. It does not say which.
+=> END
+
+~ rest
+Traveller: [[A fire's a fire. I'll take the log.|The old man won't mind. He said as much.|Just till it's light.]]
+=> END
+
+~ rest_woke
+Traveller: [[Cold. Grey. Morning, then.|The fire's down to embers. Up.|Slept. Didn't dream, which is something.]]
+=> END

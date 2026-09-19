@@ -14,3 +14,10 @@ Forester: The way on is past the rubble, if you're set on it. Mind yourself down
 do stop_talking()
 do enable_movement()
 => END
+
+~ night
+do start_talking()
+Forester: [[Not now. I don't talk after dark, and you shouldn't walk.|The fire keeps it back. Stay in the light of it or go and find your own.|Sleep. It's worse at night, whatever it is. It knows the ground better than you do.]]
+Forester: [[There's room by the fire.|Log's free.|Sit if you're sitting.]]
+do stop_talking()
+=> END
