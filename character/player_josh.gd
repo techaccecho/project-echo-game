@@ -87,7 +87,10 @@ func _physics_process(_delta):
 		# Primed, so the first step after standing still lands immediately.
 		_step_accum = step_distance
 	
-	if Input.is_action_just_pressed("interact_alt") and has_axe():
+	# UiStack: the swing is on left click as well as B, and the press is polled
+	# rather than consumed, so without this he chops the air every time a slot
+	# is clicked in the open bag.
+	if Input.is_action_just_pressed("interact_alt") and has_axe() and UiStack.is_free():
 		play_weapon_logic()
 		return
 	
@@ -124,12 +127,14 @@ func get_direction_suffix(dir: Vector2) -> String:
 		else:
 			return "down"
 
-## Whether there is an axe in the bag to swing. An unset `axe_item` means the
-## scene has not opted into the gate, so the swing is always allowed there.
+## Whether the axe is the thing in his hand. Carrying it is not enough — it has
+## to be the highlighted hotbar slot, so scrolling to the rod puts the axe away
+## and the trees stop answering. An unset `axe_item` means the scene has not
+## opted into the gate, so the swing is always allowed there.
 func has_axe() -> bool:
 	if axe_item == null:
 		return true
-	return inv != null and inv.has(axe_item)
+	return inv != null and inv.holding(axe_item)
 
 
 func play_weapon_logic():

@@ -66,9 +66,15 @@ func save() -> bool:
 
 	var slots := []
 	for slot in PLAYER_INV.slots:
+		# An empty slot is written as a blank entry rather than skipped. Which
+		# slot a thing sits in is the player's own arrangement now that the
+		# first row is the hotbar, and a compacted list would slide the bag
+		# along onto the bar on the next load.
 		if slot != null and slot.item != null and slot.amount > 0 \
 				and slot.item.resource_path != "":
 			slots.append({"item": slot.item.resource_path, "amount": slot.amount})
+		else:
+			slots.append({})
 	cfg.set_value("inventory", "slots", slots)
 	cfg.set_value("echo", "found", EchoLog.found_ids())
 	cfg.set_value("flags", "set", Flags.all())
@@ -115,17 +121,24 @@ func _restore_inventory(saved: Array) -> void:
 		if slot != null:
 			slot.item = null
 			slot.amount = 0
-	var i := 0
-	for entry in saved:
-		if i >= PLAYER_INV.slots.size():
-			break
-		var item = load(str(entry.get("item", "")))
+	# By position, not by running count: a blank entry has to leave its slot
+	# empty and move on, or everything after it shuffles up a place. A save from
+	# before slots were arranged by hand has no blanks in it and simply fills
+	# from the start, which is what it did then too.
+	for i in range(min(saved.size(), PLAYER_INV.slots.size())):
+		var entry = saved[i]
+		if not (entry is Dictionary):
+			continue
+		var path := str(entry.get("item", ""))
+		if path == "":
+			continue
+		var item = load(path)
 		if not (item is InvItem):
 			continue
 		PLAYER_INV.slots[i].item = item
 		PLAYER_INV.slots[i].amount = int(entry.get("amount", 1))
-		i += 1
 	PLAYER_INV.update.emit()
+	PLAYER_INV.selection_changed.emit()
 
 
 func _label_for(root: Node, level: String) -> String:

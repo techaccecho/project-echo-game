@@ -2,7 +2,7 @@ extends Node2D
 ## Rubble wall (Level 2) — stone and vine piled across the way to the cave.
 ##
 ## This branch has no damage/tool component system, so clearing it is a single
-## interaction gated on carrying the axe, rather than repeated hits. If the
+## interaction gated on holding the axe, rather than repeated hits. If the
 ## component system from `dev` lands here later, this is the piece to swap for
 ## a HurtComponent so it matches the Level 1 trees.
 
@@ -11,7 +11,7 @@ signal cleared
 ## Set once the wall is down, so it stays down.
 const FLAG := "level2.rubble_cleared"
 
-## Item the player must be carrying to clear this. Leave null to allow anyone.
+## Item the player must be holding to clear this. Leave null to allow anyone.
 @export var required_item: InvItem
 @export var blocked_title: String = "blocked"
 @export var cleared_title: String = "cleared"
@@ -32,6 +32,12 @@ func _ready() -> void:
 	if Flags.has(FLAG):
 		_already_cleared()
 		return
+	# Connected below the early return: a wall that is already down has freed
+	# its interaction area, and there is no prompt left to refresh. The axe has
+	# to be in his hand, so the prompt follows the wheel as well as the bag.
+	if player != null and player.inv != null:
+		player.inv.update.connect(_refresh_prompt)
+		player.inv.selection_changed.connect(_refresh_prompt)
 	_refresh_prompt()
 
 
@@ -54,7 +60,7 @@ func _player_has_tool() -> bool:
 		return true
 	if player == null or player.inv == null:
 		return false
-	return player.inv.has(required_item)
+	return player.inv.holding(required_item)
 
 
 func _on_interact() -> void:

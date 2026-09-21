@@ -25,8 +25,3 @@ update_scale = false
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Inv_UI" parent="CanvasLayer" instance=ExtResource("invui")]
-offset_left = 526.99994
-offset_top = 166.99998
-offset_right = 623.99994
-offset_bottom = 240.99998
-scale = Vector2(10, 10)
