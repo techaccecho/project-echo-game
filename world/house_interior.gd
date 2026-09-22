@@ -86,7 +86,10 @@ func _process(_delta: float) -> void:
 
 
 func _on_exit_body_entered(body: Node2D) -> void:
-	if _leaving or not body.is_in_group("player"):
+	# _busy as well as _leaving: sitting and sleeping put him down by tween and
+	# by teleport, and a sequence that happened to land him on the doormat
+	# would otherwise walk him out of the room halfway through itself.
+	if _leaving or _busy or not body.is_in_group("player"):
 		return
 	_leaving = true
 	SceneManager.exit_to(outside, outside_spawn)
@@ -272,5 +275,21 @@ func _say(title: String) -> void:
 			return
 	else:
 		Flags.set_flag(flag)
+	# He stands still to read. Without this he can walk out of the room while
+	# the balloon is up, and leaving frees this node from under the await
+	# below: dialogue_ended never arrives, so whatever called _say() never
+	# returns either. The InteractionManager is usually the one waiting, and it
+	# holds can_interact false until the callable it is awaiting comes back —
+	# which, being an autoload, kills every interaction in the game for the
+	# rest of the session.
+	#
+	# Restored rather than just switched back on: _sit() and _sleep() call this
+	# with movement already locked and mean to keep it that way, so handing it
+	# back at the end of a line would let him stroll off mid-sleep.
+	var could_move: bool = _player != null and _player.movement_enabled
+	if could_move:
+		_player.disable_movement()
 	DialogueManager.show_dialogue_balloon(res, use, [_player])
 	await DialogueManager.dialogue_ended
+	if could_move and is_instance_valid(_player):
+		_player.enable_movement()
