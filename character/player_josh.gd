@@ -42,6 +42,7 @@ const SINK_TIME := 0.5
 ## everything else. Drop to -80 to silence them.
 @export var step_volume_db: float = -14.0
 @export_range(0.0, 0.5) var step_pitch_spread: float = 0.10
+@onready var hit_component: HitComponent = $HitComponent
 @onready var hit_component_collision_shape: CollisionShape2D = $HitComponent/HitComponentCollisionShape2D
 
 @onready var animated_sprite = $Movement
@@ -139,6 +140,9 @@ func has_axe() -> bool:
 
 func play_weapon_logic():
 		disable_movement()
+		# Before the blade is live, so this stroke starts owing nothing to the
+		# last one.
+		hit_component.begin_swing()
 		hit_component_collision_shape.disabled = false
 		animated_sprite.play("axe_swing_" + get_direction_suffix(last_direction))
 		if last_direction == Vector2.UP:

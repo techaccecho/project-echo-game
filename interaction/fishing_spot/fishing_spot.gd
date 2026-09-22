@@ -64,5 +64,15 @@ func _say(title: String) -> void:
 		# it, so a fresh file is null until the editor has been focused once.
 		push_warning("fishing_spot: dialogue/fishing_spot.dialogue has not been imported yet.")
 		return
+	# He stands still to talk, the same as indoors. Walking off while the
+	# balloon is up can drop him down a cliff, which changes the level out from
+	# under this await — dialogue_ended never arrives, and whatever is waiting
+	# on this call waits for the rest of the session. See house_interior's
+	# _say() for the whole shape of it.
+	var could_move: bool = player != null and player.movement_enabled
+	if could_move:
+		player.disable_movement()
 	DialogueManager.show_dialogue_balloon(dialogue_resource, title, [self, player])
 	await DialogueManager.dialogue_ended
+	if could_move and is_instance_valid(player):
+		player.enable_movement()
