@@ -2,11 +2,12 @@ class_name FishingSpot
 extends Node2D
 ## A stretch of water worth casting into.
 ##
-## Gated on carrying the rod, the same way the rubble wall is gated on the axe:
-## without it the prompt drops to "look at the water" and the player gets a line
-## instead of the minigame. The rod is in the abandoned hut, which is itself
-## shut until the blacksmith has asked for his fish — so the order of the
-## opening act holds without any spot needing to know about the quest.
+## Gated on holding the rod — the highlighted hotbar slot, not just somewhere in
+## the bag — the same way the rubble wall is gated on the axe: without it the
+## prompt drops to "look at the water" and the player gets a line instead of the
+## minigame. The rod is in the abandoned hut, which is itself shut until the
+## blacksmith has asked for his fish — so the order of the opening act holds
+## without any spot needing to know about the quest.
 
 @export var fish_pool: Array[InvItem] = []
 @export var min_wait_time: float = 0.8
@@ -25,11 +26,12 @@ var busy: bool = false
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
 	interaction_area.interact = Callable(self, "_on_interact")
-	# The prompt has to change the moment the rod goes in the bag, not on the
-	# next cast — the player may well walk here holding it before touching
-	# anything else.
+	# The prompt has to change the moment the rod comes out, not on the next
+	# cast — the player may well walk here holding it before touching anything
+	# else, and may wheel it away again while standing on the bank.
 	if player != null and player.inv != null:
 		player.inv.update.connect(_refresh_prompt)
+		player.inv.selection_changed.connect(_refresh_prompt)
 	_refresh_prompt()
 
 ## The prompt doubles as the hint: "fish" only shows once you have the rod.
@@ -41,7 +43,7 @@ func _player_has_rod() -> bool:
 		return true
 	if player == null or not is_instance_valid(player):
 		player = get_tree().get_first_node_in_group("player")
-	return player != null and player.inv != null and player.inv.has(required_item)
+	return player != null and player.inv != null and player.inv.holding(required_item)
 
 func _on_interact() -> void:
 	if busy or player == null:

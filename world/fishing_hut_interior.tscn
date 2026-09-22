@@ -311,11 +311,6 @@ zoom = Vector2(4, 4)
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=464315202]
 
 [node name="Inv_UI" parent="CanvasLayer" unique_id=682410840 instance=ExtResource("invui")]
-offset_left = 527.0
-offset_top = 167.0
-offset_right = 624.0
-offset_bottom = 241.0
-scale = Vector2(10, 10)
 
 [node name="LevelAudio" parent="." unique_id=755376309 instance=ExtResource("levelaudio")]
 music = "res://audio/music/hearth_hollow_bed.wav"
