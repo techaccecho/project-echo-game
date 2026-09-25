@@ -27,6 +27,12 @@ var _next_spawn: String = ""
 ## True while a transition is in flight, so a freshly loaded scene knows it
 ## should place the player at the pending spawn (instead of its authored start).
 var incoming: bool = false
+## Where to put the player on the next placement instead of a spawn marker —
+## a loaded save's exact position. Consumed once.
+var pending_position: Vector2 = Vector2.INF
+## Set by start_game() and consumed by the level, so the opening arrival plays
+## once on a new game and never when returning to Level 1 from Level 2.
+var _arriving: bool = false
 
 var _fade: ColorRect
 
@@ -48,8 +54,17 @@ func _build_fade_overlay() -> void:
 
 func _fade_to(alpha: float) -> void:
 	var t := get_tree().create_tween()
+	# The pause menu quits to the title with the tree still paused, so the
+	# fade must keep ticking while everything else is stopped.
+	t.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	t.tween_property(_fade, "color:a", alpha, FADE_TIME)
 	await t.finished
+
+
+## Fade the screen to black (1.0) or back (0.0) without changing scene — for
+## a sleep, a knock-out, anything in-level that wants a blink.
+func fade(alpha: float) -> void:
+	await _fade_to(alpha)
 
 
 # --- Cutscenes --------------------------------------------------------------
@@ -61,9 +76,17 @@ func _fade_to(alpha: float) -> void:
 ## It leaves the screen black: this takes the blackout over on the fade overlay
 ## before freeing the cutscene, otherwise the old level would flash back for a
 ## frame between the two.
-func play_cutscene(scene: PackedScene) -> void:
+## Pass `once` to play it a single time per run: a flag of that name is set
+## when it has been seen, and a later call with the same name returns at once
+## — so the story card between two levels does not replay every time the
+## player walks back and forth.
+func play_cutscene(scene: PackedScene, once: String = "") -> void:
 	if scene == null:
 		return
+	if once != "":
+		if Flags.has(once):
+			return
+		Flags.set_flag(once)
 	var cs := scene.instantiate()
 	add_child(cs)
 	if cs.has_method("play"):
@@ -85,13 +108,34 @@ func play_cutscene(scene: PackedScene) -> void:
 ## leaves the screen black afterwards, so the level swap is never seen.
 func start_game(level_path: String, intro: PackedScene = null) -> void:
 	incoming = false
+	_arriving = true
 	_next_spawn = ""
+	pending_position = Vector2.INF
+	SaveGame.new_game()
+	Clock.start()
 	await _fade_to(1.0)
 	if intro != null:
-		await play_cutscene(intro)
+		await play_cutscene(intro, "cutscene.intro")
 	get_tree().change_scene_to_file(level_path)
 	# change_scene_to_file is deferred; wait for the new root to exist so the
 	# fade lifts on the level rather than on one last frame of the menu.
+	await get_tree().process_frame
+	await get_tree().process_frame
+	await _fade_to(0.0)
+
+
+## Abandon the run and go back to the title screen, from the pause menu.
+## Fades out with the tree still paused, so the world does not lurch back
+## into motion for a third of a second before it goes.
+func quit_to_title(title_scene: String) -> void:
+	await _fade_to(1.0)
+	incoming = false
+	_arriving = false
+	level_holder = null
+	player = null
+	get_tree().paused = false
+	Clock.running = false
+	get_tree().change_scene_to_file(title_scene)
 	await get_tree().process_frame
 	await get_tree().process_frame
 	await _fade_to(0.0)
@@ -128,6 +172,15 @@ func exit_to(scene_path: String, spawn: String = "") -> void:
 	get_tree().change_scene_to_file(scene_path)
 
 
+## True exactly once per new game, for the level that opens it. Consuming it
+## here rather than letting the level read a flag means a reload part-way
+## through Level 1 cannot replay the arrival.
+func take_arrival() -> bool:
+	var was := _arriving
+	_arriving = false
+	return was
+
+
 ## Called from a standalone scene's _ready to finish an incoming transition:
 ## places the player at the pending spawn and fades back in.
 func on_standalone_ready() -> void:
@@ -160,6 +213,10 @@ func change_level(level_path: String, spawn: String = "",
 
 func _load_into_holder(level_path: String, spawn: String) -> void:
 	for child in level_holder.get_children():
+		# Out of the tree now, not at frame end: its spawn markers must be
+		# gone from the group before the new level's are searched, or a
+		# marker of the same name in the old level wins.
+		level_holder.remove_child(child)
 		child.queue_free()
 	var level := (load(level_path) as PackedScene).instantiate()
 	level_holder.add_child(level)
@@ -172,6 +229,10 @@ func _place_player(spawn: String) -> void:
 	if player == null or not is_instance_valid(player):
 		player = get_tree().get_first_node_in_group("player")
 	if player == null:
+		return
+	if pending_position != Vector2.INF:
+		player.global_position = pending_position
+		pending_position = Vector2.INF
 		return
 	var marker := _find_spawn(spawn)
 	if marker:

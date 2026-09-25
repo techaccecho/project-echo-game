@@ -9,18 +9,33 @@ atlas = ExtResource("2_w82yi")
 region = Rect2(0, 64, 48, 48)
 
 [node name="Inv_UI" type="Control" unique_id=228588046]
-custom_minimum_size = Vector2(97, 74)
 layout_mode = 3
-anchors_preset = 0
-offset_right = 97.0
-offset_bottom = 74.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_f2u1w")
 
-[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=1803600225]
+[node name="Dim" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.55)
+
+[node name="Bag" type="NinePatchRect" parent="."]
 texture_filter = 1
+custom_minimum_size = Vector2(132, 132)
 layout_mode = 0
-offset_right = 97.0
-offset_bottom = 74.0
+offset_right = 132.0
+offset_bottom = 132.0
+scale = Vector2(5, 5)
+mouse_filter = 1
 texture = SubResource("AtlasTexture_dn3an")
 patch_margin_left = 6
 patch_margin_top = 6
@@ -29,7 +44,89 @@ patch_margin_bottom = 6
 axis_stretch_horizontal = 2
 axis_stretch_vertical = 2
 
-[node name="GridContainer" type="GridContainer" parent="NinePatchRect" unique_id=299436724]
+[node name="GridContainer" type="GridContainer" parent="Bag" unique_id=299436724]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -48.0
+offset_right = 48.0
+offset_bottom = 48.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 4
+
+[node name="BagSlot1" parent="Bag/GridContainer" unique_id=1485994851 instance=ExtResource("3_dn3an")]
+layout_mode = 2
+
+[node name="BagSlot2" parent="Bag/GridContainer" unique_id=299714458 instance=ExtResource("3_dn3an")]
+layout_mode = 2
+
+[node name="BagSlot3" parent="Bag/GridContainer" unique_id=1596319567 instance=ExtResource("3_dn3an")]
+layout_mode = 2
+
+[node name="BagSlot4" parent="Bag/GridContainer" unique_id=160140276 instance=ExtResource("3_dn3an")]
+layout_mode = 2
+
+[node name="BagSlot5" parent="Bag/GridContainer" unique_id=1068421153 instance=ExtResource("3_dn3an")]
+layout_mode = 2
+
+[node name="BagSlot6" parent="Bag/GridContainer" unique_id=1889859470 instance=ExtResource("3_dn3an")]
+layout_mode = 2
+
+[node name="BagSlot7" parent="Bag/GridContainer" unique_id=44808909 instance=ExtResource("3_dn3an")]
+layout_mode = 2
+
+[node name="BagSlot8" parent="Bag/GridContainer" unique_id=821586595 instance=ExtResource("3_dn3an")]
+layout_mode = 2
+
+[node name="BagSlot9" parent="Bag/GridContainer" instance=ExtResource("3_dn3an")]
+layout_mode = 2
+
+[node name="BagSlot10" parent="Bag/GridContainer" instance=ExtResource("3_dn3an")]
+layout_mode = 2
+
+[node name="BagSlot11" parent="Bag/GridContainer" instance=ExtResource("3_dn3an")]
+layout_mode = 2
+
+[node name="BagSlot12" parent="Bag/GridContainer" instance=ExtResource("3_dn3an")]
+layout_mode = 2
+
+[node name="BagSlot13" parent="Bag/GridContainer" instance=ExtResource("3_dn3an")]
+layout_mode = 2
+
+[node name="BagSlot14" parent="Bag/GridContainer" instance=ExtResource("3_dn3an")]
+layout_mode = 2
+
+[node name="BagSlot15" parent="Bag/GridContainer" instance=ExtResource("3_dn3an")]
+layout_mode = 2
+
+[node name="BagSlot16" parent="Bag/GridContainer" instance=ExtResource("3_dn3an")]
+layout_mode = 2
+
+[node name="Hotbar" type="NinePatchRect" parent="."]
+texture_filter = 1
+custom_minimum_size = Vector2(97, 30)
+layout_mode = 0
+offset_right = 97.0
+offset_bottom = 30.0
+scale = Vector2(4, 4)
+mouse_filter = 1
+texture = SubResource("AtlasTexture_dn3an")
+patch_margin_left = 6
+patch_margin_top = 6
+patch_margin_right = 6
+patch_margin_bottom = 6
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="Hotbar"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -37,45 +134,22 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -42.0
-offset_top = -31.0
+offset_top = -9.0
 offset_right = 42.0
-offset_bottom = 31.0
+offset_bottom = 9.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 columns = 4
 
-[node name="inv_UI_slot1" parent="NinePatchRect/GridContainer" unique_id=507980434 instance=ExtResource("3_dn3an")]
+[node name="HotbarSlot1" parent="Hotbar/GridContainer" unique_id=507980434 instance=ExtResource("3_dn3an")]
 layout_mode = 2
 
-[node name="inv_UI_slot2" parent="NinePatchRect/GridContainer" unique_id=719864190 instance=ExtResource("3_dn3an")]
+[node name="HotbarSlot2" parent="Hotbar/GridContainer" unique_id=719864190 instance=ExtResource("3_dn3an")]
 layout_mode = 2
 
-[node name="inv_UI_slot3" parent="NinePatchRect/GridContainer" unique_id=78108436 instance=ExtResource("3_dn3an")]
+[node name="HotbarSlot3" parent="Hotbar/GridContainer" unique_id=78108436 instance=ExtResource("3_dn3an")]
 layout_mode = 2
 
-[node name="inv_UI_slot4" parent="NinePatchRect/GridContainer" unique_id=411382148 instance=ExtResource("3_dn3an")]
-layout_mode = 2
-
-[node name="inv_UI_slot5" parent="NinePatchRect/GridContainer" unique_id=1485994851 instance=ExtResource("3_dn3an")]
-layout_mode = 2
-
-[node name="inv_UI_slot6" parent="NinePatchRect/GridContainer" unique_id=299714458 instance=ExtResource("3_dn3an")]
-layout_mode = 2
-
-[node name="inv_UI_slot7" parent="NinePatchRect/GridContainer" unique_id=1596319567 instance=ExtResource("3_dn3an")]
-layout_mode = 2
-
-[node name="inv_UI_slot8" parent="NinePatchRect/GridContainer" unique_id=160140276 instance=ExtResource("3_dn3an")]
-layout_mode = 2
-
-[node name="inv_UI_slot9" parent="NinePatchRect/GridContainer" unique_id=1068421153 instance=ExtResource("3_dn3an")]
-layout_mode = 2
-
-[node name="inv_UI_slot10" parent="NinePatchRect/GridContainer" unique_id=1889859470 instance=ExtResource("3_dn3an")]
-layout_mode = 2
-
-[node name="inv_UI_slot11" parent="NinePatchRect/GridContainer" unique_id=44808909 instance=ExtResource("3_dn3an")]
-layout_mode = 2
-
-[node name="inv_UI_slot12" parent="NinePatchRect/GridContainer" unique_id=821586595 instance=ExtResource("3_dn3an")]
+[node name="HotbarSlot4" parent="Hotbar/GridContainer" unique_id=411382148 instance=ExtResource("3_dn3an")]
 layout_mode = 2

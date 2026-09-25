@@ -17,7 +17,7 @@ class_name GloomWeather
 	set(v):
 		tint = v
 		if _modulate:
-			_modulate.color = v
+			_modulate.base = v
 ## Area the weather covers, in pixels. Should be the whole level plus a margin.
 @export var area_size: Vector2 = Vector2(1500, 560)
 ## Centre of that area, in level coordinates.
@@ -34,6 +34,8 @@ class_name GloomWeather
 ## Turn the tint off but keep the wind, e.g. for a level that sets its own mood.
 @export var tint_world: bool = true
 
+const DAY_LIGHT := preload("res://objects/day_light.tscn")
+
 var _modulate: CanvasModulate
 var _streaks: CPUParticles2D
 var _mist: CPUParticles2D
@@ -41,8 +43,9 @@ var _mist: CPUParticles2D
 
 func _ready() -> void:
 	if tint_world:
-		_modulate = CanvasModulate.new()
-		_modulate.color = tint
+		# The level's mood, lit by the time of day: DayLight multiplies the two.
+		_modulate = DAY_LIGHT.instantiate()
+		_modulate.base = tint
 		add_child(_modulate)
 	_streaks = _make_streaks()
 	add_child(_streaks)

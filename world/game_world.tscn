@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dqp5std4t6fek" path="res://world/base_grass_level_1.tscn" id="2_1i7os"]
 [ext_resource type="PackedScene" uid="uid://bey33j4ma35bh" path="res://world/blacksmith_front_yard.tscn" id="4_4054t"]
 [ext_resource type="PackedScene" uid="uid://bl8bydys1a8qm" path="res://base_terrain/scenes/river.tscn" id="9_druaq"]
-[ext_resource type="PackedScene" path="res://base_terrain/scenes/level_1_forest.tscn" id="10_4054t"]
+[ext_resource type="PackedScene" uid="uid://bgyve10sjdd61" path="res://base_terrain/scenes/level_1_forest.tscn" id="10_4054t"]
 [ext_resource type="TileSet" uid="uid://bu48edd5oif51" path="res://tilesets/rock_flower_tree_grass.tres" id="10_ccgqp"]
 [ext_resource type="PackedScene" uid="uid://5xvypv6jcbq3" path="res://character/npc_blacksmith.tscn" id="10_druaq"]
 [ext_resource type="PackedScene" uid="uid://ntcl7tkfgme1" path="res://base_terrain/scenes/water_border.tscn" id="10_hdkfl"]
@@ -20,9 +20,12 @@
 [ext_resource type="Resource" uid="uid://cq7fj2h8b3xk1" path="res://inventory/items/fish_carp.tres" id="42_carp"]
 [ext_resource type="Resource" uid="uid://dqk3xyram7wl2" path="res://inventory/items/fish_perch.tres" id="43_perch"]
 [ext_resource type="Resource" uid="uid://bx8h5n2p4qty3" path="res://inventory/items/fish_sunfish.tres" id="44_sunfish"]
+[ext_resource type="Resource" uid="uid://bq3rw8k5fnd2x" path="res://inventory/items/fishing_rod.tres" id="45_rod"]
+[ext_resource type="Resource" uid="uid://cskstfx5pwpfm" path="res://inventory/items/forest_key.tres" id="46_key"]
+[ext_resource type="PackedScene" path="res://world/east_gate.tscn" id="47_eastgate"]
 [ext_resource type="PackedScene" uid="uid://bmu3ciwxqewdw" path="res://objects/blocked_path.tscn" id="blockedpath"]
 [ext_resource type="Script" uid="uid://cpwnfxebcpy1u" path="res://world/game_world.gd" id="gw_script"]
-[ext_resource type="PackedScene" path="res://objects/level_audio.tscn" id="lvlaudio"]
+[ext_resource type="PackedScene" uid="uid://blvlaud102ec" path="res://objects/level_audio.tscn" id="lvlaudio"]
 [ext_resource type="PackedScene" uid="uid://bibupx3yvo61" path="res://interaction/interaction_area/interaction_area.tscn" id="portal_area"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_portal"]
@@ -97,20 +100,34 @@ z_index = 5
 position = Vector2(-858, -11)
 
 [node name="FishingSpotNorth" parent="GameLevel1" unique_id=1595381012 instance=ExtResource("40_fshsp")]
-position = Vector2(-736, -778)
+position = Vector2(-712, -776)
 fish_pool = Array[ExtResource("41_invitem")]([ExtResource("42_carp"), ExtResource("43_perch"), ExtResource("44_sunfish")])
+required_item = ExtResource("45_rod")
 
 [node name="FishingSpotBend" parent="GameLevel1" unique_id=1198392607 instance=ExtResource("40_fshsp")]
-position = Vector2(-713, -501)
+position = Vector2(-744, -520)
 fish_pool = Array[ExtResource("41_invitem")]([ExtResource("42_carp"), ExtResource("43_perch"), ExtResource("44_sunfish")])
+required_item = ExtResource("45_rod")
 
 [node name="FishingSpotWest" parent="GameLevel1" unique_id=1895247757 instance=ExtResource("40_fshsp")]
-position = Vector2(-839, -320)
+position = Vector2(-824, -312)
 fish_pool = Array[ExtResource("41_invitem")]([ExtResource("42_carp"), ExtResource("43_perch"), ExtResource("44_sunfish")])
+required_item = ExtResource("45_rod")
 
 [node name="FishingSpotEast" parent="GameLevel1" unique_id=84056509 instance=ExtResource("40_fshsp")]
-position = Vector2(-835, -782)
+position = Vector2(-856, -776)
 fish_pool = Array[ExtResource("41_invitem")]([ExtResource("42_carp"), ExtResource("43_perch"), ExtResource("44_sunfish")])
+required_item = ExtResource("45_rod")
+
+[node name="FishingSpotPond" parent="GameLevel1" unique_id=225313781 instance=ExtResource("40_fshsp")]
+position = Vector2(-547, -98)
+fish_pool = Array[ExtResource("41_invitem")]([ExtResource("42_carp"), ExtResource("43_perch"), ExtResource("44_sunfish")])
+required_item = ExtResource("45_rod")
+prize = ExtResource("46_key")
+prize_flag = "forest.key_found"
+
+[node name="EastGate" parent="GameLevel1" instance=ExtResource("47_eastgate")]
+position = Vector2(-96, -560)
 
 [node name="WaterBorder" parent="." unique_id=1357689819 instance=ExtResource("10_hdkfl")]
 
@@ -145,17 +162,13 @@ position = Vector2(-96, -904)
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1780773830]
 
 [node name="Inv_UI" parent="CanvasLayer" unique_id=228588046 instance=ExtResource("13_1i7os")]
-offset_left = 527.0
-offset_top = 167.0
-offset_right = 624.0
-offset_bottom = 241.0
-scale = Vector2(10, 10)
 
 [node name="Portal" parent="." unique_id=1866590606 instance=ExtResource("portal_area")]
-position = Vector2(-1036, -812)
+position = Vector2(-96, -576)
 action_name = "travel"
 
 [node name="Pad" type="Polygon2D" parent="Portal" unique_id=178969412]
+visible = false
 color = Color(0.3, 0.75, 1, 0.55)
 polygon = PackedVector2Array(-14, 0, -7, -9, 7, -9, 14, 0, 7, 9, -7, 9)
 
@@ -173,4 +186,4 @@ ambience_volume_db = {
 }
 
 [node name="ReturnSpawn" type="Marker2D" parent="." unique_id=729082798 groups=["player_spawn"]]
-position = Vector2(-1000, -812)
+position = Vector2(-96, -540)

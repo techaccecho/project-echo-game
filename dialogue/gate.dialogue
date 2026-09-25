@@ -1,0 +1,16 @@
+~ locked
+Traveller: A gate. Iron, black with weather, cut straight into the rock.
+Traveller: [wait=0.5]Locked. And not the kind you put a shoulder through.
+Traveller: [[There's a keyhole. Which means there's a key.|Somebody shut this and took the key with them.|The bars are worn smooth in one place. It has been opened before.]]
+=> END
+
+~ unlock
+Traveller: The key turns. Stiff, then all at once.
+Traveller: [wait=0.6]So this is the way the smith meant.
+=> END
+
+~ stumps
+Traveller: Stumps. Old ones — the cuts have gone grey and the rings are filling in.
+Traveller: Somebody cut their way through here, and a long time ago.
+Traveller: [[They were going the same way I am.|Whoever it was, they did not come back this way.|The axe marks are all on one side. They only went in.]]
+=> END

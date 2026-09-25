@@ -46,6 +46,8 @@ func _unhandled_input(event: InputEvent) -> void:
 # Finishes with a standalone result screen (never overlapping the last
 # letter). Returns true only if every letter in the sequence was hit.
 func play_sequence(length: int = 3) -> bool:
+	UiStack.push("fishing")
+	_clear_panel()
 	await _show_panel()
 	await _play_countdown()
 
@@ -85,6 +87,7 @@ func play_sequence(length: int = 3) -> bool:
 	await get_tree().create_timer(RESULT_HOLD).timeout
 
 	await _hide_panel()
+	UiStack.pop("fishing")
 	return all_hit
 
 # "Fishing starting in 3.. 2.. 1.. GO!" beat before the letters start,
@@ -108,6 +111,19 @@ func _pop_main_text(text: String, color: Color, font_size: int) -> void:
 	main_label.scale = Vector2(0.65, 0.65)
 	var tween = create_tween().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	tween.tween_property(main_label, "scale", Vector2.ONE, 0.18)
+
+# Wipe the last cast off the panel before it fades back in. The panel is an
+# autoload that is only ever hidden, never rebuilt, so without this the second
+# cast opens on the first one's "IT GOT AWAY..." — still in the result's colour
+# and size — and holds it until the countdown's first tick lands on top.
+func _clear_panel() -> void:
+	waiting_letter = ""
+	hit_this_letter = false
+	title_label.text = ""
+	main_label.text = ""
+	main_label.scale = Vector2.ONE
+	main_label.add_theme_color_override("font_color", COLOR_NEUTRAL)
+	main_label.add_theme_font_size_override("font_size", LETTER_FONT_SIZE)
 
 func _show_panel() -> void:
 	panel.visible = true

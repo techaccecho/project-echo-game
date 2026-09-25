@@ -1,0 +1,183 @@
+[gd_scene format=3 uid="uid://cgr33t3r2ech0"]
+
+[ext_resource type="Script" path="res://character/npc_greeter.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://qng3njafkosa" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Character and Portrait/Character/Pre-made/Alex/Idle.png" id="2_idle"]
+[ext_resource type="PackedScene" uid="uid://bibupx3yvo61" path="res://interaction/interaction_area/interaction_area.tscn" id="3_iarea"]
+[ext_resource type="Texture2D" uid="uid://c6djfl1ltphgs" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Character and Portrait/Character/Pre-made/Alex/Flute/Flute.png" id="4_flute"]
+
+[sub_resource type="AtlasTexture" id="AI_0_0"]
+atlas = ExtResource("2_idle")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AI_0_1"]
+atlas = ExtResource("2_idle")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AI_0_2"]
+atlas = ExtResource("2_idle")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AI_0_3"]
+atlas = ExtResource("2_idle")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AI_1_0"]
+atlas = ExtResource("2_idle")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AI_1_1"]
+atlas = ExtResource("2_idle")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AI_1_2"]
+atlas = ExtResource("2_idle")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AI_1_3"]
+atlas = ExtResource("2_idle")
+region = Rect2(96, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AI_2_0"]
+atlas = ExtResource("2_idle")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AI_2_1"]
+atlas = ExtResource("2_idle")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AI_2_2"]
+atlas = ExtResource("2_idle")
+region = Rect2(64, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AI_2_3"]
+atlas = ExtResource("2_idle")
+region = Rect2(96, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AF_0_0"]
+atlas = ExtResource("4_flute")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AF_0_1"]
+atlas = ExtResource("4_flute")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AF_0_2"]
+atlas = ExtResource("4_flute")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AF_0_3"]
+atlas = ExtResource("4_flute")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AF_0_4"]
+atlas = ExtResource("4_flute")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AF_0_5"]
+atlas = ExtResource("4_flute")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SF"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AI_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AI_0_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AI_0_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AI_0_3")
+}],
+"loop": true,
+"name": &"idle_down",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AI_1_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AI_1_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AI_1_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AI_1_3")
+}],
+"loop": true,
+"name": &"idle_up",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AI_2_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AI_2_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AI_2_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AI_2_3")
+}],
+"loop": true,
+"name": &"idle_side",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AF_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AF_0_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AF_0_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AF_0_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AF_0_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AF_0_5")
+}],
+"loop": true,
+"name": &"flute",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RS_body"]
+size = Vector2(9, 10)
+
+[sub_resource type="CircleShape2D" id="CS_talk"]
+radius = 24.0
+
+[node name="NpcGreeter" type="CharacterBody2D" groups=["npc"]]
+z_index = 5
+script = ExtResource("1_script")
+
+[node name="Movement" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SF")
+animation = &"flute"
+autoplay = "flute"
+
+[node name="Physics" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 5)
+shape = SubResource("RS_body")
+
+[node name="InteractionArea" parent="." instance=ExtResource("3_iarea")]
+action_name = "talk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("CS_talk")
+
+[node name="BalloonAnchor2D" type="Node2D" parent="."]
+position = Vector2(0, -16)

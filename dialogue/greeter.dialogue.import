@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://d2cmg2lb7awbj"
+path="res://.godot/imported/greeter.dialogue-9bf1f23c96811027bc18e8127fc49ffd.tres"
+
+[deps]
+
+source_file="res://dialogue/greeter.dialogue"
+dest_files=["res://.godot/imported/greeter.dialogue-9bf1f23c96811027bc18e8127fc49ffd.tres"]
+
+[params]
+
+defaults=true

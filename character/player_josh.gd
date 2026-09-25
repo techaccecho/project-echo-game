@@ -13,13 +13,26 @@ const FOOTSTEPS := [
 	"res://audio/sfx/footstep_4.wav",
 	"res://audio/sfx/footstep_5.wav",
 ]
+## Still frames borrowed from the pack's collapse sheet: its kneeling frames
+## read as sitting, and there is no other sitting art for Josh. (Its final
+## lying-down frames are a 13px heap and are not worth using.)
+const POSES := preload("res://art/Farm RPG - Tiny Asset Pack - (All in One)/Character and Portrait/Character/Pre-made/Josh/Dead.png")
+const POSE_SIT_SIDE := Vector2i(2, 2)     ## kneeling, facing right
+const POSE_SIT_DOWN := Vector2i(2, 0)     ## kneeling, facing the camera
+
 const FALL_TIME := 0.6
 const SINK_TIME := 0.5
 
 @export var inv: Inv
+## The axe the blacksmith hands over. Swinging is gated on carrying it, so the
+## trees stand until he has been paid his three fish. Leave null to let anyone
+## swing — which is what every scene did before the trade existed.
+@export var axe_item: InvItem
 @export var walk_speed: float = 100
 @export var run_speed: float = 200
-@export var character_name: String = "Player"
+## The name over his speech bubble. He is never named in the story, so this is
+## what he is called when he talks to himself.
+@export var character_name: String = "Traveller"
 
 @export_group("Footsteps")
 ## Pixels between footfalls. Distance rather than time, so running steps speed
@@ -29,6 +42,7 @@ const SINK_TIME := 0.5
 ## everything else. Drop to -80 to silence them.
 @export var step_volume_db: float = -14.0
 @export_range(0.0, 0.5) var step_pitch_spread: float = 0.10
+@onready var hit_component: HitComponent = $HitComponent
 @onready var hit_component_collision_shape: CollisionShape2D = $HitComponent/HitComponentCollisionShape2D
 
 @onready var animated_sprite = $Movement
@@ -38,6 +52,10 @@ var last_direction: Vector2 = Vector2(0, 1) # default face down
 var movement_enabled: bool = true
 
 var is_dying: bool = false
+## Ground drag: 1.0 on firm ground, less on sand. Set by whatever he is
+## standing on; reset when he revives.
+var terrain_speed: float = 1.0
+var _pose: Sprite2D = null
 var is_chopping: bool = true
 var _step_accum: float = 0.0
 
@@ -56,7 +74,7 @@ func _physics_process(_delta):
 	var is_running = Input.is_action_pressed("run")
 	var current_speed = run_speed if is_running else walk_speed
 	
-	velocity = input_direction * current_speed
+	velocity = input_direction * current_speed * terrain_speed
 	move_and_slide()
 	
 	if input_direction != Vector2.ZERO:
@@ -70,7 +88,10 @@ func _physics_process(_delta):
 		# Primed, so the first step after standing still lands immediately.
 		_step_accum = step_distance
 	
-	if Input.is_action_just_pressed("interact_alt"):
+	# UiStack: the swing is on left click as well as B, and the press is polled
+	# rather than consumed, so without this he chops the air every time a slot
+	# is clicked in the open bag.
+	if Input.is_action_just_pressed("interact_alt") and has_axe() and UiStack.is_free():
 		play_weapon_logic()
 		return
 	
@@ -107,8 +128,21 @@ func get_direction_suffix(dir: Vector2) -> String:
 		else:
 			return "down"
 
+## Whether the axe is the thing in his hand. Carrying it is not enough — it has
+## to be the highlighted hotbar slot, so scrolling to the rod puts the axe away
+## and the trees stop answering. An unset `axe_item` means the scene has not
+## opted into the gate, so the swing is always allowed there.
+func has_axe() -> bool:
+	if axe_item == null:
+		return true
+	return inv != null and inv.holding(axe_item)
+
+
 func play_weapon_logic():
 		disable_movement()
+		# Before the blade is live, so this stroke starts owing nothing to the
+		# last one.
+		hit_component.begin_swing()
 		hit_component_collision_shape.disabled = false
 		animated_sprite.play("axe_swing_" + get_direction_suffix(last_direction))
 		if last_direction == Vector2.UP:
@@ -123,6 +157,54 @@ func play_weapon_logic():
 		await animated_sprite.animation_finished
 		hit_component_collision_shape.disabled = true
 		enable_movement()
+
+## Show one still frame from the pose sheet in place of the animation — for
+## sitting and sleeping. release_pose() puts the animation back.
+func hold_pose(cell: Vector2i, flip: bool = false, turn_degrees: float = 0.0) -> void:
+	if _pose == null:
+		_pose = Sprite2D.new()
+		_pose.texture = POSES
+		_pose.region_enabled = true
+		add_child(_pose)
+	_pose.region_rect = Rect2(cell.x * 32, cell.y * 32, 32, 32)
+	_pose.flip_h = flip
+	_pose.rotation_degrees = turn_degrees
+	_pose.visible = true
+	animated_sprite.visible = false
+
+
+func release_pose() -> void:
+	if _pose:
+		_pose.visible = false
+	animated_sprite.visible = true
+
+
+## Walk to a world point under script control, for cutscenes and the opening
+## arrival. Await it. Input stays locked out for the duration, but everything
+## else is the ordinary walk — real collision, the right facing animation and
+## footfalls at the usual spacing.
+func walk_to_point(target: Vector2, speed: float = -1.0) -> void:
+	movement_enabled = false
+	var v: float = speed if speed > 0.0 else walk_speed
+	# A cap, so a path that turns out to be blocked ends the walk instead of
+	# hanging the sequence that is awaiting it.
+	var guard := 900
+	while global_position.distance_to(target) > 2.0 and guard > 0:
+		guard -= 1
+		var dir := global_position.direction_to(target)
+		velocity = dir * v
+		move_and_slide()
+		last_direction = dir
+		_step_accum += velocity.length() * get_physics_process_delta_time()
+		if _step_accum >= step_distance:
+			_step_accum = 0.0
+			Audio.sfx(FOOTSTEPS[randi() % FOOTSTEPS.size()],
+					step_volume_db, step_pitch_spread)
+		update_animation(dir, false)
+		await get_tree().physics_frame
+	velocity = Vector2.ZERO
+	update_animation(Vector2.ZERO, false)
+
 
 func disable_movement():
 	movement_enabled = false
@@ -239,6 +321,7 @@ func fall_through_and_drown(sea_y: float, respawn_scene: String, spawn: String) 
 
 ## Undo everything the death animation did. Called while the screen is black.
 func _revive() -> void:
+	terrain_speed = 1.0
 	scale = Vector2.ONE
 	rotation_degrees = 0.0
 	modulate.a = 1.0
@@ -253,22 +336,30 @@ func _revive() -> void:
 # Called by a FishingSpot when the player interacts with it. Plays the cast/wait/catch
 # sequence facing the spot, then drops a random fish from the pool into the inventory.
 func catch_fish(fish_pool: Array, face_direction: Vector2 = Vector2.ZERO, min_wait: float = 0.8, max_wait: float = 1.8) -> void:
+	await cast_line(face_direction, min_wait, max_wait)
+	var caught_bite = await FishingMinigame.play_sequence(3)
+	await reel_in(caught_bite)
+	if caught_bite and fish_pool.size() > 0:
+		collect(fish_pool[randi() % fish_pool.size()])
+	enable_movement()
+
+
+## Turn to the water and put the line in, then hold it there. Await it, run
+## whatever the water is hiding, and finish with reel_in(). Split out of
+## catch_fish so the forest pond can hang its own minigame off the same cast.
+func cast_line(face_direction: Vector2 = Vector2.ZERO, min_wait: float = 0.8, max_wait: float = 1.8) -> void:
 	disable_movement()
 	if face_direction != Vector2.ZERO:
 		last_direction = face_direction
-	var suffix = get_direction_suffix(last_direction)
-
-	animated_sprite.play("fish_cast_" + suffix)
+	animated_sprite.play("fish_cast_" + get_direction_suffix(last_direction))
 	await animated_sprite.animation_finished
-
-	animated_sprite.play("fish_wait_" + suffix)
+	animated_sprite.play("fish_wait_" + get_direction_suffix(last_direction))
 	await get_tree().create_timer(randf_range(min_wait, max_wait)).timeout
 
-	var caught_bite = await FishingMinigame.play_sequence(3)
 
-	if caught_bite and fish_pool.size() > 0:
-		animated_sprite.play("fish_catch_" + suffix)
+## Bring the line back in. Plays the catch on a hit; on a miss he just stops
+## fishing. Leaves movement disabled — the caller decides when he is free.
+func reel_in(caught: bool) -> void:
+	if caught:
+		animated_sprite.play("fish_catch_" + get_direction_suffix(last_direction))
 		await animated_sprite.animation_finished
-		collect(fish_pool[randi() % fish_pool.size()])
-
-	enable_movement()

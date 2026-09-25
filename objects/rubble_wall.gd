@@ -2,13 +2,16 @@ extends Node2D
 ## Rubble wall (Level 2) — stone and vine piled across the way to the cave.
 ##
 ## This branch has no damage/tool component system, so clearing it is a single
-## interaction gated on carrying the axe, rather than repeated hits. If the
+## interaction gated on holding the axe, rather than repeated hits. If the
 ## component system from `dev` lands here later, this is the piece to swap for
 ## a HurtComponent so it matches the Level 1 trees.
 
 signal cleared
 
-## Item the player must be carrying to clear this. Leave null to allow anyone.
+## Set once the wall is down, so it stays down.
+const FLAG := "level2.rubble_cleared"
+
+## Item the player must be holding to clear this. Leave null to allow anyone.
 @export var required_item: InvItem
 @export var blocked_title: String = "blocked"
 @export var cleared_title: String = "cleared"
@@ -26,7 +29,25 @@ var is_cleared: bool = false
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
 	interaction_area.interact = Callable(self, "_on_interact")
+	if Flags.has(FLAG):
+		_already_cleared()
+		return
+	# Connected below the early return: a wall that is already down has freed
+	# its interaction area, and there is no prompt left to refresh. The axe has
+	# to be in his hand, so the prompt follows the wheel as well as the bag.
+	if player != null and player.inv != null:
+		player.inv.update.connect(_refresh_prompt)
+		player.inv.selection_changed.connect(_refresh_prompt)
 	_refresh_prompt()
+
+
+## Cleared on an earlier visit: no rubble, no prompt, no collision, no fuss.
+func _already_cleared() -> void:
+	is_cleared = true
+	rubble.visible = false
+	body_shape.disabled = true
+	interaction_area.monitoring = false
+	interaction_area.queue_free()
 
 
 ## The prompt doubles as the hint: "clear" only shows once you have the axe.
@@ -39,7 +60,7 @@ func _player_has_tool() -> bool:
 		return true
 	if player == null or player.inv == null:
 		return false
-	return player.inv.has(required_item)
+	return player.inv.holding(required_item)
 
 
 func _on_interact() -> void:
@@ -50,6 +71,7 @@ func _on_interact() -> void:
 		_refresh_prompt()
 		return
 	is_cleared = true
+	Flags.set_flag(FLAG)
 	DialogueManager.show_dialogue_balloon(dialogue_resource, cleared_title, [self, player])
 	_break_apart()
 

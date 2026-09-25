@@ -1,15 +1,134 @@
 ~ start
 do start_talking()
 do disable_movement()
-NPCBlacksmith: [[Hi|Hello|Hey]] there visitor, welcome to our world! Have you seen our vast forests?
-- Yes, they seem mystical!
-	NPCBlacksmith: They do indeed, [[be careful around the fragile trees - they could break and hurt you!|enjoy the exploration!|there's always more to see!]].
-- No, I have not
-	NPCBlacksmith: You should go check it out, the forest is full of surprises.
-	NPCBlacksmith: To truly explore these, you would need an [wave]axe[/wave]. Let me see if I have a spare lying around.
-	NPCBlacksmith: [wait=1] Ahaa! Here take this one, it is a bit rusty but should get the job done for the smaller trees!
-	NPCBlacksmith: You can view your axe in your inventory by pressing "I". Safe exploring!
-	do collect(axe)
+if not Flags.has("blacksmith.quest_offered")
+	=> first_meeting
+elif Flags.has("blacksmith.axe_given") and not Flags.has("blacksmith.axe_taken")
+	=> axe_on_the_ground
+elif Flags.has("blacksmith.axe_given")
+	=> after
+elif not has_rod()
+	=> no_rod
+elif fish_count() >= fish_price
+	=> payday
+else
+	=> not_enough
+
+
+#=============================================================================
+# The first meeting: the road is shut, he knows the other way, and his price
+# is three fish. Ends by setting blacksmith.quest_offered, which is also what
+# unlocks the fishing hut's door.
+#=============================================================================
+~ first_meeting
+Blacksmith: HOY! [wait=0.4]Don't just [wave]stand[/wave] there, you'll rust!
+Blacksmith: [[Visitor!|A face!|Somebody new!]] Nobody comes here. Nobody comes here and I am delighted about it, which tells you what sort of week I've had.
+- I'm trying to get through the land.
+	=> road
+- I'm just passing through.
+	Blacksmith: PASSING THROUGH. Ha! Ha. [wait=0.5]No.
+	=> road
+
+~ road
+Blacksmith: The old ridge road? Shut. Barricaded. Signed, even, and signs cost money round here, so you know they meant it.
+Blacksmith: [shake]Nobody[/shake] goes over the ridge any more.
+Blacksmith: [wait=0.6]But there is another way. Oh, there is another way. And exactly one man alive still knows where it starts.
+Blacksmith: It's me. I'm the man. [[I'm being modest about it.|That was the modest version.|You can tell I'm the man by the apron.]]
+- Will you tell me?
+	=> price
+- How much?
+	Blacksmith: HOW MUCH. He gets it. Look at him, he gets it.
+	=> price
+
+~ price
+Blacksmith: Three fish.
+Blacksmith: [wait=0.5]Three. Fish.
+- Fish?
+	Blacksmith: Fish! Silver, wriggling, deeply unhelpful about being caught. You've seen fish.
+- Three fish for a road?
+	Blacksmith: For THE road. And yes. I've eaten nothing but my own bread for eleven days and my own bread is [shake]a punishment[/shake].
+Blacksmith: I'd catch them myself, but the river and I have an arrangement: I stay out of it, and it doesn't drown me.
+Blacksmith: There's a rod in the old fishing hut up on the north shore. Fellow who lived there hasn't been back in years — he won't begrudge you it.
+Blacksmith: Rod. River. Three fish. Then we talk about roads.
+do Flags.set_flag("blacksmith.quest_offered")
+=> goodbye
+
+
+#=============================================================================
+# Sent for the rod but hasn't got it yet.
+#=============================================================================
+~ no_rod
+Blacksmith: [[Still here? The hut's north. On the shore. Where the water is.|The rod is in the HUT, friend. The hut does not walk to you.|North shore. Old hut. Rod inside. I've made it as small as it goes.]]
+Blacksmith: [[No rod, no fish. No fish, no road.|You cannot catch a fish by [wave]glaring[/wave] at it. I have tried.|It's a stick with a string. You'll manage.]]
+=> goodbye
+
+
+#=============================================================================
+# Has the rod, hasn't got three fish yet. The rotating heckling, sharpened by
+# how close he actually is.
+#=============================================================================
+~ not_enough
+if fish_count() == 0
+	Blacksmith: [[Nothing. You've brought me nothing. That's fewer than three, in case you were unsure.|I asked for three fish and you have returned with a damp stick and an expression.|Let me count what you've brought me. [wait=0.6]Done. It was quick.]]
+elif fish_count() == 1
+	Blacksmith: [[ONE. One is not three! Even the goat knows that and the goat is a disappointment.|A fish! A whole entire fish! And now the other two, which are the ones I asked about.|One down. Two to go. I'll be right here, hitting things.]]
+else
+	Blacksmith: [[TWO. Agonisingly two. So close I can taste it, and I would very much like to taste it.|Two fish. Two! The third one is out there RIGHT NOW being smug.|One more. ONE. Go and be stern with the river.]]
+Blacksmith: [[Off you go.|The river's that way. It hasn't moved.|Shoo. Fish.|Come back heavier.]]
+=> goodbye
+
+
+#=============================================================================
+# Payday: takes the three fish, gives up the road, and hands over the axe the
+# forest is going to need.
+#=============================================================================
+~ payday
+Blacksmith: [wait=0.4]Is that — [wave]THREE[/wave]?
+Blacksmith: Three fish! Three actual fish, in my actual hand! Give them here before one of us changes his mind.
+do take_fish()
+Blacksmith: [wait=0.8]Beautiful. Ugly. Beautiful and ugly. I'm going to fry all three and I'm not going to share.
+Blacksmith: Right. A bargain's a bargain. The way through.
+Blacksmith: It's not over the ridge. It's [wave]under[/wave] it. There's a path through the forest — the deep part, the part everyone sensibly avoids — and it comes out the other side of the closed road.
+- Through the forest?
+	Blacksmith: Through the forest. I know. I know! I said it and I heard it.
+- That's it? Just walk in?
+	Blacksmith: Just walk in, he says. Just walk in.
+Blacksmith: The old path's grown over, and grown over means it's not a path, it's a [shake]hedge with ambitions[/shake]. You'll be cutting your way in.
+Blacksmith: Which means you want one of these.
+Blacksmith: [wait=1] Here. My spare. It's rusty and the handle's older than you are, but it bites well enough on the small trees.
+Blacksmith: [shake]HEADS UP![/shake]
+do drop_axe()
+do Flags.set_flag("blacksmith.fish_paid")
+Blacksmith: [wait=0.5]...I did say heads up.
+- You threw an axe at me.
+	Blacksmith: I threw an axe [wave]near[/wave] you. There's a whole craft to it.
+- My foot.
+	Blacksmith: Your foot was in the landing area. That's on the foot.
+Blacksmith: Well? Pick it up. It's not going to leap into your hand — [[I have tried.|I've spent hours on that.|Believe me, I've tried.]]
+Blacksmith: Once it's in your bag you can swing it with [wave]B[/wave]. Check the bag with "I" if you don't trust me.
+Blacksmith: And mind the fragile trees. They come down faster than you'd like and they don't much care where you're standing.
+=> goodbye
+
+
+#=============================================================================
+# Thrown, and still lying in the grass where it landed.
+#=============================================================================
+~ axe_on_the_ground
+Blacksmith: [[It's on the ground. Where I threw it. Where it remains.|The axe. Down there. The axe-shaped thing.|I have thrown you an axe and you have elected to stand near it.]]
+Blacksmith: [[Bend at the knees.|Pick it [shake]up[/shake].|Grass doesn't need chopping. Trees do. Take the axe.]]
+=> goodbye
+
+
+#=============================================================================
+# After the trade.
+#=============================================================================
+~ after
+Blacksmith: [[Still got that axe? Good. Don't bring it back, I've nowhere to put it.|The forest. Cut in, keep going, come out the far side of the road. It's simple, it's just not easy.|Any more fish? [wait=0.7]No? Then we've nothing to discuss, and I say that with enormous affection.]]
+Blacksmith: [[Mind the fragile trees.|Watch where they fall.|Don't get clever with the big ones.]]
+=> goodbye
+
+
+~ goodbye
 do stop_talking()
 do enable_movement()
 => END

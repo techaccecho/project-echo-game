@@ -14,9 +14,13 @@ extends AnimatedSprite2D
 
 var _phase := 0.0
 var _rest := 0.0
+var _rest_rot := 0.0
 
 func _ready() -> void:
 	_rest = position.y
+	# The hull's authored facing. The art points north, so a boat under way
+	# is turned to its heading and yaws either side of that, not of zero.
+	_rest_rot = rotation_degrees
 	_phase = randf() * TAU
 	frame = randi() % maxi(1, sprite_frames.get_frame_count(animation)) if sprite_frames else 0
 	speed_scale = randf_range(0.7, 1.0)
@@ -25,4 +29,4 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	_phase += delta * TAU / maxf(0.1, period)
 	position.y = _rest + sin(_phase) * bob
-	rotation_degrees = sin(_phase * 0.61) * yaw
+	rotation_degrees = _rest_rot + sin(_phase * 0.61) * yaw

@@ -21,6 +21,9 @@ const PLAYER_INV := preload("res://inventory/player_inv.tres")
 const MANIFEST := [
 	"res://fragments/fragment_01_hollow_stump.tres",
 	"res://fragments/fragment_02_the_ledge_gives.tres",
+	"res://fragments/fragment_03_the_colour_goes.tres",
+	"res://fragments/fragment_04_the_villager.tres",
+	"res://fragments/fragment_05_green_before_the_last.tres",
 ]
 
 ## The fragments that actually exist, in MANIFEST order.
@@ -123,7 +126,21 @@ func _restore_inventory() -> void:
 
 ## Wipe progress. Handy while building levels; not wired to any UI.
 func reset() -> void:
+	restore([])
+
+
+## The ids of every page found so far, for SaveGame.
+func found_ids() -> Array:
+	return _found.keys()
+
+
+## Replace the record wholesale — loading a save, or starting a new game with
+## an empty list. Inventory is the caller's business: SaveGame rebuilds the bag
+## itself, pages included, so this must not re-give them.
+func restore(ids: Array) -> void:
 	_found.clear()
+	for id in ids:
+		_found[str(id)] = true
 	_save()
 	changed.emit()
 

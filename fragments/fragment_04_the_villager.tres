@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="Fragment" format=3 uid="uid://bqechofrag04x"]
+
+[ext_resource type="Script" uid="uid://b4sep75xygsp3" path="res://core/fragment.gd" id="1_frag"]
+[ext_resource type="Texture2D" uid="uid://7g7rmeqwftkm" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Icons/Weapons/Books and Potions/Books.png" id="2_icon"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_page"]
+atlas = ExtResource("2_icon")
+region = Rect2(0, 48, 16, 16)
+
+[resource]
+script = ExtResource("1_frag")
+id = "f04_the_villager"
+title = "the villager"
+entry_label = "ENTRY 18"
+level = 3
+found_at = "a dead end in the grove, beside a stump"
+body = "There is a man in here. I thought at first he'd come looking for me.
+
+He says the same three things. I have stood in front of him for I don't know how long and he has said them, in order, and started again. He isn't looking at me. I don't think he can.
+
+I asked him about the stones. On the third time round he said [i]red[/i], which isn't one of his three things, and then went back to them as if he hadn't.
+
+Blue, then red. I'll take it."
+footer = "— the page is folded small, as if carried in a fist."
+name = "a torn page"
+texture = SubResource("AtlasTexture_page")
+metadata/_custom_type_script = "res://core/fragment.gd"

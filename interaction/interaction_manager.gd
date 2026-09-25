@@ -3,7 +3,7 @@ extends Node2D
 #class_name InteractionManager
 
 @onready var player = get_tree().get_first_node_in_group("player")
-@onready var label = $Label
+@onready var prompt: InteractionPrompt = $Prompt
 
 var active_areas = []
 var can_interact = true
@@ -27,19 +27,24 @@ func _process(_delta):
 		if closest == null:
 			return
 
-		# Prompt reflects each area's own button + action, e.g. "[B / Click] to shake"
-		label.text = "[" + closest.key_prompt + "] to " + closest.action_name
-		label.global_position = closest.global_position
-		label.global_position.y -= 36
-		#label.global_position.x = label.size.x / 2
-		label.show()
+		# Prompt reflects each area's own button + action, e.g. "B · shake"
+		prompt.set_prompt(closest.key_prompt, closest.action_name)
+		prompt.show_at(closest.global_position)
 	else:
-		label.hide()
+		prompt.hide_prompt()
 
 func _sort_by_distance_to_player(area1, area2):
+	# The player is a different node in every scene; the one grabbed at startup
+	# is long gone by the time the third level loads.
+	if player == null or not is_instance_valid(player):
+		player = get_tree().get_first_node_in_group("player")
 	if area1 == null or area2 == null or player == null:
 		return false
 
+	# Priority first, distance only to settle a tie: a dropped axe lying at the
+	# blacksmith's feet should be picked up, not start the conversation again.
+	if area1.prompt_priority != area2.prompt_priority:
+		return area1.prompt_priority > area2.prompt_priority
 	var area1_to_player = player.global_position.distance_to(area1.global_position)
 	var area2_to_player = player.global_position.distance_to(area2.global_position)
 	return area1_to_player < area2_to_player
@@ -54,7 +59,7 @@ func _input(event):
 	var closest = active_areas[0]
 	if closest != null and event.is_action_pressed(closest.input_action):
 		can_interact = false
-		label.hide()
+		prompt.hide_prompt()
 
 		await closest.interact.call()
 
