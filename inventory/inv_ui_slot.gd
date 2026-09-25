@@ -46,6 +46,11 @@ func update(slot: InvSlot):
 	else:
 		item_visual.visible = true
 		item_visual.texture = slot.item.texture
+		# Icons are not all one size — the key is a 32px sprite — so shrink
+		# anything that would spill out of the slot, and leave the rest alone.
+		var icon: Vector2 = slot.item.texture.get_size() if slot.item.texture else Vector2.ONE
+		var widest: float = maxf(icon.x, icon.y)
+		item_visual.scale = Vector2.ONE * (16.0 / widest if widest > 16.0 else 1.0)
 		# A "1" in the corner tells the player nothing — the icon already says
 		# he has one. The count only earns its place once things stack.
 		amount_text.visible = slot.amount > 1

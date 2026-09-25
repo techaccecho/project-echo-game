@@ -2,7 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://yayo4t5ledsq" path="res://objects/pine_tree_large.tscn" id="2_6jvlf"]
 [ext_resource type="PackedScene" uid="uid://dugw7qjqmfrdc" path="res://objects/mahogany_tree_unhittable_dark.tscn" id="3_dyq2f"]
-[ext_resource type="PackedScene" uid="uid://c47vpfnpe1k1i" path="res://objects/maple_tree_hittable_light.tscn" id="3_mj0j0"]
 
 [sub_resource type="RectangleShape2D" id="TBC_0"]
 size = Vector2(32, 22)
@@ -67,20 +66,8 @@ size = Vector2(73, 26)
 [sub_resource type="RectangleShape2D" id="TBC_20"]
 size = Vector2(72, 20)
 
-[sub_resource type="RectangleShape2D" id="TBC_21"]
-size = Vector2(108, 19)
-
 [sub_resource type="RectangleShape2D" id="TBC_22"]
-size = Vector2(99, 25)
-
-[sub_resource type="RectangleShape2D" id="TBC_23"]
-size = Vector2(105, 16)
-
-[sub_resource type="RectangleShape2D" id="TBC_24"]
-size = Vector2(104, 16)
-
-[sub_resource type="RectangleShape2D" id="TBC_25"]
-size = Vector2(98, 32)
+size = Vector2(15, 25)
 
 [sub_resource type="RectangleShape2D" id="TBC_26"]
 size = Vector2(102, 21)
@@ -311,17 +298,7 @@ position = Vector2(-29, -649.4375)
 scale = Vector2(1.0625, 1.0625)
 
 [node name="Sprite2D36" parent="." unique_id=1688392935 instance=ExtResource("2_6jvlf")]
-position = Vector2(-55, -561)
-
-[node name="Sprite2D35" parent="." unique_id=440443924 instance=ExtResource("2_6jvlf")]
-position = Vector2(-46.5, -528.65625)
-scale = Vector2(1.09375, 1.09375)
-
-[node name="Sprite2D37" parent="." unique_id=995599942 instance=ExtResource("2_6jvlf")]
-position = Vector2(-79, -521)
-
-[node name="Sprite2D38" parent="." unique_id=810131641 instance=ExtResource("2_6jvlf")]
-position = Vector2(-31, -497)
+position = Vector2(-55, -613)
 
 [node name="Sprite2D39" parent="." unique_id=564916935 instance=ExtResource("2_6jvlf")]
 position = Vector2(-61, -467)
@@ -472,57 +449,33 @@ position = Vector2(-134, -3)
 [node name="Sprite2D75" parent="." unique_id=311164970 instance=ExtResource("2_6jvlf")]
 position = Vector2(-247, -19)
 
-[node name="TreeHittable3" parent="." unique_id=1026330433 instance=ExtResource("3_mj0j0")]
-z_index = -1
-position = Vector2(-66, -631.375)
-scale = Vector2(0.875, 0.875)
-
-[node name="TreeHittable4" parent="." unique_id=2791894 instance=ExtResource("3_mj0j0")]
-z_index = -1
-position = Vector2(-52, -602)
-
 [node name="Sprite2D31" parent="." unique_id=425304515 instance=ExtResource("2_6jvlf")]
 position = Vector2(-24, -613)
 
-[node name="Sprite2D32" parent="." unique_id=1439888414 instance=ExtResource("2_6jvlf")]
-position = Vector2(-33, -588)
-
 [node name="Sprite2D33" parent="." unique_id=2145244119 instance=ExtResource("2_6jvlf")]
-position = Vector2(-12, -563)
-
-[node name="Sprite2D34" parent="." unique_id=1608083173 instance=ExtResource("2_6jvlf")]
-position = Vector2(-18, -533)
+position = Vector2(-10, -617)
 
 [node name="Sprite2D15" parent="." unique_id=1808208627 instance=ExtResource("2_6jvlf")]
 position = Vector2(-55, -307)
-
-[node name="TreeHittable5" parent="." unique_id=106629565 instance=ExtResource("3_mj0j0")]
-z_index = -1
-position = Vector2(-90, -566.00006)
-scale = Vector2(0.875, 0.875)
 
 [node name="Sprite2D45" parent="." unique_id=979924016 instance=ExtResource("2_6jvlf")]
 z_index = 1
 position = Vector2(-41, -414)
 
-[node name="TreeHittable6" parent="." unique_id=1939239450 instance=ExtResource("3_mj0j0")]
+[node name="BorderPine6" parent="." unique_id=1939239450 instance=ExtResource("2_6jvlf")]
 z_index = -1
 position = Vector2(-52.500004, -442.78125)
 scale = Vector2(0.78125024, 0.7812502)
 
-[node name="TreeHittable9" parent="." unique_id=1583345953 instance=ExtResource("3_mj0j0")]
+[node name="BorderPine9" parent="." unique_id=1583345953 instance=ExtResource("2_6jvlf")]
 z_index = -1
 position = Vector2(-84.5, -456.72656)
 scale = Vector2(0.9687499, 1.0078135)
 
-[node name="TreeHittable7" parent="." unique_id=2132112724 instance=ExtResource("3_mj0j0")]
+[node name="BorderPine7" parent="." unique_id=2132112724 instance=ExtResource("2_6jvlf")]
 z_index = -1
 position = Vector2(-66.00001, -435)
 scale = Vector2(0.875, 0.875)
-
-[node name="TreeHittable8" parent="." unique_id=1954309734 instance=ExtResource("3_mj0j0")]
-z_index = -1
-position = Vector2(-35, -548)
 
 [node name="Sprite2D76" parent="." unique_id=356027030 instance=ExtResource("2_6jvlf")]
 position = Vector2(-265, -5)
@@ -856,27 +809,27 @@ scale = Vector2(0.68750256, 0.6718027)
 position = Vector2(-1254, -1.0000005)
 scale = Vector2(0.87500024, 0.8923611)
 
-[node name="TreeHittable10" parent="." unique_id=925625874 instance=ExtResource("3_mj0j0")]
+[node name="BorderPine10" parent="." unique_id=925625874 instance=ExtResource("2_6jvlf")]
 z_index = -1
 position = Vector2(-960, -38.000004)
 scale = Vector2(0.8593745, 0.83544946)
 
-[node name="TreeHittable11" parent="." unique_id=1860347409 instance=ExtResource("3_mj0j0")]
+[node name="BorderPine11" parent="." unique_id=1860347409 instance=ExtResource("2_6jvlf")]
 z_index = -1
 position = Vector2(-997, -60)
 scale = Vector2(0.8593745, 0.83544946)
 
-[node name="TreeHittable12" parent="." unique_id=297293869 instance=ExtResource("3_mj0j0")]
+[node name="BorderPine12" parent="." unique_id=297293869 instance=ExtResource("2_6jvlf")]
 z_index = -1
 position = Vector2(-1100.875, -71.3098)
 scale = Vector2(0.74219006, 0.7054342)
 
-[node name="TreeHittable13" parent="." unique_id=2012418263 instance=ExtResource("3_mj0j0")]
+[node name="BorderPine13" parent="." unique_id=2012418263 instance=ExtResource("2_6jvlf")]
 z_index = -1
 position = Vector2(-1106.0001, -45.000004)
 scale = Vector2(0.8593745, 0.83544946)
 
-[node name="TreeHittable14" parent="." unique_id=737884017 instance=ExtResource("3_mj0j0")]
+[node name="BorderPine14" parent="." unique_id=737884017 instance=ExtResource("2_6jvlf")]
 z_index = -1
 position = Vector2(-783.0001, -43)
 scale = Vector2(0.74219006, 0.7054342)
@@ -903,7 +856,7 @@ position = Vector2(-5, -642.00006)
 scale = Vector2(0.75, 0.7708333)
 
 [node name="Sprite2D165" parent="." unique_id=1072401262 instance=ExtResource("2_6jvlf")]
-position = Vector2(-7, -604)
+position = Vector2(-8, -626)
 scale = Vector2(0.75, 0.7708333)
 
 [node name="Sprite2D166" parent="." unique_id=949862013 instance=ExtResource("2_6jvlf")]
@@ -1091,26 +1044,6 @@ shape = SubResource("TBC_19")
 [node name="tbc_20" type="CollisionShape2D" parent="TreeBorderCollision" unique_id=1322016342]
 position = Vector2(-32, -588)
 shape = SubResource("TBC_20")
-
-[node name="tbc_21" type="CollisionShape2D" parent="TreeBorderCollision" unique_id=501856089]
-position = Vector2(-50, -568.5)
-shape = SubResource("TBC_21")
-
-[node name="tbc_22" type="CollisionShape2D" parent="TreeBorderCollision" unique_id=504283001]
-position = Vector2(-45.5, -546.5)
-shape = SubResource("TBC_22")
-
-[node name="tbc_23" type="CollisionShape2D" parent="TreeBorderCollision" unique_id=748394982]
-position = Vector2(-42.5, -526)
-shape = SubResource("TBC_23")
-
-[node name="tbc_24" type="CollisionShape2D" parent="TreeBorderCollision" unique_id=121035319]
-position = Vector2(-43, -510)
-shape = SubResource("TBC_24")
-
-[node name="tbc_25" type="CollisionShape2D" parent="TreeBorderCollision" unique_id=1683545188]
-position = Vector2(-46, -486)
-shape = SubResource("TBC_25")
 
 [node name="tbc_26" type="CollisionShape2D" parent="TreeBorderCollision" unique_id=1739695872]
 position = Vector2(-48, -459.5)

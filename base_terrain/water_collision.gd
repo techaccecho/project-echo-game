@@ -14,12 +14,14 @@ extends StaticBody2D
 ## shapes to drag about.
 ##
 ## Where the rule gets a stretch wrong, overrule it by hand instead of
-## repainting: box the area out under a child node named "Carve" to open it,
-## or "Block" to close it. Each box is an Area2D (monitoring off — it is only
-## there for its handles) with one rectangle shape, so it can be dragged and
-## resized in the 2D editor against the tinted cells that `debug_draw` shows.
-## Block wins where the two overlap. Anything under either node is inert: only
-## the cells it covers are read.
+## repainting: draw the area out under a child node named "Carve" to open it,
+## or "Block" to close it. A region is a CollisionPolygon2D — or a
+## CollisionShape2D holding a rectangle or a convex polygon — wrapped in an
+## Area2D with monitoring off, so it is only there for its editor handles and
+## can be drawn against the tinted cells that `debug_draw` shows. Carve wins
+## where the two overlap, so a region drawn to keep somewhere walkable keeps
+## it walkable however roughly a Block is drawn over it. Anything under either
+## node is inert: nothing collides with it, only the cells it covers are read.
 
 ## The layer that paints the water itself.
 @export var water_layer: NodePath
@@ -60,12 +62,14 @@ func _ready() -> void:
 				_blocked.erase(c)
 
 	# The hand edits, last, so they overrule whatever the paint worked out.
-	for rect in _boxes("Carve"):
-		for c in _cells_in(rect):
-			_blocked.erase(c)
-	for rect in _boxes("Block"):
-		for c in _cells_in(rect):
+	# Carve runs after Block, so a carve always wins: a region drawn to keep
+	# somewhere walkable keeps it walkable, whatever overlaps it.
+	for region in _regions("Block"):
+		for c in _cells_in(region):
 			_blocked[c] = true
+	for region in _regions("Carve"):
+		for c in _cells_in(region):
+			_blocked.erase(c)
 
 	for rect in _merge(_blocked.keys()):
 		_add_shape(rect)
@@ -73,37 +77,69 @@ func _ready() -> void:
 		queue_redraw()
 
 
-## Every hand-drawn rectangle under the child node of this name, in this
-## node's own space. Any rectangle shape under it counts, however it is
-## wrapped, so a box can be an Area2D or a bare CollisionShape2D.
-func _boxes(group_name: String) -> Array[Rect2]:
-	var out: Array[Rect2] = []
+## Every hand-drawn region under the child node of this name, as a polygon in
+## this node's own space. A region can be a CollisionPolygon2D or a
+## CollisionShape2D holding a rectangle or a convex polygon, wrapped in an
+## Area2D or bare — whatever is easiest to drag in the editor. The node's full
+## transform is applied, so a rotated or scaled region reads as it looks.
+func _regions(group_name: String) -> Array[PackedVector2Array]:
+	var out: Array[PackedVector2Array] = []
 	var group := get_node_or_null(NodePath(group_name))
 	if group == null:
 		return out
-	for node in group.find_children("*", "CollisionShape2D", true, false):
-		var cs := node as CollisionShape2D
-		var box := cs.shape as RectangleShape2D
-		if box == null:
-			push_warning("WaterCollision: %s/%s is not a rectangle, skipped."
-					% [group_name, cs.name])
+	var into := global_transform.affine_inverse()
+	for node in group.find_children("*", "Node2D", true, false):
+		var points := _points_of(node)
+		if points.is_empty():
 			continue
-		var centre: Vector2 = to_local(cs.global_position)
-		# global_scale, so a box resized by dragging its parent still reads right.
-		var size: Vector2 = box.size * cs.global_scale.abs()
-		out.append(Rect2(centre - size / 2.0, size))
+		var xf := into * (node as Node2D).global_transform
+		var local := PackedVector2Array()
+		for pt in points:
+			local.append(xf * pt)
+		out.append(local)
 	return out
 
 
-## The cells a rectangle covers. A cell counts once the box reaches into it at
-## all, so dragging a box roughly over the water does what it looks like.
-func _cells_in(rect: Rect2) -> Array[Vector2i]:
+## The outline a region node draws, in its own space, or nothing if it is not
+## a shape this understands.
+func _points_of(node: Node) -> PackedVector2Array:
+	if node is CollisionPolygon2D:
+		return (node as CollisionPolygon2D).polygon
+	if node is CollisionShape2D:
+		var shape := (node as CollisionShape2D).shape
+		if shape is RectangleShape2D:
+			var h: Vector2 = (shape as RectangleShape2D).size / 2.0
+			return PackedVector2Array([
+				Vector2(-h.x, -h.y), Vector2(h.x, -h.y),
+				Vector2(h.x, h.y), Vector2(-h.x, h.y)])
+		if shape is ConvexPolygonShape2D:
+			return (shape as ConvexPolygonShape2D).points
+		if shape != null:
+			push_warning("WaterCollision: %s is a %s, which is not a shape this can read — use a rectangle or a polygon."
+					% [node.name, shape.get_class()])
+	return PackedVector2Array()
+
+
+## The cells a region covers. A cell counts once the region reaches into it at
+## all, so drawing roughly over the water does what it looks like.
+func _cells_in(region: PackedVector2Array) -> Array[Vector2i]:
 	var out: Array[Vector2i] = []
-	var from := Vector2i(floori(rect.position.x / _cell.x), floori(rect.position.y / _cell.y))
-	var to := Vector2i(ceili(rect.end.x / _cell.x), ceili(rect.end.y / _cell.y))
+	if region.size() < 3:
+		return out
+	var bounds := Rect2(region[0], Vector2.ZERO)
+	for pt in region:
+		bounds = bounds.expand(pt)
+	var from := Vector2i(floori(bounds.position.x / _cell.x), floori(bounds.position.y / _cell.y))
+	var to := Vector2i(ceili(bounds.end.x / _cell.x), ceili(bounds.end.y / _cell.y))
 	for y in range(from.y, to.y):
 		for x in range(from.x, to.x):
-			out.append(Vector2i(x, y))
+			var square := PackedVector2Array([
+				Vector2(x * _cell.x, y * _cell.y),
+				Vector2((x + 1) * _cell.x, y * _cell.y),
+				Vector2((x + 1) * _cell.x, (y + 1) * _cell.y),
+				Vector2(x * _cell.x, (y + 1) * _cell.y)])
+			if not Geometry2D.intersect_polygons(region, square).is_empty():
+				out.append(Vector2i(x, y))
 	return out
 
 

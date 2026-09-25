@@ -2,6 +2,115 @@
 
 [ext_resource type="Script" uid="uid://dxk8h3n2q7fsp" path="res://interaction/fishing_spot/fishing_spot.gd" id="1_fshsp"]
 [ext_resource type="PackedScene" uid="uid://bibupx3yvo61" path="res://interaction/interaction_area/interaction_area.tscn" id="2_fshsp"]
+[ext_resource type="Texture2D" uid="uid://betnucvh881ck" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Fish/Fish point small.png" id="3_fishpt"]
+[ext_resource type="Texture2D" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Character and Portrait/Character/Others/Shine.png" id="4_shine"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fp00"]
+atlas = ExtResource("3_fishpt")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fp01"]
+atlas = ExtResource("3_fishpt")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fp02"]
+atlas = ExtResource("3_fishpt")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fp03"]
+atlas = ExtResource("3_fishpt")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fp04"]
+atlas = ExtResource("3_fishpt")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fp05"]
+atlas = ExtResource("3_fishpt")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fp06"]
+atlas = ExtResource("3_fishpt")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fp07"]
+atlas = ExtResource("3_fishpt")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fp08"]
+atlas = ExtResource("3_fishpt")
+region = Rect2(128, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fp09"]
+atlas = ExtResource("3_fishpt")
+region = Rect2(144, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fp10"]
+atlas = ExtResource("3_fishpt")
+region = Rect2(160, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fishpt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fp00")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fp01")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fp02")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fp03")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fp04")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fp05")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fp06")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fp07")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fp08")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fp09")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fp10")
+}],
+"loop": true,
+"name": &"swim",
+"speed": 4.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sh0"]
+atlas = ExtResource("4_shine")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sh1"]
+atlas = ExtResource("4_shine")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_shine"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sh0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sh1")
+}],
+"loop": true,
+"name": &"twinkle",
+"speed": 3.0
+}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fshsp"]
 radius = 24.0
@@ -15,3 +124,18 @@ action_name = "fish"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=886694523]
 shape = SubResource("CircleShape2D_fshsp")
+
+[node name="Fish" type="AnimatedSprite2D" parent="." unique_id=1502339471]
+z_index = -1
+sprite_frames = SubResource("SpriteFrames_fishpt")
+animation = &"swim"
+autoplay = "swim"
+frame_progress = 0.4
+
+[node name="Glint" type="AnimatedSprite2D" parent="."]
+visible = false
+z_index = -1
+position = Vector2(0, -4)
+sprite_frames = SubResource("SpriteFrames_shine")
+animation = &"twinkle"
+autoplay = "twinkle"

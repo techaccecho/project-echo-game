@@ -10,6 +10,7 @@
 [ext_resource type="TileSet" uid="uid://daaxsrd5xb5iw" path="res://water_features/water_props.tres" id="7_2ntah"]
 [ext_resource type="TileSet" uid="uid://bu48edd5oif51" path="res://tilesets/rock_flower_tree_grass.tres" id="8_sf5q6"]
 [ext_resource type="TileSet" uid="uid://cok1cqxkvmqrh" path="res://tilesets/tilled_soil_wet_soil.tres" id="9_sf5q6"]
+[ext_resource type="Script" path="res://base_terrain/water_collision.gd" id="pondcol"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_gphni"]
 particles_animation = true
@@ -978,6 +979,10 @@ tile_set = ExtResource("7_2ntah")
 z_index = -1
 tile_map_data = PackedByteArray("AADc//r/AgAAAAAAAADe//v/AgAGAAQAAADe//r/AgAHAAQAAAA=")
 tile_set = ExtResource("7_2ntah")
+
+[node name="PondCollision" type="StaticBody2D" parent="Decorations/Water"]
+script = ExtResource("pondcol")
+water_layer = NodePath("../Water")
 
 [node name="Grass" type="Node2D" parent="Decorations" unique_id=428172015]
 

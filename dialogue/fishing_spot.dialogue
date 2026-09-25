@@ -1,3 +1,20 @@
 ~ no_rod
 Traveller: [[There are fish down there. Nothing in my hands to get them with.|Plenty of fish. No line, no hook, no hope.|I could stare at this water all day and it would not put a fish in my pocket.|Fish, yes. Something to catch them with, no.]]
 => END
+
+~ glint
+Traveller: Something down there is catching the light.
+Traveller: [wait=0.5]Not a fish. Fish don't hold still.
+Traveller: It's small, and it's got a ring on one end. [[That's a key, or I've never seen one.|A key. Down there, in the weed.|Somebody's key, on the bottom of a forest pond.]]
+Traveller: It's deeper than an arm. But I have a rod.
+=> END
+
+~ prize
+Traveller: That is not a fish.
+Traveller: A key. Iron, and a long time in the water by the look of it.
+Traveller: [[Somebody dropped this. Or somebody hid it.|Nobody loses a key in the middle of a pond by accident.|Whatever this opens, it wasn't meant to be opened.]]
+=> END
+
+~ prize_missed
+Traveller: [[Weed. The hook comes up wearing half the pond.|Nothing. It's still down there.|Missed it. It's not going anywhere — try again.]]
+=> END
