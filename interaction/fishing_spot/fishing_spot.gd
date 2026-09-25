@@ -2,11 +2,12 @@ class_name FishingSpot
 extends Node2D
 ## A stretch of water worth casting into.
 ##
-## Gated on carrying the rod, the same way the rubble wall is gated on the axe:
-## without it the prompt drops to "look at the water" and the player gets a line
-## instead of the minigame. The rod is in the abandoned hut, which is itself
-## shut until the blacksmith has asked for his fish — so the order of the
-## opening act holds without any spot needing to know about the quest.
+## Gated on holding the rod — the highlighted hotbar slot, not just somewhere in
+## the bag — the same way the rubble wall is gated on the axe: without it the
+## prompt drops to "look at the water" and the player gets a line instead of the
+## minigame. The rod is in the abandoned hut, which is itself shut until the
+## blacksmith has asked for his fish — so the order of the opening act holds
+## without any spot needing to know about the quest.
 
 @export var fish_pool: Array[InvItem] = []
 @export var min_wait_time: float = 0.8
@@ -54,6 +55,7 @@ func _ready() -> void:
 	# anything else.
 	if player != null and player.inv != null:
 		player.inv.update.connect(_refresh_prompt)
+		player.inv.selection_changed.connect(_refresh_prompt)
 	_refresh_prompt()
 
 ## The prompt doubles as the hint: "fish" only shows once you have the rod, and
@@ -92,7 +94,7 @@ func _player_has_rod() -> bool:
 		return true
 	if player == null or not is_instance_valid(player):
 		player = get_tree().get_first_node_in_group("player")
-	return player != null and player.inv != null and player.inv.has(required_item)
+	return player != null and player.inv != null and player.inv.holding(required_item)
 
 func _on_interact() -> void:
 	if busy or player == null:
@@ -150,5 +152,15 @@ func _say(title: String) -> void:
 		# it, so a fresh file is null until the editor has been focused once.
 		push_warning("fishing_spot: dialogue/fishing_spot.dialogue has not been imported yet.")
 		return
+	# He stands still to talk, the same as indoors. Walking off while the
+	# balloon is up can drop him down a cliff, which changes the level out from
+	# under this await — dialogue_ended never arrives, and whatever is waiting
+	# on this call waits for the rest of the session. See house_interior's
+	# _say() for the whole shape of it.
+	var could_move: bool = player != null and player.movement_enabled
+	if could_move:
+		player.disable_movement()
 	DialogueManager.show_dialogue_balloon(dialogue_resource, title, [self, player])
 	await DialogueManager.dialogue_ended
+	if could_move and is_instance_valid(player):
+		player.enable_movement()

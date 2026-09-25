@@ -162,11 +162,6 @@ position = Vector2(-96, -904)
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1780773830]
 
 [node name="Inv_UI" parent="CanvasLayer" unique_id=228588046 instance=ExtResource("13_1i7os")]
-offset_left = 527.0
-offset_top = 167.0
-offset_right = 624.0
-offset_bottom = 241.0
-scale = Vector2(10, 10)
 
 [node name="Portal" parent="." unique_id=1866590606 instance=ExtResource("portal_area")]
 position = Vector2(-96, -576)
