@@ -22,6 +22,7 @@
 [ext_resource type="Resource" uid="uid://bx8h5n2p4qty3" path="res://inventory/items/fish_sunfish.tres" id="44_sunfish"]
 [ext_resource type="Resource" uid="uid://bq3rw8k5fnd2x" path="res://inventory/items/fishing_rod.tres" id="45_rod"]
 [ext_resource type="Resource" uid="uid://cskstfx5pwpfm" path="res://inventory/items/forest_key.tres" id="46_key"]
+[ext_resource type="PackedScene" path="res://world/east_gate.tscn" id="47_eastgate"]
 [ext_resource type="PackedScene" uid="uid://bmu3ciwxqewdw" path="res://objects/blocked_path.tscn" id="blockedpath"]
 [ext_resource type="Script" uid="uid://cpwnfxebcpy1u" path="res://world/game_world.gd" id="gw_script"]
 [ext_resource type="PackedScene" uid="uid://blvlaud102ec" path="res://objects/level_audio.tscn" id="lvlaudio"]
@@ -125,6 +126,9 @@ required_item = ExtResource("45_rod")
 prize = ExtResource("46_key")
 prize_flag = "forest.key_found"
 
+[node name="EastGate" parent="GameLevel1" instance=ExtResource("47_eastgate")]
+position = Vector2(-96, -560)
+
 [node name="WaterBorder" parent="." unique_id=1357689819 instance=ExtResource("10_hdkfl")]
 
 [node name="PineTreeLarge" parent="." unique_id=1488782070 instance=ExtResource("22_q8vt7")]
@@ -165,10 +169,11 @@ offset_bottom = 241.0
 scale = Vector2(10, 10)
 
 [node name="Portal" parent="." unique_id=1866590606 instance=ExtResource("portal_area")]
-position = Vector2(-1036, -812)
+position = Vector2(-96, -576)
 action_name = "travel"
 
 [node name="Pad" type="Polygon2D" parent="Portal" unique_id=178969412]
+visible = false
 color = Color(0.3, 0.75, 1, 0.55)
 polygon = PackedVector2Array(-14, 0, -7, -9, 7, -9, 14, 0, 7, 9, -7, 9)
 
@@ -186,4 +191,4 @@ ambience_volume_db = {
 }
 
 [node name="ReturnSpawn" type="Marker2D" parent="." unique_id=729082798 groups=["player_spawn"]]
-position = Vector2(-1000, -812)
+position = Vector2(-96, -540)

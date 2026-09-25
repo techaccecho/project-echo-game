@@ -2,7 +2,8 @@ extends Node2D
 ## Root of the legacy Level 1 world (game_world.tscn).
 ##
 ## This script only adds two things and never touches the GameLevel1 subtree:
-##   • a Portal interaction that travels to the shell (Level 2),
+##   • the east gate and, in its gateway, the Portal that travels to the shell
+##     (Level 2) — the portal is dead until the gate is unlocked,
 ##   • completion of any incoming transition (placing the player at the spawn
 ##     the SceneManager asked for, e.g. when returning from Level 2),
 ##   • the time-of-day light and camera limits,
@@ -38,10 +39,17 @@ const BLACKSMITH_DOOR := Vector2(-452, -822)
 const CAMERA_AREA := Rect2i(-1552, -1124, 1552, 1112)
 
 @onready var portal: InteractionArea = $Portal
+## The way east. The portal sits in its gateway and does nothing until the
+## bars are up — the gate's own body is what keeps him out of it meanwhile,
+## and this stops him reaching through the bars to travel.
+@onready var gate: LockedGate = $GameLevel1/EastGate/Gate
 
 func _ready() -> void:
 	if portal:
 		portal.interact = Callable(self, "_on_portal")
+	if gate:
+		gate.opened.connect(_on_gate_opened)
+		_arm_portal(gate.is_open())
 	add_child(DAY_LIGHT.instantiate())
 	var bounds: Node = CAMERA_BOUNDS.instantiate()
 	bounds.set("bounds", CAMERA_AREA)
@@ -80,6 +88,19 @@ func _ready() -> void:
 		var arrival: Node = ARRIVAL.instantiate()
 		add_child(arrival)
 		arrival.call("play")
+
+## The bars are up: the road east is real now.
+func _on_gate_opened() -> void:
+	_arm_portal(true)
+
+
+func _arm_portal(on: bool) -> void:
+	if portal == null:
+		return
+	portal.monitoring = on
+	if not on:
+		InteractionManager.deregister_area(portal)
+
 
 func _on_portal() -> void:
 	# The story card plays the first time up the path; after that it is just
