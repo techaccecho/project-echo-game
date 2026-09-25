@@ -287,9 +287,9 @@ script = ExtResource("18_watcol")
 water_layer = NodePath("../Water")
 bank_layers = Array[NodePath]([NodePath("../GrassSand"), NodePath("../GroundWater"), NodePath("../GrassCliffWater")])
 crossing_layers = Array[NodePath]([NodePath("../Bridge/BridgeTopRail"), NodePath("../Bridge/BridgeBottomRail")])
-debug_draw = true
 
 [node name="Carve" type="Node2D" parent="WaterCollision" unique_id=930141818]
+visible = false
 
 [node name="Area2D" type="Area2D" parent="WaterCollision/Carve" unique_id=1527170514]
 
@@ -390,6 +390,7 @@ shape = SubResource("RectangleShape2D_8w07x")
 debug_color = Color(0.64563096, 0.52247685, 7.70092e-07, 0.41960785)
 
 [node name="Block" type="Node2D" parent="WaterCollision" unique_id=434319918]
+visible = false
 
 [node name="UpperChannelA" type="Area2D" parent="WaterCollision/Block" unique_id=214666032]
 position = Vector2(-728, -744)
