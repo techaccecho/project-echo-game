@@ -1,0 +1,171 @@
+[gd_scene format=4 uid="uid://c3ch0cav31nt2"]
+
+[ext_resource type="Script" path="res://world/house_interior.gd" id="script"]
+[ext_resource type="TileSet" uid="uid://cr0ckcav3s2ec" path="res://tilesets/rock_caves.tres" id="rockset"]
+[ext_resource type="PackedScene" uid="uid://wvbxyfgl33vp" path="res://character/player_josh.tscn" id="player"]
+[ext_resource type="PackedScene" uid="uid://blvlaud102ec" path="res://objects/level_audio.tscn" id="levelaudio"]
+[ext_resource type="PackedScene" uid="uid://doa04urw7iidr" path="res://inventory/inv_ui.tscn" id="invui"]
+[ext_resource type="PackedScene" uid="uid://bibupx3yvo61" path="res://interaction/interaction_area/interaction_area.tscn" id="iarea"]
+[ext_resource type="PackedScene" uid="uid://cq40o8258u0ra" path="res://objects/campfire.tscn" id="campfire"]
+[ext_resource type="PackedScene" uid="uid://cn1ght11ght2e" path="res://objects/night_light.tscn" id="light"]
+[ext_resource type="PackedScene" uid="uid://c8frgpk2echo" path="res://objects/fragment_pickup.tscn" id="frag"]
+[ext_resource type="Resource" uid="uid://bqechofrag06x" path="res://fragments/fragment_06_the_hollow_behind_the_pine.tres" id="frag06"]
+[ext_resource type="Texture2D" uid="uid://deyb2k33h45y" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Tileset/Rock Caves.png" id="rocktex"]
+
+[sub_resource type="RectangleShape2D" id="RS_1"]
+size = Vector2(192, 58)
+
+[sub_resource type="RectangleShape2D" id="RS_2"]
+size = Vector2(20, 160)
+
+[sub_resource type="RectangleShape2D" id="RS_3"]
+size = Vector2(20, 160)
+
+[sub_resource type="RectangleShape2D" id="RS_4"]
+size = Vector2(80, 16)
+
+[sub_resource type="RectangleShape2D" id="RS_5"]
+size = Vector2(80, 16)
+
+[sub_resource type="RectangleShape2D" id="RS_6"]
+size = Vector2(28, 12)
+
+[sub_resource type="RectangleShape2D" id="RS_7"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RS_8"]
+size = Vector2(64, 30)
+
+[sub_resource type="RectangleShape2D" id="RS_9"]
+size = Vector2(40, 28)
+
+[sub_resource type="RectangleShape2D" id="RS_exit"]
+size = Vector2(32, 12)
+
+[node name="EchoCaveInterior" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("script")
+outside = "res://world/game_level_2.tscn"
+outside_spawn = "EggCave"
+outside_is_shell = true
+story = "res://dialogue/echo_cave.dialogue"
+bed = ""
+lines = {"Fire": "fire", "Wall": "wall", "Stones": "stones"}
+
+[node name="Backdrop" type="Polygon2D" parent="."]
+z_index = -10
+color = Color(0.02, 0.015, 0.02, 1)
+polygon = PackedVector2Array(-2000, -2000, 2500, -2000, 2500, 2500, -2000, 2500)
+
+[node name="Dark" type="CanvasModulate" parent="."]
+color = Color(0.42, 0.36, 0.42, 1)
+
+[node name="Floor" type="TileMapLayer" parent="."]
+z_index = -2
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAQAAAAAAAEAAAADAAQAAAAAAAIAAAAKAAQAAAABAAAAAAALAAQAAAABAAEAAAACAAQAAAABAAIAAAAJAAQAAAACAAAAAAAKAAQAAAACAAEAAAABAAQAAAACAAIAAAAIAAQAAAADAAAAAAAJAAQAAAADAAEAAAAAAAQAAAADAAIAAAADAAQAAAAEAAAAAAAIAAQAAAAEAAEAAAALAAQAAAAEAAIAAAACAAQAAAAFAAAAAAADAAQAAAAFAAEAAAAKAAQAAAAFAAIAAAABAAQAAAAGAAAAAAACAAQAAAAGAAEAAAAJAAQAAAAGAAIAAAAAAAQAAAAHAAAAAAABAAQAAAAHAAEAAAAIAAQAAAAHAAIAAAALAAQAAAAIAAAAAAAAAAQAAAAIAAEAAAADAAQAAAAIAAIAAAAKAAQAAAAJAAAAAAALAAQAAAAJAAEAAAACAAQAAAAJAAIAAAAJAAQAAAAKAAAAAAAKAAQAAAAKAAEAAAABAAQAAAAKAAIAAAAIAAQAAAALAAAAAAAJAAQAAAALAAEAAAAAAAQAAAALAAIAAAADAAQAAAAAAAMAAAAEAAAAAAABAAMAAAAFAAAAAAACAAMAAAAFAAAAAAADAAMAAAAFAAAAAAAEAAMAAAAFAAAAAAAFAAMAAAAFAAAAAAAGAAMAAAAFAAAAAAAHAAMAAAAFAAAAAAAIAAMAAAAFAAAAAAAJAAMAAAAFAAAAAAAKAAMAAAAFAAAAAAALAAMAAAAHAAAAAAAAAAQAAAAEAAEAAAABAAQAAAAFAAIAAAACAAQAAAAFAAIAAAADAAQAAAAFAAEAAAAEAAQAAAAGAAIAAAAFAAQAAAAGAAEAAAAGAAQAAAAFAAEAAAAHAAQAAAAGAAEAAAAIAAQAAAAFAAEAAAAJAAQAAAAFAAIAAAAKAAQAAAAGAAIAAAALAAQAAAAHAAEAAAAAAAUAAAAEAAEAAAABAAUAAAAGAAEAAAACAAUAAAAGAAIAAAADAAUAAAAFAAEAAAAEAAUAAAAGAAEAAAAFAAUAAAAFAAEAAAAGAAUAAAAGAAEAAAAHAAUAAAAGAAIAAAAIAAUAAAAFAAIAAAAJAAUAAAAGAAEAAAAKAAUAAAAGAAIAAAALAAUAAAAHAAEAAAAAAAYAAAAEAAEAAAABAAYAAAAGAAEAAAACAAYAAAAFAAEAAAADAAYAAAAGAAEAAAAEAAYAAAAGAAIAAAAFAAYAAAAGAAEAAAAGAAYAAAAGAAEAAAAHAAYAAAAFAAEAAAAIAAYAAAAFAAEAAAAJAAYAAAAGAAEAAAAKAAYAAAAGAAEAAAALAAYAAAAHAAEAAAAAAAcAAAAEAAEAAAABAAcAAAAGAAEAAAACAAcAAAAGAAEAAAADAAcAAAAFAAIAAAAEAAcAAAAFAAIAAAAFAAcAAAAGAAEAAAAGAAcAAAAGAAEAAAAHAAcAAAAGAAEAAAAIAAcAAAAGAAEAAAAJAAcAAAAGAAIAAAAKAAcAAAAFAAIAAAALAAcAAAAHAAEAAAAAAAgAAAAEAAEAAAABAAgAAAAFAAEAAAACAAgAAAAFAAIAAAADAAgAAAAGAAIAAAAEAAgAAAAGAAEAAAAFAAgAAAAGAAEAAAAGAAgAAAAFAAIAAAAHAAgAAAAFAAEAAAAIAAgAAAAFAAIAAAAJAAgAAAAFAAIAAAAKAAgAAAAFAAEAAAALAAgAAAAHAAEAAAAAAAkAAAAEAAMAAAABAAkAAAAFAAMAAAACAAkAAAAFAAMAAAADAAkAAAAFAAMAAAAEAAkAAAAFAAMAAAAFAAkAAAAFAAIAAAAGAAkAAAAFAAEAAAAHAAkAAAAFAAMAAAAIAAkAAAAFAAMAAAAJAAkAAAAFAAMAAAAKAAkAAAAFAAMAAAALAAkAAAAHAAMAAAA=")
+tile_set = ExtResource("rockset")
+
+[node name="Props" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Stones" type="Sprite2D" parent="Props"]
+position = Vector2(24, 96)
+texture = ExtResource("rocktex")
+centered = false
+offset = Vector2(0, -16)
+region_enabled = true
+region_rect = Rect2(64, 64, 16, 16)
+
+[node name="Campfire" parent="Props" instance=ExtResource("campfire")]
+position = Vector2(96, 104)
+
+[node name="FireLight" parent="Props/Campfire" instance=ExtResource("light")]
+position = Vector2(0, -6)
+radius = 96.0
+strength = 1.3
+flicker = 0.14
+always_on = true
+
+[node name="Fragment6" parent="Props" instance=ExtResource("frag")]
+position = Vector2(150, 78)
+fragment = ExtResource("frag06")
+
+[node name="Solids" type="StaticBody2D" parent="."]
+
+[node name="S1" type="CollisionShape2D" parent="Solids"]
+position = Vector2(96.0, 29.0)
+shape = SubResource("RS_1")
+
+[node name="S2" type="CollisionShape2D" parent="Solids"]
+position = Vector2(10.0, 80.0)
+shape = SubResource("RS_2")
+
+[node name="S3" type="CollisionShape2D" parent="Solids"]
+position = Vector2(182.0, 80.0)
+shape = SubResource("RS_3")
+
+[node name="S4" type="CollisionShape2D" parent="Solids"]
+position = Vector2(40.0, 156.0)
+shape = SubResource("RS_4")
+
+[node name="S5" type="CollisionShape2D" parent="Solids"]
+position = Vector2(152.0, 156.0)
+shape = SubResource("RS_5")
+
+[node name="S6" type="CollisionShape2D" parent="Solids"]
+position = Vector2(96.0, 106.0)
+shape = SubResource("RS_6")
+
+[node name="Interact" type="Node2D" parent="."]
+
+[node name="Fire" parent="Interact" instance=ExtResource("iarea")]
+position = Vector2(96.0, 100.0)
+action_name = "warm up"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact/Fire"]
+shape = SubResource("RS_7")
+
+[node name="Wall" parent="Interact" instance=ExtResource("iarea")]
+position = Vector2(96.0, 55.0)
+action_name = "look"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact/Wall"]
+shape = SubResource("RS_8")
+
+[node name="Stones" parent="Interact" instance=ExtResource("iarea")]
+position = Vector2(44.0, 110.0)
+action_name = "look"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact/Stones"]
+shape = SubResource("RS_9")
+
+[node name="Exit" type="Area2D" parent="."]
+position = Vector2(96, 158)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Exit"]
+shape = SubResource("RS_exit")
+
+[node name="Entrance" type="Marker2D" parent="." groups=["player_spawn"]]
+position = Vector2(96, 124)
+
+[node name="PlayerJosh" parent="." instance=ExtResource("player")]
+position = Vector2(96, 124)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(96, 80)
+zoom = Vector2(4, 4)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Inv_UI" parent="CanvasLayer" instance=ExtResource("invui")]
+offset_left = 527.0
+offset_top = 167.0
+offset_right = 624.0
+offset_bottom = 241.0
+scale = Vector2(10, 10)
+
+[node name="LevelAudio" parent="." instance=ExtResource("levelaudio")]
+music = "res://audio/music/cliffside_bed.wav"
+music_volume_db = -12.0
+
+[connection signal="body_entered" from="Exit" to="." method="_on_exit_body_entered"]

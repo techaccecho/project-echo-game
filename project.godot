@@ -12,7 +12,7 @@ config_version=5
 
 config/name="echo-game-world"
 run/main_scene="uid://cma1nm3nuech"
-config/features=PackedStringArray("4.6", "Forward Plus")
+config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
@@ -129,7 +129,8 @@ hotbar_4={
 
 [internationalization]
 
-locale/translations_pot_files=PackedStringArray("res://dialogue/greet.dialogue", "res://dialogue/forester.dialogue", "res://dialogue/rubble_wall.dialogue", "res://dialogue/cave_entrance.dialogue", "res://dialogue/old_path.dialogue", "res://dialogue/arrival.dialogue", "res://dialogue/blacksmith_house.dialogue", "res://dialogue/fishing_hut.dialogue", "res://dialogue/grove.dialogue", "res://dialogue/greeter.dialogue", "res://dialogue/sand_crossing.dialogue", "res://dialogue/fishing_spot.dialogue", "res://dialogue/gate.dialogue")
+
+locale/translations_pot_files=PackedStringArray("res://dialogue/greet.dialogue", "res://dialogue/forester.dialogue", "res://dialogue/rubble_wall.dialogue", "res://dialogue/cave_entrance.dialogue", "res://dialogue/old_path.dialogue", "res://dialogue/arrival.dialogue", "res://dialogue/blacksmith_house.dialogue", "res://dialogue/fishing_hut.dialogue", "res://dialogue/grove.dialogue", "res://dialogue/greeter.dialogue", "res://dialogue/sand_crossing.dialogue", "res://dialogue/fishing_spot.dialogue", "res://dialogue/gate.dialogue", "res://dialogue/echo_cave.dialogue", "res://dialogue/cliffside.dialogue")
 
 [layer_names]
 

@@ -12,6 +12,8 @@ extends Node2D
 ## Optional rubble wall that must be cleared first.
 @export var rubble_path: NodePath
 
+const CARD := preload("res://cutscenes/cliff_to_grove.tscn")
+
 @onready var interaction_area: InteractionArea = $InteractionArea
 
 var dialogue_resource = load("res://dialogue/cave_entrance.dialogue")
@@ -41,6 +43,8 @@ func _on_interact() -> void:
 	if target_scene != "" and ResourceLoader.exists(target_scene):
 		DialogueManager.show_dialogue_balloon(dialogue_resource, "enter", [self, player])
 		await DialogueManager.dialogue_ended
+		# The story card the first time through; afterwards just the passage.
+		await SceneManager.play_cutscene(CARD, "cutscene.cliff_to_grove")
 		SceneManager.change_level(target_scene, target_spawn)
 	else:
 		DialogueManager.show_dialogue_balloon(dialogue_resource, "sealed", [self, player])

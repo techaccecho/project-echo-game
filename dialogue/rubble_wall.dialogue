@@ -5,6 +5,13 @@ You could shift it with an axe. You don't have one.
 do enable_movement()
 => END
 
+~ hint
+do disable_movement()
+Stone and vine, stacked shoulder high across the gap.
+The vines are doing the holding. A few good swings of the axe should bring it down.
+do enable_movement()
+=> END
+
 ~ cleared
 do disable_movement()
 The pile comes apart easier than it looks. The vines were holding it together, not the stone.
