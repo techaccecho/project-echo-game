@@ -16,6 +16,9 @@
 [ext_resource type="PackedScene" path="res://interaction/interaction_area/interaction_area.tscn" id="14_3o8b2"]
 [ext_resource type="Script" path="res://interaction_area.gd" id="15_n7sjo"]
 
+[ext_resource type="PackedScene" uid="uid://c8frgpk2echo" path="res://objects/fragment_pickup.tscn" id="frag_pick"]
+[ext_resource type="Resource" uid="uid://bqechofrag01x" path="res://fragments/fragment_01_hollow_stump.tres" id="frag01"]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oqnng"]
 size = Vector2(80, 80)
 
@@ -473,3 +476,8 @@ action_name = "look at the stumps"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StumpsLook" unique_id=108511961]
 shape = SubResource("RectangleShape2D_smb6d")
+
+[node name="Page1" parent="." instance=ExtResource("frag_pick")]
+z_index = 5
+position = Vector2(36, 41)
+fragment = ExtResource("frag01")
