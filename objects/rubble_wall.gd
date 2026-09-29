@@ -199,3 +199,7 @@ func _puff(at: Vector2, chip_count: int, dust_count: int) -> void:
 	dust.global_position = at
 	dust.amount = dust_count
 	dust.restart()
+
+func _refresh_prompt() -> void:
+	# this is missing?
+	var a := false
