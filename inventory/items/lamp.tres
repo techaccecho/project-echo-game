@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="InvItem" format=3 uid="uid://c1amp1t3m2ech"]
+
+[ext_resource type="Script" uid="uid://by0khe2xbsbyd" path="res://inventory/inventory_item.gd" id="1_m3h8r"]
+[ext_resource type="Texture2D" uid="uid://co0ei2pt10bxk" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Exterior/Lamp .png" id="2_lamp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lamp"]
+atlas = ExtResource("2_lamp")
+region = Rect2(0, 0, 16, 16)
+
+[resource]
+script = ExtResource("1_m3h8r")
+name = "lamp"
+texture = SubResource("AtlasTexture_lamp")
+metadata/_custom_type_script = "uid://by0khe2xbsbyd"

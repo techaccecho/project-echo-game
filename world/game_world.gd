@@ -8,7 +8,8 @@ extends Node2D
 ##   • the time-of-day light and camera limits,
 ##   • Jory, who greets you on the meadow above the landing,
 ##   • the blacksmith's front door and the fishing hut, each with an interior,
-##   • fish and morning gulls on the western sea, and
+##   • fish and morning gulls on the western sea,
+##   • the lanterns that mark the lived-in places after dark, and
 ##   • the opening arrival by boat, on a new game only.
 
 const CLIFF_CUTSCENE := preload("res://cutscenes/hollow_to_cliff.tscn")
@@ -22,6 +23,20 @@ const GREETER := preload("res://character/npc_greeter.tscn")
 ## the way inland.
 const GREETER_AT := Vector2(-988, -222)
 const SEA_LIFE := preload("res://objects/sea_life.tscn")
+const LANTERN := preload("res://objects/lantern.tscn")
+const NIGHT_LIGHT := preload("res://objects/night_light.tscn")
+## Where the lamps hang once the sun is down: either side of the smith's
+## door, the workshop's front posts, beside the hut's door, and along the
+## bridge rails so the crossing is the one lit line through the dark.
+const LANTERNS := [
+	Vector2(-480, -818), Vector2(-424, -818),        # blacksmith's door
+	Vector2(-270, -822), Vector2(-138, -822),        # workshop front
+	Vector2(-1150, -842),                            # fishing hut door
+	Vector2(-842, -458), Vector2(-760, -458), Vector2(-678, -458),   # bridge, north rail
+	Vector2(-801, -412), Vector2(-719, -412),                        # bridge, south rail
+]
+## The forge in the workshop never quite goes out.
+const FORGE_GLOW := Vector2(-214, -840)
 const MORNING_GULLS := preload("res://objects/morning_gulls.tscn")
 ## The hut's y-sort anchor: 20px north of its actual bottom-left (see
 ## FishingHut), on the meadow in the map's north-west corner, between the
@@ -72,6 +87,17 @@ func _ready() -> void:
 	gulls.flying = PackedVector2Array([Vector2(-1390, -884)])
 	gulls.z_index = 2
 	add_child(gulls)
+	for at in LANTERNS:
+		var lantern: Node2D = LANTERN.instantiate()
+		lantern.position = at
+		$GameLevel1.add_child(lantern)
+	var forge: Node2D = NIGHT_LIGHT.instantiate()
+	forge.position = FORGE_GLOW
+	forge.set("radius", 70.0)
+	forge.set("strength", 0.8)
+	forge.set("warm", Color(1.0, 0.55, 0.25))
+	forge.set("flicker", 0.3)
+	add_child(forge)
 	SceneManager.on_standalone_ready()
 	# A new game opens with the player rowing in; coming back from Level 2 does
 	# not. Instanced here rather than sitting in the scene so the level file is

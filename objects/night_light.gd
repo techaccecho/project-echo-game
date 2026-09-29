@@ -1,3 +1,4 @@
+class_name NightLight
 extends PointLight2D
 ## A pool of light that comes up as the day goes down: a campfire, a lantern
 ## on the path. Draws nothing by day — it reads the Clock's tint and turns its
@@ -13,6 +14,9 @@ extends PointLight2D
 ## A lantern on its way out: it gutters and goes dark for a moment now and
 ## then, and sometimes stutters trying to come back.
 @export var faulty := false
+## Something else decides whether this is lit at all — the player's lamp,
+## which only burns once he is carrying one.
+var lit := true
 
 var _lit := 1.0
 var _fault_in := 0.0
@@ -47,12 +51,9 @@ func _process(delta: float) -> void:
 
 func _update(delta: float) -> void:
 	_t += delta
-	var night := 1.0
-	if not always_on:
-		var tint: Color = Clock.tint()
-		var lum := 0.299 * tint.r + 0.587 * tint.g + 0.114 * tint.b
-		# White at noon -> 0; the night tint (lum ~0.48) -> 1.
-		night = clampf((1.0 - lum) / 0.5, 0.0, 1.0)
+	var night := 1.0 if always_on else Clock.darkness()
+	if not lit:
+		night = 0.0
 	var wobble := 1.0 + flicker * (sin(_t * 11.0) * 0.5 + sin(_t * 23.0 + 1.3) * 0.3 + sin(_t * 5.0) * 0.2)
 	if faulty:
 		_fault_in -= delta
