@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://b2itmpku1ech"]
+
+[ext_resource type="Script" uid="uid://ctr4j54dxus40" path="res://objects/item_pickup.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://bibupx3yvo61" path="res://interaction/interaction_area/interaction_area.tscn" id="2_iarea"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pick"]
+size = Vector2(42, 38)
+
+[node name="ItemPickup" type="Node2D" unique_id=1786132584]
+y_sort_enabled = true
+script = ExtResource("1_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1460543723]
+
+[node name="InteractionArea" parent="." unique_id=767835430 instance=ExtResource("2_iarea")]
+action_name = "pick up"
+prompt_priority = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=720617880]
+shape = SubResource("RectangleShape2D_pick")

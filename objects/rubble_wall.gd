@@ -12,7 +12,7 @@ signal cleared
 const FLAG := "level2.rubble_cleared"
 const CRUMBLE_SFX := "res://audio/sfx/stone_crumble.wav"
 
-## Item the player must be carrying to clear this. Leave null to allow anyone.
+## Item the player must be holding to clear this. Leave null to allow anyone.
 @export var required_item: InvItem
 @export var blocked_title: String = "blocked"
 @export var hint_title: String = "hint"
@@ -45,6 +45,14 @@ func _ready() -> void:
 		_already_cleared()
 		return
 
+	# Connected below the early return: a wall that is already down has freed
+	# its interaction area, and there is no prompt left to refresh. The axe has
+	# to be in his hand, so the prompt follows the wheel as well as the bag.
+	if player != null and player.inv != null:
+		player.inv.update.connect(_refresh_prompt)
+		player.inv.selection_changed.connect(_refresh_prompt)
+	_refresh_prompt()
+
 
 ## Cleared on an earlier visit: only the scattered leftovers, nothing to hit.
 func _already_cleared() -> void:
@@ -64,7 +72,7 @@ func _player_has_tool() -> bool:
 		return true
 	if player == null or player.inv == null:
 		return false
-	return player.inv.has(required_item)
+	return player.inv.holding(required_item)
 
 
 func _on_interact() -> void:

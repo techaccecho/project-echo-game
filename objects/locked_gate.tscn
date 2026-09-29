@@ -1,0 +1,85 @@
+[gd_scene format=3 uid="uid://bg4t3l0ck3d1"]
+
+[ext_resource type="Script" path="res://objects/locked_gate.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Exterior/Dungeon/Door.png" id="1_door"]
+[ext_resource type="PackedScene" uid="uid://bibupx3yvo61" path="res://interaction/interaction_area/interaction_area.tscn" id="2_iarea"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g0"]
+atlas = ExtResource("1_door")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g1"]
+atlas = ExtResource("1_door")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g2"]
+atlas = ExtResource("1_door")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g3"]
+atlas = ExtResource("1_door")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g4"]
+atlas = ExtResource("1_door")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gate"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g0")
+}],
+"loop": true,
+"name": &"shut",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g4")
+}],
+"loop": false,
+"name": &"open",
+"speed": 7.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RS_gatebody"]
+size = Vector2(32, 26)
+
+[sub_resource type="RectangleShape2D" id="RS_gatearea"]
+size = Vector2(44, 40)
+
+[node name="LockedGate" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+z_index = -1
+centered = false
+offset = Vector2(0, -32)
+sprite_frames = SubResource("SpriteFrames_gate")
+animation = &"shut"
+
+[node name="Body" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+position = Vector2(16, -13)
+shape = SubResource("RS_gatebody")
+
+[node name="InteractionArea" parent="." instance=ExtResource("2_iarea")]
+position = Vector2(8, -14)
+action_name = "try the gate"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("RS_gatearea")

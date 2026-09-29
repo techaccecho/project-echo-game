@@ -13,6 +13,12 @@ class_name InteractionArea
 # Key/button hint shown inside the prompt label, e.g. "E" or "B / Click".
 @export var key_prompt: String = "E"
 
+# Which prompt wins when two areas overlap. The closest one normally wins;
+# a higher priority jumps the queue regardless of distance. Something dropped
+# on the ground sits on top of whoever dropped it, so it wants to be picked up
+# before the conversation starts again.
+@export var prompt_priority: int = 0
+
 var interact: Callable = func():
 	pass
 

@@ -3,6 +3,8 @@ do start_talking()
 do disable_movement()
 if not Flags.has("blacksmith.quest_offered")
 	=> first_meeting
+elif Flags.has("blacksmith.axe_given") and not Flags.has("blacksmith.axe_taken")
+	=> axe_on_the_ground
 elif Flags.has("blacksmith.axe_given")
 	=> after
 elif not has_rod()
@@ -94,12 +96,26 @@ Blacksmith: It's not over the ridge. It's [wave]under[/wave] it. There's a path 
 Blacksmith: The old path's grown over, and grown over means it's not a path, it's a [shake]hedge with ambitions[/shake]. You'll be cutting your way in.
 Blacksmith: Which means you want one of these.
 Blacksmith: [wait=1] Here. My spare. It's rusty and the handle's older than you are, but it bites well enough on the small trees.
-do collect(axe)
+Blacksmith: [shake]HEADS UP![/shake]
+do drop_axe()
 do Flags.set_flag("blacksmith.fish_paid")
-do Flags.set_flag("blacksmith.axe_given")
-Blacksmith: It's in your bag — press "I" if you don't believe me. Swing it with [wave]B[/wave] when something green is in your way.
-Blacksmith: Mind the fragile trees. They come down faster than you'd like and they don't much care where you're standing.
-Blacksmith: Go on. The forest is that way, and my supper is [shake]this[/shake] way.
+Blacksmith: [wait=0.5]...I did say heads up.
+- You threw an axe at me.
+	Blacksmith: I threw an axe [wave]near[/wave] you. There's a whole craft to it.
+- My foot.
+	Blacksmith: Your foot was in the landing area. That's on the foot.
+Blacksmith: Well? Pick it up. It's not going to leap into your hand — [[I have tried.|I've spent hours on that.|Believe me, I've tried.]]
+Blacksmith: Once it's in your bag you can swing it with [wave]B[/wave]. Check the bag with "I" if you don't trust me.
+Blacksmith: And mind the fragile trees. They come down faster than you'd like and they don't much care where you're standing.
+=> goodbye
+
+
+#=============================================================================
+# Thrown, and still lying in the grass where it landed.
+#=============================================================================
+~ axe_on_the_ground
+Blacksmith: [[It's on the ground. Where I threw it. Where it remains.|The axe. Down there. The axe-shaped thing.|I have thrown you an axe and you have elected to stand near it.]]
+Blacksmith: [[Bend at the knees.|Pick it [shake]up[/shake].|Grass doesn't need chopping. Trees do. Take the axe.]]
 => goodbye
 
 

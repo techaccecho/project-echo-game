@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://d1p0nddv1ech"]
+
+[ext_resource type="Script" path="res://interaction/pond_dive/pond_dive.gd" id="1_dive"]
+
+[node name="PondDive" type="CanvasLayer"]
+layer = 60
+script = ExtResource("1_dive")

@@ -41,6 +41,10 @@ func _sort_by_distance_to_player(area1, area2):
 	if area1 == null or area2 == null or player == null:
 		return false
 
+	# Priority first, distance only to settle a tie: a dropped axe lying at the
+	# blacksmith's feet should be picked up, not start the conversation again.
+	if area1.prompt_priority != area2.prompt_priority:
+		return area1.prompt_priority > area2.prompt_priority
 	var area1_to_player = player.global_position.distance_to(area1.global_position)
 	var area2_to_player = player.global_position.distance_to(area2.global_position)
 	return area1_to_player < area2_to_player
