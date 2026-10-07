@@ -43,8 +43,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
 # Shows a "get ready" countdown, then `length` random letters one at a time.
 # Each must be pressed within LETTER_DURATION seconds to count as a hit.
-# Finishes with a standalone result screen (never overlapping the last
-# letter). Returns true only if every letter in the sequence was hit.
+# The first miss ends the run. Finishes with a standalone result screen
+# (never overlapping the last letter). Returns true only if every letter in
+# the sequence was hit.
 func play_sequence(length: int = 3) -> bool:
 	UiStack.push("fishing")
 	_clear_panel()
@@ -71,6 +72,11 @@ func play_sequence(length: int = 3) -> bool:
 			all_hit = false
 
 		await get_tree().create_timer(FEEDBACK_DURATION).timeout
+		# Every letter has to land, so the first miss has already decided it.
+		# Stop here, once the missed letter has had its beat in red, rather
+		# than make him play out letters that can no longer catch anything.
+		if not all_hit:
+			break
 
 	await get_tree().create_timer(POST_LETTERS_PAUSE).timeout
 
