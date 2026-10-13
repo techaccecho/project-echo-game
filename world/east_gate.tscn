@@ -1,26 +1,31 @@
-[gd_scene format=4]
+[gd_scene format=4 uid="uid://dvqr7unybthrb"]
 
-[ext_resource type="Script" path="res://world/east_gate.gd" id="1_54v1m"]
-[ext_resource type="TileSet" path="res://base_terrain/grass_and_cliff_and_water.tres" id="2_pycu0"]
-[ext_resource type="TileSet" path="res://tilesets/Road.tres" id="3_5a0hn"]
-[ext_resource type="PackedScene" path="res://objects/locked_gate.tscn" id="4_50hqj"]
-[ext_resource type="Script" path="res://objects/locked_gate.gd" id="5_13hwg"]
-[ext_resource type="Resource" path="res://inventory/items/forest_key.tres" id="6_1ulkv"]
-[ext_resource type="Texture2D" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Exterior/Dungeon/statue.png" id="7_ps84m"]
-[ext_resource type="PackedScene" path="res://objects/pine_tree_large.tscn" id="8_c0xyk"]
-[ext_resource type="Texture2D" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Tree/Common/Shadow/Pine Tree.png" id="9_15hph"]
-[ext_resource type="PackedScene" path="res://objects/maple_tree_hittable_light.tscn" id="10_ipc2y"]
-[ext_resource type="Texture2D" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Tree/Common/Effects/FX Effects Dark Forest leafs 2.png" id="11_nfuyo"]
-[ext_resource type="Texture2D" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Tree/Common/Shadow/Maple Tree Animation.png" id="12_fqejf"]
-[ext_resource type="Script" path="res://objects/maple_tree_hittable_light.gd" id="13_vqttf"]
-[ext_resource type="PackedScene" path="res://interaction/interaction_area/interaction_area.tscn" id="14_3o8b2"]
-[ext_resource type="Script" path="res://interaction_area.gd" id="15_n7sjo"]
+[ext_resource type="Script" uid="uid://cidl6m8ft0hbx" path="res://world/east_gate.gd" id="1_54v1m"]
+[ext_resource type="TileSet" uid="uid://bn57hrrqptm2r" path="res://base_terrain/grass_and_cliff_and_water.tres" id="2_pycu0"]
+[ext_resource type="TileSet" uid="uid://5hqydjyei7cw" path="res://tilesets/Road.tres" id="3_5a0hn"]
+[ext_resource type="PackedScene" uid="uid://bg4t3l0ck3d1" path="res://objects/locked_gate.tscn" id="4_50hqj"]
+[ext_resource type="Resource" uid="uid://cskstfx5pwpfm" path="res://inventory/items/forest_key.tres" id="6_1ulkv"]
+[ext_resource type="Texture2D" uid="uid://bvw32kp0wfgsw" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Exterior/Dungeon/statue.png" id="7_ps84m"]
+[ext_resource type="PackedScene" uid="uid://yayo4t5ledsq" path="res://objects/pine_tree_large.tscn" id="8_c0xyk"]
+[ext_resource type="PackedScene" uid="uid://c47vpfnpe1k1i" path="res://objects/maple_tree_hittable_light.tscn" id="10_ipc2y"]
+[ext_resource type="Texture2D" uid="uid://cyr3hbhw5wa1q" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Tree/Common/Effects/FX Effects Dark Forest leafs 2.png" id="11_nfuyo"]
+[ext_resource type="Texture2D" uid="uid://c8ykgeghdacey" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Tree/Common/Shadow/Maple Tree Animation.png" id="12_fqejf"]
+[ext_resource type="PackedScene" uid="uid://bibupx3yvo61" path="res://interaction/interaction_area/interaction_area.tscn" id="14_3o8b2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oqnng"]
 size = Vector2(80, 80)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6bfr4"]
 size = Vector2(32, 48)
+
+[sub_resource type="RectangleShape2D" id="RS_doortop"]
+size = Vector2(32, 12)
+
+[sub_resource type="RectangleShape2D" id="RS_jambw"]
+size = Vector2(8, 32)
+
+[sub_resource type="RectangleShape2D" id="RS_jambe"]
+size = Vector2(7, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_36eg3"]
 size = Vector2(96, 80)
@@ -190,22 +195,13 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_smb6d"]
 size = Vector2(30, 26)
 
-[sub_resource type="RectangleShape2D" id="RS_doortop"]
-size = Vector2(32, 12)
-
-[sub_resource type="RectangleShape2D" id="RS_jambw"]
-size = Vector2(8, 32)
-
-[sub_resource type="RectangleShape2D" id="RS_jambe"]
-size = Vector2(7, 32)
-
 [node name="EastGate" type="Node2D" unique_id=395062595]
 y_sort_enabled = true
 script = ExtResource("1_54v1m")
 
 [node name="Cliff" type="TileMapLayer" parent="." unique_id=2136608672]
 z_index = -4
-tile_map_data = PackedByteArray("AAD6//v/BwAEAAAAAAD6//z/BwAEAAMAAAD6//3/BwAIAAQAAAD6//7/BwAIAAQAAAD6////BwAIAAQAAAD6/wAABwAGAAAAAAD7//v/BwAGAAAAAAD7//z/BwAGAAMAAAD7//3/BwAJAAQAAAD7//7/BwAJAAQAAAD7////BwAJAAQAAAD7/wAABwAGAAAAAAD8//v/BwAGAAAAAAD8//z/BwAGAAMAAAD8//3/BwAJAAQAAAD8//7/BwAJAAQAAAD8////BwAJAAQAAAD8/wAABwAGAAAAAAD9//v/BwAGAAAAAAD9//z/BwAGAAMAAAD9//3/BwAJAAQAAAD9//7/BwAJAAQAAAD9////BwAJAAQAAAD9/wAABwAGAAAAAAD+//v/BwAGAAAAAAD+//z/BwAGAAMAAAD+//3/BwAJAAQAAAD+//7/BwAJAAQAAAD+////BwAJAAQAAAD+/wAABwAGAAAAAAD///v/BwAGAAAAAAD///z/BwAGAAMAAAD///3/BwAJAAQAAAD///7/BwAJAAQAAAD/////BwAJAAQAAAD//wAABwAGAAAAAAAAAPv/BwAGAAAAAAAAAPz/BwAGAAMAAAAAAP3/BwAJAAQAAAAAAP7/BwAJAAQAAAAAAP//BwAJAAQAAAAAAAAABwAGAAAAAAABAPv/BwAGAAAAAAABAPz/BwAGAAMAAAABAP3/BwAJAAQAAAABAP7/BwAJAAQAAAABAP//BwAJAAQAAAABAAAABwAGAAAAAAACAPv/BwAGAAAAAAACAPz/BwAGAAMAAAACAP3/BwAJAAQAAAACAP7/BwAJAAQAAAACAP//BwAJAAQAAAACAAAABwAGAAAAAAADAPv/BwAGAAAAAAADAPz/BwAGAAMAAAADAP3/BwAJAAQAAAADAP7/BwAJAAQAAAADAP//BwAJAAQAAAADAAAABwAGAAAAAAAEAPv/BwAGAAAAAAAEAPz/BwAGAAMAAAAEAP3/BwAJAAQAAAAEAP7/BwAJAAQAAAAEAP//BwAJAAQAAAAEAAAABwAGAAAAAAAFAPv/BwAGAAAAAAAFAPz/BwAGAAMAAAAFAP3/BwAJAAQAAAAFAP7/BwAJAAQAAAAFAP//BwAJAAQAAAAFAAAABwAGAAAAAAA=")
+tile_map_data = PackedByteArray("AAD6//v/BwAEAAAAAAD6//z/BwAGAAIAAAD6//3/BwAJAAQAAAD6//7/BwAJAAQAAAD6////BwAIAAQAAAD6/wAABwAKAAAAAAD7//v/BwAKAAAAAAD7//z/BwAJAAMAAAD7//3/BwAJAAQAAAD7//7/BwAJAAQAAAD7////BwAJAAQAAAD7/wAABwAGAAAAAAD8//v/BwAKAAAAAAD8//z/BwAJAAMAAAD8//3/BwAJAAQAAAD8//7/BwAJAAQAAAD8////BwAJAAQAAAD8/wAABwAKAAAAAAD9//v/BwAKAAAAAAD9//z/BwAJAAMAAAD9//3/BwAJAAQAAAD9//7/BwAJAAQAAAD9////BwAJAAQAAAD9/wAABwAKAAAAAAD+//v/BwAKAAAAAAD+//z/BwAJAAMAAAD+//3/BwAJAAQAAAD+//7/BwAJAAQAAAD+////BwAJAAQAAAD+/wAABwAKAAAAAAD///v/BwAKAAAAAAD///z/BwAJAAMAAAD///3/BwAJAAQAAAD///7/BwAJAAQAAAD/////BwAJAAQAAAD//wAABwAKAAAAAAAAAPv/BwAKAAAAAAAAAPz/BwAJAAMAAAAAAP3/BwAJAAQAAAAAAP7/BwAJAAQAAAAAAP//BwAJAAQAAAAAAAAABwAKAAAAAAABAPv/BwAKAAAAAAABAPz/BwAJAAMAAAABAP3/BwAJAAQAAAABAP7/BwAJAAQAAAABAP//BwAJAAQAAAABAAAABwAGAAAAAAACAPv/BwAKAAAAAAACAPz/BwAJAAMAAAACAP3/BwAJAAQAAAACAP7/BwAJAAQAAAACAP//BwAJAAQAAAACAAAABwAKAAAAAAADAPv/BwAKAAAAAAADAPz/BwAJAAMAAAADAP3/BwAJAAQAAAADAP7/BwAJAAQAAAADAP//BwAJAAQAAAADAAAABwAKAAAAAAAEAPv/BwAKAAAAAAAEAPz/BwAJAAMAAAAEAP3/BwAJAAQAAAAEAP7/BwAJAAQAAAAEAP//BwAJAAQAAAAEAAAABwAKAAAAAAAFAPv/BwAKAAAAAAAFAPz/BwAJAAMAAAAFAP3/BwAJAAQAAAAFAP7/BwAJAAQAAAAFAP//BwAJAAQAAAAFAAAABwAKAAAAAAA=")
 tile_set = ExtResource("2_pycu0")
 
 [node name="Path" type="TileMapLayer" parent="." unique_id=1870548762]
@@ -223,15 +219,15 @@ shape = SubResource("RectangleShape2D_oqnng")
 position = Vector2(0, -56)
 shape = SubResource("RectangleShape2D_6bfr4")
 
-[node name="DoorTop" type="CollisionShape2D" parent="Walls"]
+[node name="DoorTop" type="CollisionShape2D" parent="Walls" unique_id=2020507642]
 position = Vector2(0, -26)
 shape = SubResource("RS_doortop")
 
-[node name="DoorJambWest" type="CollisionShape2D" parent="Walls"]
+[node name="DoorJambWest" type="CollisionShape2D" parent="Walls" unique_id=1902238376]
 position = Vector2(-12, -16)
 shape = SubResource("RS_jambw")
 
-[node name="DoorJambEast" type="CollisionShape2D" parent="Walls"]
+[node name="DoorJambEast" type="CollisionShape2D" parent="Walls" unique_id=1929705519]
 position = Vector2(12.5, -16)
 shape = SubResource("RS_jambe")
 
@@ -261,13 +257,12 @@ shape = SubResource("RectangleShape2D_c3j1r")
 position = Vector2(-96, 58)
 shape = SubResource("RectangleShape2D_4h80i")
 
-[node name="Gate" type="Node2D" parent="." unique_id=1003994507 instance=ExtResource("4_50hqj")]
+[node name="Gate" parent="." unique_id=1003994507 instance=ExtResource("4_50hqj")]
 z_index = 5
 position = Vector2(-16, 0)
-script = ExtResource("5_13hwg")
 required_item = ExtResource("6_1ulkv")
 
-[node name="Occluder" type="Sprite2D" parent="."]
+[node name="Occluder" type="Sprite2D" parent="." unique_id=662429538]
 visible = false
 z_index = 5
 position = Vector2(0, -1)
@@ -306,169 +301,90 @@ shape = SubResource("RectangleShape2D_3mos3")
 [node name="Pines" type="Node2D" parent="." unique_id=686884835]
 y_sort_enabled = true
 
-[node name="Pine1" type="Sprite2D" parent="Pines" unique_id=1488782070 instance=ExtResource("8_c0xyk")]
+[node name="Pine1" parent="Pines" unique_id=1488782070 instance=ExtResource("8_c0xyk")]
 z_index = 5
 position = Vector2(-86, -62)
-texture = ExtResource("9_15hph")
-offset = Vector2(0, -17)
-region_enabled = true
-region_rect = Rect2(96, 0, 32, 48)
 
-[node name="Pine2" type="Sprite2D" parent="Pines" unique_id=736345351 instance=ExtResource("8_c0xyk")]
+[node name="Pine2" parent="Pines" unique_id=736345351 instance=ExtResource("8_c0xyk")]
 z_index = 5
 position = Vector2(-60, -72)
-texture = ExtResource("9_15hph")
-offset = Vector2(0, -17)
-region_enabled = true
-region_rect = Rect2(96, 0, 32, 48)
 
-[node name="Pine3" type="Sprite2D" parent="Pines" unique_id=385015890 instance=ExtResource("8_c0xyk")]
+[node name="Pine3" parent="Pines" unique_id=385015890 instance=ExtResource("8_c0xyk")]
 z_index = 5
 position = Vector2(-34, -60)
-texture = ExtResource("9_15hph")
-offset = Vector2(0, -17)
-region_enabled = true
-region_rect = Rect2(96, 0, 32, 48)
 
-[node name="Pine4" type="Sprite2D" parent="Pines" unique_id=533484146 instance=ExtResource("8_c0xyk")]
+[node name="Pine4" parent="Pines" unique_id=533484146 instance=ExtResource("8_c0xyk")]
 z_index = 5
 position = Vector2(-8, -74)
-texture = ExtResource("9_15hph")
-offset = Vector2(0, -17)
-region_enabled = true
-region_rect = Rect2(96, 0, 32, 48)
 
-[node name="Pine5" type="Sprite2D" parent="Pines" unique_id=1396762145 instance=ExtResource("8_c0xyk")]
+[node name="Pine5" parent="Pines" unique_id=1396762145 instance=ExtResource("8_c0xyk")]
 z_index = 5
 position = Vector2(-108, 6)
-texture = ExtResource("9_15hph")
-offset = Vector2(0, -17)
-region_enabled = true
-region_rect = Rect2(96, 0, 32, 48)
 
-[node name="Pine6" type="Sprite2D" parent="Pines" unique_id=1987831481 instance=ExtResource("8_c0xyk")]
+[node name="Pine6" parent="Pines" unique_id=1987831481 instance=ExtResource("8_c0xyk")]
 z_index = 5
 position = Vector2(-100, 28)
-texture = ExtResource("9_15hph")
-offset = Vector2(0, -17)
-region_enabled = true
-region_rect = Rect2(96, 0, 32, 48)
 
-[node name="Pine7" type="Sprite2D" parent="Pines" unique_id=892655392 instance=ExtResource("8_c0xyk")]
+[node name="Pine7" parent="Pines" unique_id=892655392 instance=ExtResource("8_c0xyk")]
 z_index = 5
 position = Vector2(-110, 82)
-texture = ExtResource("9_15hph")
-offset = Vector2(0, -17)
-region_enabled = true
-region_rect = Rect2(96, 0, 32, 48)
 
-[node name="Pine8" type="Sprite2D" parent="Pines" unique_id=870263018 instance=ExtResource("8_c0xyk")]
+[node name="Pine8" parent="Pines" unique_id=870263018 instance=ExtResource("8_c0xyk")]
 z_index = 5
 position = Vector2(-98, 100)
-texture = ExtResource("9_15hph")
-offset = Vector2(0, -17)
-region_enabled = true
-region_rect = Rect2(96, 0, 32, 48)
 
-[node name="Pine9" type="Sprite2D" parent="Pines" unique_id=1202582856 instance=ExtResource("8_c0xyk")]
+[node name="Pine9" parent="Pines" unique_id=1202582856 instance=ExtResource("8_c0xyk")]
 z_index = 5
 position = Vector2(-76, 98)
-texture = ExtResource("9_15hph")
-offset = Vector2(0, -17)
-region_enabled = true
-region_rect = Rect2(96, 0, 32, 48)
 
-[node name="Pine10" type="Sprite2D" parent="Pines" unique_id=558266047 instance=ExtResource("8_c0xyk")]
+[node name="Pine10" parent="Pines" unique_id=558266047 instance=ExtResource("8_c0xyk")]
 z_index = 5
 position = Vector2(-52, 94)
-texture = ExtResource("9_15hph")
-offset = Vector2(0, -17)
-region_enabled = true
-region_rect = Rect2(96, 0, 32, 48)
 
-[node name="Pine11" type="Sprite2D" parent="Pines" unique_id=269042383 instance=ExtResource("8_c0xyk")]
+[node name="Pine11" parent="Pines" unique_id=269042383 instance=ExtResource("8_c0xyk")]
 z_index = 5
 position = Vector2(-28, 102)
-texture = ExtResource("9_15hph")
-offset = Vector2(0, -17)
-region_enabled = true
-region_rect = Rect2(96, 0, 32, 48)
 
-[node name="Pine12" type="Sprite2D" parent="Pines" unique_id=1876356872 instance=ExtResource("8_c0xyk")]
+[node name="Pine12" parent="Pines" unique_id=1876356872 instance=ExtResource("8_c0xyk")]
 z_index = 5
 position = Vector2(-4, 96)
-texture = ExtResource("9_15hph")
-offset = Vector2(0, -17)
-region_enabled = true
-region_rect = Rect2(96, 0, 32, 48)
 
 [node name="PathTrees" type="Node2D" parent="." unique_id=739237459]
 y_sort_enabled = true
 
-[node name="MouthMaple1" type="AnimatedSprite2D" parent="PathTrees" unique_id=106629565 instance=ExtResource("10_ipc2y")]
-z_index = 5
-y_sort_enabled = true
+[node name="MouthMaple1" parent="PathTrees" unique_id=106629565 instance=ExtResource("10_ipc2y")]
 position = Vector2(-98, 51)
 sprite_frames = SubResource("SpriteFrames_qessd")
-animation = &"trunk"
-offset = Vector2(0, -11)
-script = ExtResource("13_vqttf")
 
-[node name="MouthMaple2" type="AnimatedSprite2D" parent="PathTrees" unique_id=1846447749 instance=ExtResource("10_ipc2y")]
-z_index = 5
-y_sort_enabled = true
+[node name="MouthMaple2" parent="PathTrees" unique_id=1846447749 instance=ExtResource("10_ipc2y")]
 position = Vector2(-93, 66)
 sprite_frames = SubResource("SpriteFrames_qessd")
-animation = &"trunk"
-offset = Vector2(0, -11)
-script = ExtResource("13_vqttf")
 
 [node name="Stumps" type="Node2D" parent="." unique_id=48211114]
 y_sort_enabled = true
 
-[node name="Stump1" type="AnimatedSprite2D" parent="Stumps" unique_id=1157704417 instance=ExtResource("10_ipc2y")]
-z_index = 5
-y_sort_enabled = true
+[node name="Stump1" parent="Stumps" unique_id=1157704417 instance=ExtResource("10_ipc2y")]
 position = Vector2(-68, 20)
 sprite_frames = SubResource("SpriteFrames_qessd")
-animation = &"trunk"
-offset = Vector2(0, -11)
-script = ExtResource("13_vqttf")
 starts_felled = true
 
-[node name="Stump2" type="AnimatedSprite2D" parent="Stumps" unique_id=1015644427 instance=ExtResource("10_ipc2y")]
-z_index = 5
-y_sort_enabled = true
+[node name="Stump2" parent="Stumps" unique_id=1015644427 instance=ExtResource("10_ipc2y")]
 position = Vector2(-36, 60)
 sprite_frames = SubResource("SpriteFrames_qessd")
-animation = &"trunk"
-offset = Vector2(0, -11)
-script = ExtResource("13_vqttf")
 starts_felled = true
 
-[node name="Stump3" type="AnimatedSprite2D" parent="Stumps" unique_id=815565823 instance=ExtResource("10_ipc2y")]
-z_index = 5
-y_sort_enabled = true
+[node name="Stump3" parent="Stumps" unique_id=815565823 instance=ExtResource("10_ipc2y")]
 position = Vector2(32, 38)
 sprite_frames = SubResource("SpriteFrames_qessd")
-animation = &"trunk"
-offset = Vector2(0, -11)
-script = ExtResource("13_vqttf")
 starts_felled = true
 
-[node name="Stump4" type="AnimatedSprite2D" parent="Stumps" unique_id=2096835379 instance=ExtResource("10_ipc2y")]
-z_index = 5
-y_sort_enabled = true
+[node name="Stump4" parent="Stumps" unique_id=2096835379 instance=ExtResource("10_ipc2y")]
 position = Vector2(-74, 74)
 sprite_frames = SubResource("SpriteFrames_qessd")
-animation = &"trunk"
-offset = Vector2(0, -11)
-script = ExtResource("13_vqttf")
 starts_felled = true
 
-[node name="StumpsLook" type="Area2D" parent="." unique_id=720283725 instance=ExtResource("14_3o8b2")]
+[node name="StumpsLook" parent="." unique_id=720283725 instance=ExtResource("14_3o8b2")]
 position = Vector2(-68, 20)
-script = ExtResource("15_n7sjo")
 action_name = "look at the stumps"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StumpsLook" unique_id=108511961]
