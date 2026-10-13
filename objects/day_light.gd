@@ -5,5 +5,16 @@ extends CanvasModulate
 
 @export var base: Color = Color.WHITE
 
+
+# The Clock counts DayLights so it knows whether the scene has a sky: the
+# player's lamp stays off in a room, however late it is outside.
+func _enter_tree() -> void:
+	Clock.sky_count += 1
+
+
+func _exit_tree() -> void:
+	Clock.sky_count -= 1
+
+
 func _process(_delta: float) -> void:
 	color = base * Clock.tint()

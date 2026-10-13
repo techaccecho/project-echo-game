@@ -5,8 +5,9 @@ class_name CrumbleBridge
 ##
 ## The path widens here and the ground is deep, dry sand: every step on it is
 ## slow. The player crosses left to right; at each step exactly one lane
-## holds, and the rest is quicksand that pours away into the drop and takes
-## the player down the cliff into the sea far below. Firm sand and quicksand
+## holds, and the rest is quicksand that takes the player under where he
+## stands. (The cliff edge beside the path still drops him into the sea —
+## that is the FallZone's job, not this one's.) Firm sand and quicksand
 ## are visually identical, so the crossing is learnt by dying — which means
 ## the respawn wants to be the near side of the crossing, not the far side of
 ## the level. Set `respawn_spawn` to a marker just before it.
@@ -249,5 +250,5 @@ func _give_way(c: Vector2i) -> void:
 		stone.give_way()
 		# Let the shudder play out before the player goes with it.
 		await stone.gave_way
-	if _player and _player.has_method("fall_through_and_drown"):
-		_player.fall_through_and_drown(sea_y, respawn_scene, respawn_spawn)
+	if _player and _player.has_method("sink_in_sand"):
+		_player.sink_in_sand(respawn_scene, respawn_spawn)

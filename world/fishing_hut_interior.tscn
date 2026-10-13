@@ -3,6 +3,8 @@
 [ext_resource type="TileSet" uid="uid://c1nt3r10rh0us" path="res://tilesets/interior_house.tres" id="houseset"]
 [ext_resource type="PackedScene" uid="uid://bibupx3yvo61" path="res://interaction/interaction_area/interaction_area.tscn" id="iarea"]
 [ext_resource type="Resource" uid="uid://bq3rw8k5fnd2x" path="res://inventory/items/fishing_rod.tres" id="item_rod"]
+[ext_resource type="Resource" uid="uid://c1amp1t3m2ech" path="res://inventory/items/lamp.tres" id="item_lamp"]
+[ext_resource type="Texture2D" uid="uid://co0ei2pt10bxk" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Exterior/Lamp .png" id="tex_lamp"]
 [ext_resource type="Texture2D" uid="uid://f5qtnov6iluw" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Icons/Weapons/RPG/5.png" id="tex_rod"]
 [ext_resource type="PackedScene" uid="uid://doa04urw7iidr" path="res://inventory/inv_ui.tscn" id="invui"]
 [ext_resource type="PackedScene" uid="uid://blvlaud102ec" path="res://objects/level_audio.tscn" id="levelaudio"]
@@ -90,6 +92,11 @@ lines = {
 "Table": "table"
 }
 pickups = {
+"Lamp": {
+"item": ExtResource("item_lamp"),
+"line": "lamp_found",
+"prop": "WallDressing/Lamp"
+},
 "Rod": {
 "item": ExtResource("item_rod"),
 "line": "rod_found",
@@ -136,6 +143,12 @@ texture = ExtResource("tex_decor")
 centered = false
 region_enabled = true
 region_rect = Rect2(160, 0, 16, 16)
+
+[node name="Lamp" type="Sprite2D" parent="WallDressing"]
+position = Vector2(128, 28)
+texture = ExtResource("tex_lamp")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
 
 [node name="Props" type="Node2D" parent="." unique_id=749395952]
 y_sort_enabled = true
@@ -284,6 +297,13 @@ action_name = "look"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interact/Crates" unique_id=601431737]
 shape = SubResource("RS_15")
+
+[node name="Lamp" parent="Interact" instance=ExtResource("iarea")]
+position = Vector2(128, 52)
+action_name = "take the lamp"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact/Lamp"]
+shape = SubResource("RS_rod")
 
 [node name="Rod" parent="Interact" instance=ExtResource("iarea")]
 position = Vector2(168, 144)

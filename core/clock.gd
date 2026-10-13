@@ -22,17 +22,22 @@ const DAY_SECONDS := 16.0 * 60.0
 const WAKE_HOUR := 7.0
 
 ## The colour the world is lit with at each hour, blended between the entries.
-## Kept mild on purpose: night has to stay playable with no lamps in the pack.
+## Night is properly dark: without a lamp you are feeling your way, which is
+## the point — the lit places (a doorway, the bridge, a campfire) are the
+## landmarks, and the player's own lamp is what makes the dark crossable.
 const LIGHT := [
-	[5.0,  Color(0.42, 0.46, 0.66)],   # last of the night
+	[5.0,  Color(0.20, 0.22, 0.40)],   # last of the night
 	[6.5,  Color(0.92, 0.74, 0.62)],   # dawn
 	[8.5,  Color(1.00, 0.97, 0.90)],   # morning
 	[12.0, Color(1.00, 1.00, 1.00)],   # noon
 	[16.0, Color(1.00, 0.96, 0.88)],   # late afternoon
 	[18.5, Color(1.00, 0.72, 0.50)],   # evening
-	[20.5, Color(0.62, 0.52, 0.66)],   # dusk
-	[22.0, Color(0.42, 0.46, 0.66)],   # night
+	[20.5, Color(0.50, 0.40, 0.60)],   # dusk
+	[22.0, Color(0.20, 0.22, 0.40)],   # night
 ]
+## The tint's luminance at full night, for darkness(): anything this dark or
+## darker counts as 1.
+const NIGHT_LUM := 0.24
 
 var day: int = 1
 ## 0..24, fractional.
@@ -41,6 +46,14 @@ var hour: float = WAKE_HOUR
 var running: bool = false
 
 var _last_phase: int = -1
+
+## How many DayLights are in the tree — i.e. whether the current scene has a
+## sky at all. Interiors have none, and no lamp needs to be lit in one.
+var sky_count: int = 0
+## A level that makes its own weather (Level 3's storm never lets the sun in)
+## sets this and tint() answers with it until it is cleared.
+var _override: Color = Color.WHITE
+var _overriding: bool = false
 
 
 func _process(delta: float) -> void:
@@ -81,8 +94,15 @@ func is_night() -> bool:
 
 
 ## The world's light right now. White at noon, warm at the ends of the day,
-## a cool blue-grey through the night.
+## a deep blue through the night — unless a level has overridden it.
 func tint() -> Color:
+	if _overriding:
+		return _override
+	return sky_tint()
+
+
+## The light the sky alone would give at this hour, override or not.
+func sky_tint() -> Color:
 	var n := LIGHT.size()
 	for i in n:
 		var h0: float = LIGHT[i][0]
@@ -98,6 +118,25 @@ func tint() -> Color:
 		if since < span:
 			return c0.lerp(c1, since / span)
 	return Color.WHITE
+
+
+## 0 in full daylight, 1 at full night: how much the lamps should be doing.
+## Zero anywhere without a sky (an interior), whatever the hour.
+func darkness() -> float:
+	if sky_count <= 0:
+		return 0.0
+	var c := tint()
+	var lum := 0.299 * c.r + 0.587 * c.g + 0.114 * c.b
+	return clampf((1.0 - lum) / (1.0 - NIGHT_LUM), 0.0, 1.0)
+
+
+func set_light_override(c: Color) -> void:
+	_override = c
+	_overriding = true
+
+
+func clear_light_override() -> void:
+	_overriding = false
 
 
 ## Begin a run at the first morning.

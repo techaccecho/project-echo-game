@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="Fragment" format=3 uid="uid://bqechofrag06x"]
+
+[ext_resource type="Script" uid="uid://b4sep75xygsp3" path="res://core/fragment.gd" id="1_frag"]
+[ext_resource type="Texture2D" uid="uid://7g7rmeqwftkm" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Icons/Weapons/Books and Potions/Books.png" id="2_icon"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_page"]
+atlas = ExtResource("2_icon")
+region = Rect2(0, 48, 16, 16)
+
+[resource]
+script = ExtResource("1_frag")
+id = "f06_hollow_behind_pine"
+title = "the hollow behind the pine"
+entry_label = "ENTRY 15"
+level = 2
+found_at = "a hidden cave off the Cliffside Path"
+body = "Rain all day. Found a hollow in the cliff behind a pine, up from the old man's fire — you would walk past it a hundred times.
+
+Somebody has had a fire in here before me. Not him. The ash is old and there is a circle of stones laid out too neatly for a lookout who sleeps by his own fire every night.
+
+Cut this out of the mountain, I think, a long time ago. The back wall is worked. There are marks on it I keep starting to draw and then stopping, because they change when I look away, and I do not want that on paper.
+
+Warm, though. Dry. I will sleep here and go on to the wall in the morning."
+footer = "— a sketch of three short strokes, one under the other, scratched out."
+name = "a torn page"
+texture = SubResource("AtlasTexture_page")
+metadata/_custom_type_script = "res://core/fragment.gd"

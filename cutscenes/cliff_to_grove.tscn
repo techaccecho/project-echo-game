@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://cc11ff2gr0v3x"]
+
+[ext_resource type="PackedScene" uid="uid://bcutsc3n3bse" path="res://objects/cutscene.tscn" id="1_base"]
+
+[node name="CliffToGrove" instance=ExtResource("1_base")]
+beats = Array[String](["The passage goes down for longer than the mountain is tall.", "When it opens out again there are trees, and the trees are the wrong colour.", "The ground between them does not take a footprint. The light does not come from anywhere.", "Somewhere ahead of you, somebody is talking to nobody."])
+title = "CASE 03"
+subtitle = "THE CORRUPTED GROVE"

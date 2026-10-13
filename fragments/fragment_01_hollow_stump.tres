@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="Fragment" format=3 uid="uid://bqechofrag01x"]
+
+[ext_resource type="Script" uid="uid://b4sep75xygsp3" path="res://core/fragment.gd" id="1_frag"]
+[ext_resource type="Texture2D" uid="uid://7g7rmeqwftkm" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Icons/Weapons/Books and Potions/Books.png" id="2_icon"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_page"]
+atlas = ExtResource("2_icon")
+region = Rect2(0, 48, 16, 16)
+
+[resource]
+script = ExtResource("1_frag")
+id = "f01_hollow_stump"
+title = "four notes, faster"
+entry_label = "ENTRY 11"
+level = 1
+found_at = "a hollow stump, outside the gate in the rock"
+body = "Somebody laid a path to this door before I ever came. Stones in the grass, and the wood cut back — years ago, by the look of the stumps. The wood has had the years since to grow back, and I've had an afternoon. My arms are finished.
+
+The gate won't have me. There's a keyhole in it, and I don't have what goes in a keyhole. So I'm sitting on a stump writing, which is more than I've managed all week.
+
+I keep going back to the dream. The same one, every night since it started. They come down in rows. Side to side, and a step lower every time they reach the edge. Under all of it there are four notes, low, the same four over and over — and faster, the closer they get. You only ever get one shot out at a time. You wait behind the little walls while they're chewed away to nothing.
+
+I wrote it up the morning after the first night, when I still thought it was funny. Gave it a flippant name. I said more in that post than I meant to — it's all there, if you know which one to read.
+
+I told myself it was a game I played too much as a kid.
+
+It doesn't feel like a game out here."
+footer = "— the page was pushed deep into the rotten heart of the stump, as if hidden rather than dropped."
+name = "a torn page"
+texture = SubResource("AtlasTexture_page")
+metadata/_custom_type_script = "uid://b4sep75xygsp3"

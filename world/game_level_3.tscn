@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://c47vpfnpe1k1i" path="res://objects/maple_tree_hittable_light.tscn" id="hit"]
 [ext_resource type="PackedScene" uid="uid://c8frgpk2echo" path="res://objects/fragment_pickup.tscn" id="frag"]
 [ext_resource type="PackedScene" uid="uid://bg100mwthr2ec" path="res://objects/gloom_weather.tscn" id="weather"]
+[ext_resource type="PackedScene" uid="uid://c5t0rm3ech0000" path="res://objects/storm.tscn" id="storm"]
 [ext_resource type="PackedScene" uid="uid://ccamb0und5l2" path="res://objects/camera_bounds.tscn" id="cambounds"]
 [ext_resource type="PackedScene" uid="uid://blvlaud102ec" path="res://objects/level_audio.tscn" id="levelaudio"]
 [ext_resource type="PackedScene" uid="uid://cnpc10st2ech0" path="res://character/npc_lost.tscn" id="npc"]
@@ -12580,6 +12581,8 @@ position = Vector2(76, 424)
 tint = Color(0.72, 0.6, 0.88, 1)
 area_center = Vector2(592, 432)
 area_size = Vector2(1384, 1064)
+
+[node name="Storm" parent="." instance=ExtResource("storm")]
 
 [node name="Flicker" parent="." instance=ExtResource("flicker")]
 

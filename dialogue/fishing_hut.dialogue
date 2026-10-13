@@ -7,6 +7,11 @@ Traveller: A rod. Warped a bit, but the line's good and the hook is sharp.
 Traveller: Three fish, the smith said. [[Let's see what's biting.|Right. The river, then.|He'll get his fish.]]
 => END
 
+~ lamp_found
+Traveller: A lamp. The glass is smoked black, but there's oil in it and the wick is whole.
+Traveller: [[Whoever fished here didn't do it blind.|Night won't be so bad with this.|That's the dark taken care of.]]
+=> END
+
 ~ bed
 Traveller: Nobody has slept here in a long while. Nobody is going to mind.
 => END

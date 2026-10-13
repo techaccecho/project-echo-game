@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://c1ant3rn2ech0"]
+
+[ext_resource type="Texture2D" uid="uid://co0ei2pt10bxk" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Exterior/Lamp .png" id="1_lamp"]
+[ext_resource type="PackedScene" uid="uid://cn1ght11ght2e" path="res://objects/night_light.tscn" id="2_light"]
+
+[node name="Lantern" type="Sprite2D"]
+z_index = 5
+texture = ExtResource("1_lamp")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Light" parent="." instance=ExtResource("2_light")]
+position = Vector2(0, -4)
+radius = 56.0
+strength = 0.9
+flicker = 0.08
