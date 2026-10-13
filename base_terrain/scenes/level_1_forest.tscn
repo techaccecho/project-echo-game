@@ -10,7 +10,8 @@
 [ext_resource type="TileSet" uid="uid://daaxsrd5xb5iw" path="res://water_features/water_props.tres" id="7_2ntah"]
 [ext_resource type="TileSet" uid="uid://bu48edd5oif51" path="res://tilesets/rock_flower_tree_grass.tres" id="8_sf5q6"]
 [ext_resource type="TileSet" uid="uid://cok1cqxkvmqrh" path="res://tilesets/tilled_soil_wet_soil.tres" id="9_sf5q6"]
-[ext_resource type="Script" path="res://base_terrain/water_collision.gd" id="pondcol"]
+[ext_resource type="TileSet" uid="uid://5hqydjyei7cw" path="res://tilesets/Road.tres" id="10_ljesh"]
+[ext_resource type="Script" uid="uid://bl7l2xprdm7po" path="res://base_terrain/water_collision.gd" id="pondcol"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_gphni"]
 particles_animation = true
@@ -958,16 +959,20 @@ scale = Vector2(0.6666667, 0.71875)
 [node name="Water" type="Node2D" parent="Decorations" unique_id=2121914131]
 
 [node name="WaterEdges" type="TileMapLayer" parent="Decorations/Water" unique_id=268662953]
-tile_map_data = PackedByteArray("AADe//n/AAALAAYAAADd//n/AAAFAAUAAADc//n/AAAKAAQAAADb//v/AAAIAAcAAADb//r/AAAIAAUAAADb//n/AAAIAAQAAADc//r/AQAAAAAAAADd//r/AQAAAAAAAADe//v/AAALAAcAAADe//r/AAALAAYAAADd//v/AAAJAAcAAADc//v/AAAJAAcAAADv//j/AAABAAQAAADx//j/AAAHAAYAAADx//f/AAALAAQAAADw//j/AAAFAAcAAADw//f/AAAIAAQAAADx//n/AAAAAAYAAADv//n/AAAAAAYAAADe//j/AAALAAQAAADd//j/AAAIAAQAAAA=")
+tile_map_data = PackedByteArray("AADe//n/AAALAAYAAADd//n/AAAFAAUAAADc//n/AAAKAAQAAADb//v/AAAIAAcAAADb//r/AAAIAAUAAADb//n/AAAIAAQAAADc//r/AQAAAAAAAADd//r/AQAAAAAAAADe//v/AAALAAcAAADe//r/AAALAAYAAADd//v/AAAJAAcAAADc//v/AAAJAAcAAADv//j/AAABAAQAAADx//j/AAAHAAYAAADx//f/AAALAAQAAADw//j/AAAFAAcAAADw//f/AAAIAAQAAADx//n/AAAAAAYAAADv//n/AAAAAAYAAADe//j/AAALAAQAAADd//j/AAAIAAQAAADx/+n/AAAKAAQAAADy/+n/AAALAAQAAADv/+v/AAABAAcAAADm//H/AAABAAcAAADn//H/AAAFAAcAAADn//D/AAAIAAQAAADo//D/AAALAAQAAADo//H/AAALAAcAAADq//D/AAAAAAcAAADv//D/AAAAAAcAAADu//T/AAAAAAcAAADw/+n/AAAIAAQAAADx/+v/AAAJAAcAAADy/+v/AAALAAcAAADy/+r/AAALAAYAAADw/+r/AAAIAAUAAADw/+v/AAAFAAcAAADx/+r/AQAAAAAAAAA=")
 tile_set = ExtResource("5_dlpp7")
 
 [node name="Water" type="TileMapLayer" parent="Decorations/Water" unique_id=206767592]
 z_index = -5
-tile_map_data = PackedByteArray("AADb//n/AwAAAAAAAADc//n/AwAAAAAAAADd//n/AwAAAAAAAADe//n/AwAAAAAAAADe//r/AwAAAAAAAADe//v/AwAAAAAAAADd//v/AwAAAAAAAADc//v/AwAAAAAAAADb//v/AwAAAAAAAADb//r/AwAAAAAAAADw//f/AwAAAAAAAADv//n/AwAAAAAAAADv//j/AwAAAAAAAADw//j/AwAAAAAAAADx//f/AwAAAAAAAADx//j/AwAAAAAAAADx//n/AwAAAAAAAADd//j/AwAAAAAAAADe//j/AwAAAAAAAAA=")
+tile_map_data = PackedByteArray("AADb//n/AwAAAAAAAADc//n/AwAAAAAAAADd//n/AwAAAAAAAADe//n/AwAAAAAAAADe//r/AwAAAAAAAADe//v/AwAAAAAAAADd//v/AwAAAAAAAADc//v/AwAAAAAAAADb//v/AwAAAAAAAADb//r/AwAAAAAAAADw//f/AwAAAAAAAADv//n/AwAAAAAAAADv//j/AwAAAAAAAADw//j/AwAAAAAAAADx//f/AwAAAAAAAADx//j/AwAAAAAAAADx//n/AwAAAAAAAADd//j/AwAAAAAAAADe//j/AwAAAAAAAADx/+n/AwAAAAAAAADy/+n/AwAAAAAAAADm//H/AwAAAAAAAADn//H/AwAAAAAAAADo//H/AwAAAAAAAADo//D/AwAAAAAAAADn//D/AwAAAAAAAADq//D/AwAAAAAAAADv//D/AwAAAAAAAADw/+r/AwAAAAAAAADw/+v/AwAAAAAAAADv/+v/AwAAAAAAAADy/+r/AwAAAAAAAADu//T/AwAAAAAAAADw/+n/AwAAAAAAAADx/+r/AwAAAAAAAADx/+v/AwAAAAAAAADy/+v/AwAAAAAAAAA=")
 tile_set = ExtResource("6_f7oae")
 
 [node name="Floaties" type="TileMapLayer" parent="Decorations/Water" unique_id=1597830265]
-tile_map_data = PackedByteArray("AADc//r/AgAAAAAAAADd//r/AgADAAAAAAA=")
+tile_map_data = PackedByteArray("AADc//r/AgAAAAAAAADd//r/AgADAAAAAADv//D/AgACAAQAAADo//D/AgAGAAQAAADw/+n/CAAIAAgAAADw/+r/CAAIAAkAAADx/+n/CAAJAAgAAADx/+r/CAAJAAkAAAA=")
+tile_set = ExtResource("7_2ntah")
+
+[node name="Floaties2" type="TileMapLayer" parent="Decorations/Water" unique_id=1896739671]
+tile_map_data = PackedByteArray("AADc//r/AgAAAAAAAADd//r/AgADAAAAAADv//D/AgACAAQAAADo//D/AgAGAAQAAADw/+n/CAAIAAgAAADw/+r/CAAIAAkAAADx/+r/CAAAAAgAAAA=")
 tile_set = ExtResource("7_2ntah")
 
 [node name="Underwater" type="TileMapLayer" parent="Decorations/Water" unique_id=1453651073]
@@ -977,37 +982,41 @@ tile_set = ExtResource("7_2ntah")
 
 [node name="Reeds" type="TileMapLayer" parent="Decorations/Water" unique_id=920207231]
 z_index = -1
-tile_map_data = PackedByteArray("AADc//r/AgAAAAAAAADe//v/AgAGAAQAAADe//r/AgAHAAQAAAA=")
+tile_map_data = PackedByteArray("AADc//r/AgAAAAAAAADe//v/AgAGAAQAAADe//r/AgAHAAQAAADy/+n/AgAGAAQAAADx/+r/AgAHAAQAAADx/+v/AgAAAAAAAAA=")
 tile_set = ExtResource("7_2ntah")
 
-[node name="PondCollision" type="StaticBody2D" parent="Decorations/Water"]
+[node name="PondCollision" type="StaticBody2D" parent="Decorations/Water" unique_id=11266698]
 script = ExtResource("pondcol")
 water_layer = NodePath("../Water")
 
 [node name="Grass" type="Node2D" parent="Decorations" unique_id=428172015]
 
 [node name="Level0" type="TileMapLayer" parent="Decorations/Grass" unique_id=1448067850]
-tile_map_data = PackedByteArray("AADc//f/AAAFAAIAAADc//j/AAAFAAMAAADd//f/AAAGAAIAAADd//j/AAAGAAMAAADa//n/AAAFAAIAAADa//r/AAAFAAMAAADb//n/AAAGAAIAAADb//r/AAAGAAMAAADZ//r/AwABAAAAAADd//z/AwABAAAAAADc//3/AwABAAAAAADf//j/AwABAAAAAADf//r/AwABAAAAAADk//r/BQABAAAAAADl//n/BQABAAAAAADh//j/BQABAAAAAADh//n/BQABAAAAAADi//j/BQABAAAAAADk//n/BQABAAAAAADj//n/BQADAAAAAADo//v/BQABAAAAAADo//z/BQABAAAAAADp//v/BQABAAAAAAA=")
+tile_map_data = PackedByteArray("AADc//f/AAAFAAIAAADc//j/AAAFAAMAAADd//f/AAAGAAIAAADd//j/AAAGAAMAAADa//n/AAAFAAIAAADa//r/AAAFAAMAAADb//n/AAAGAAIAAADb//r/AAAGAAMAAADZ//r/AwABAAAAAADd//z/AwABAAAAAADc//3/AwABAAAAAADf//j/AwABAAAAAADf//r/AwABAAAAAADk//r/BQABAAAAAADl//n/BQABAAAAAADh//j/BQABAAAAAADh//n/BQABAAAAAADi//j/BQABAAAAAADk//n/BQABAAAAAADj//n/BQADAAAAAADo//v/BQABAAAAAADo//z/BQABAAAAAADp//v/BQABAAAAAADs//j/BQABAAAAAADt//j/BQABAAAAAADt//f/BQABAAAAAADu//X/BQABAAAAAADt//X/BQABAAAAAADt//T/BQABAAAAAADx//b/BQABAAAAAADl//H/BQABAAAAAADl//L/BQABAAAAAADm//L/BQABAAAAAADo/+//BQABAAAAAADp/+//BQABAAAAAADp/+7/BQABAAAAAADq//H/BQABAAAAAADp//H/BQABAAAAAADu//D/BQABAAAAAAD0/+7/BQABAAAAAADz/+7/BQABAAAAAADv/+r/BQABAAAAAADv/+v/BQABAAAAAADw/+v/BQABAAAAAADy/+j/BQABAAAAAADz/+v/BQABAAAAAADz/+r/BQABAAAAAAD3/+n/BQABAAAAAAD4/+n/BQABAAAAAAD5/+n/BQABAAAAAAD5/+r/BQABAAAAAAD4/+r/BQABAAAAAAD3/+r/BQABAAAAAAD3/+j/BQABAAAAAAD4/+j/BQABAAAAAAD0//b/BQABAAAAAAD3//b/BQABAAAAAAD4//D/BQABAAAAAAD3//D/BQABAAAAAAD3//H/BQABAAAAAAD5//P/BQABAAAAAAD5//L/BQABAAAAAAD6//L/BQABAAAAAADv//X/AAAFAAIAAADv//b/AAAFAAMAAADw//X/AAAGAAIAAADw//b/AAAGAAMAAADu//j/AAAFAAIAAADu//n/AAAFAAMAAADv//j/AAAGAAIAAADv//n/AAAGAAMAAAA=")
 tile_set = ExtResource("8_sf5q6")
 
 [node name="Level1" type="TileMapLayer" parent="Decorations/Grass" unique_id=1201733823]
 z_index = 1
-tile_map_data = PackedByteArray("AADc//j/AwAAAAAAAADd//f/AAAGAAIAAADd//j/AAAGAAMAAADb//j/AwACAAAAAADc//f/AwABAAEAAADe//z/AwADAAEAAADf//j/AwAGAAIAAADa//v/AwACAAAAAADl//n/AQAAAAAAAADm//n/AQABAAAAAADk//r/BQAGAAEAAADh//j/BQAGAAEAAADi//r/BQACAAAAAADj//n/AAADAAEAAADj//j/AQACAAAAAADk//j/AQADAAAAAADo//v/BQADAAAAAAA=")
+tile_map_data = PackedByteArray("AADc//j/AwAAAAAAAADd//f/AAAGAAIAAADd//j/AAAGAAMAAADb//j/AwACAAAAAADc//f/AwABAAEAAADe//z/AwADAAEAAADf//j/AwAGAAIAAADa//v/AwACAAAAAADl//n/AQAAAAAAAADm//n/AQABAAAAAADk//r/BQAGAAEAAADh//j/BQAGAAEAAADi//r/BQACAAAAAADj//n/AAADAAEAAADj//j/AQACAAAAAADk//j/AQADAAAAAADo//v/BQADAAAAAADt//j/AwADAAEAAADt//X/AwADAAEAAADx//b/AwADAAEAAAD5//L/AwADAAEAAADq//H/AwADAAEAAADk//H/AwADAAEAAADw//n/BQADAAAAAADs//X/BQAAAAAAAADp/+7/BQAAAAAAAAD4/+//BQAAAAAAAADz/+r/BQAAAAAAAAD4/+j/BQAAAAAAAADs//T/AwACAAAAAADl//H/AwACAAAAAADo/+//AwACAAAAAADu/+//AwACAAAAAADv/+v/AwACAAAAAADo//H/AAAFAAIAAADo//L/AAAFAAMAAADp//H/AAAGAAIAAADp//L/AAAGAAMAAADz/+3/AAAFAAIAAADz/+7/AAAFAAMAAAD0/+3/AAAGAAIAAAD0/+7/AAAGAAMAAAD3//D/AAAFAAIAAAD3//H/AAAFAAMAAAD4//D/AAAGAAIAAAD4//H/AAAGAAMAAADp//v/AAADAAEAAADr//j/AAADAAEAAADt/+//AAADAAEAAAD5//D/AAADAAEAAAD3/+n/AAADAAEAAADy/+j/AQADAAAAAADu//b/AQAAAAAAAADv//b/AQABAAAAAADq/+//AQAAAAAAAADr/+//AQABAAAAAADm//L/AQACAAAAAADn//L/AQADAAAAAADv/+7/AQACAAAAAADw/+7/AQADAAAAAADx/+j/AQACAAAAAADz/+v/AQAAAAAAAAD0/+v/AQABAAAAAAD4/+r/AQAAAAAAAAD5/+r/AQABAAAAAADu/+r/AQAAAAAAAADv/+r/AQABAAAAAAD3/+j/BQAGAAEAAADu/+v/BQAGAAEAAAD0/+n/BQAGAAEAAAA=")
 tile_set = ExtResource("8_sf5q6")
 
 [node name="Level2" type="TileMapLayer" parent="Decorations/Grass" unique_id=1167920382]
 z_index = 2
-tile_map_data = PackedByteArray("AADc//f/AAAFAAIAAADc//j/AAAFAAMAAADd//f/AAAGAAIAAADd//j/AAAGAAMAAADa//n/AAAFAAIAAADa//r/BQAKAAAAAADb//n/AAAGAAIAAADb//r/AAAGAAMAAADa//v/AwAIAAIAAADj//n/AAAMAAEAAAA=")
+tile_map_data = PackedByteArray("AADc//f/AAAFAAIAAADc//j/AAAFAAMAAADd//f/AAAGAAIAAADd//j/AAAGAAMAAADa//n/AAAFAAIAAADa//r/BQAKAAAAAADb//n/AAAGAAIAAADb//r/AAAGAAMAAADa//v/AwAIAAIAAADj//n/AAAMAAEAAADv//n/BQAKAAAAAADw//b/BQAKAAAAAADq//j/BQAKAAAAABDp//L/BQAKAAAAABDv/+//BQAKAAAAAAD5/+n/BQAKAAAAAADu/+r/BQAKAAAAABDm//z/AwAKAAUAAADo//b/AwAKAAUAAAD0/+j/AwAKAAUAAADp//z/AwALAAUAAADn/+//AwALAAUAAADh//P/AwALAAUAAAD0/+7/AwALAAUAAADn//X/AwALAAUAAAA=")
 tile_set = ExtResource("8_sf5q6")
+
+[node name="PathDecor" type="TileMapLayer" parent="Decorations/Grass" unique_id=1633524168]
+z_index = 1
+tile_map_data = PackedByteArray("AADz/+j/AAAHAAcAAAD1/+r/AAAIAAcAAAD0/+v/AAAIAAcAAADu//D/AAAIAAcAAADu/+//AAAHAAgAAADv/+7/AAAHAAgAAADh//X/AAAAAAkAAADk//X/AAAHAAkAAADo//b/AAAGAAkAAADo//3/AAAGAAkAAADp//z/AAAHAAgAAADu//b/AAAHAAcAAADs//X/AAAAAAkAAADn//X/AAAHAAgAAAA=")
+tile_set = ExtResource("10_ljesh")
 
 [node name="Dirt" type="Node2D" parent="Decorations" unique_id=1589901827]
 
 [node name="Floor" type="TileMapLayer" parent="Decorations/Dirt" unique_id=2115780415]
-tile_map_data = PackedByteArray("AADj//X/BgABAAMAAADm//X/BgABAAMAAADn//X/BgAFAAAAAADo//X/BgALAAAAAADo//b/BgAGAAMAAADp//b/BgACAAMAAADn//b/BgAIAAMAAADk//b/BgAAAAIAAADq//b/BgACAAMAAADr//b/BgADAAIAAADr//X/BgABAAAAAADs//X/BgADAAMAAADi//T/BgADAAMAAADh//T/BgAEAAMAAADh//P/BgAAAAAAAADh//X/BgALAAMAAADg//X/BgAIAAMAAADg//T/BgAIAAAAAADk//X/BgADAAAAAAA=")
+tile_map_data = PackedByteArray("AADj//X/BgABAAMAAADm//X/BgABAAMAAADn//X/BgAFAAAAAADo//X/BgALAAAAAADo//b/BgAGAAMAAADp//b/BgACAAMAAADn//b/BgAIAAMAAADk//b/BgAAAAIAAADq//b/BgACAAMAAADr//b/BgADAAIAAADr//X/BgABAAAAAADs//X/BgADAAMAAADi//T/BgADAAMAAADh//T/BgAEAAMAAADh//P/BgAAAAAAAADh//X/BgALAAMAAADg//X/BgAIAAMAAADg//T/BgAIAAAAAADk//X/BgADAAAAAADq/+//BgAIAAMAAADq/+7/BgAFAAAAAADr/+//BgALAAMAAADr/+7/BgALAAAAAADp/+7/BgABAAMAAADm//D/BgAAAAIAAADm/+//BgABAAAAAADn/+//BgADAAMAAADu//D/BgAAAAMAAADv/+//BgAAAAIAAADv/+7/BgAAAAAAAADu//b/BgABAAMAAADv//b/BgADAAIAAADv//X/BgABAAAAAADw//X/BgADAAMAAADj//r/BgAAAAMAAADm//z/BgAIAAAAAADn//z/BgALAAAAAADm//3/BgAIAAMAAADn//3/BgAGAAMAAADo//3/BgACAAMAAADp//3/BgADAAIAAADp//z/BgAAAAAAAAD0//b/BgAAAAMAAAD0/+//BgAAAAIAAAD0/+7/BgABAAAAAAD1/+7/BgADAAMAAADx/+j/BgAAAAMAAADz/+j/BgABAAMAAAD0/+j/BgACAAMAAAD0/+r/BgABAAAAAAD0/+v/BgAAAAIAAAD1/+j/BgADAAAAAAD1/+n/BgAAAAEAAAD1/+r/BgADAAIAAADu/+v/BgAAAAMAAAD4/+j/BgAAAAMAAAA=")
 tile_set = ExtResource("9_sf5q6")
 
 [node name="REMOVE_GrassBackground" type="Node2D" parent="." unique_id=1027331573]
-visible = false
 z_index = -10
 
 [node name="TileMapLayer" type="TileMapLayer" parent="REMOVE_GrassBackground" unique_id=2099847168]
