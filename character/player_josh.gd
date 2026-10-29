@@ -88,6 +88,16 @@ func _physics_process(_delta):
 		# Primed, so the first step after standing still lands immediately.
 		_step_accum = step_distance
 	
+	if Input.is_action_just_pressed("lamp_toggle") and UiStack.is_free():
+		Lamp.toggle()
+
+	# The lamp and its oil are used rather than swung: with either in hand, the
+	# same button lights the lamp or pours a flask into it.
+	if Input.is_action_just_pressed("interact_alt") and UiStack.is_free() \
+			and inv != null and Lamp.use(inv.selected_item()):
+		update_animation(input_direction, is_running)
+		return
+
 	# UiStack: the swing is on left click as well as B, and the press is polled
 	# rather than consumed, so without this he chops the air every time a slot
 	# is clicked in the open bag.

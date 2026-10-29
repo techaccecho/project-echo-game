@@ -23,7 +23,7 @@ var _levels: Array[Dictionary] = [
 	]},
 	{"title": "Level 3", "steps": [
 		_step("Find a lamp", _flag("pickup.fishing_hut_interior.Lamp")),
-		_step("Find oil for the lamp", _flag("level3.oil")),
+		_step("Find oil for the lamp", _flag("lamp.oil_found")),
 		_step("Find all fragments", _all_fragments),
 		_step("Place all fragments", _flag("level3.gate_open")),
 	]},

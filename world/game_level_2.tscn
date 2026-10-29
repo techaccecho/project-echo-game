@@ -35,6 +35,8 @@
 [ext_resource type="TileSet" uid="uid://cu70ub5pe6rno" path="res://base_terrain/water_tile_singular.tres" id="waterset"]
 [ext_resource type="PackedScene" path="res://objects/gloom_weather.tscn" id="weather"]
 [ext_resource type="Texture2D" uid="uid://dapbdupsehdj8" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Exterior/wood moss.png" id="woodmoss"]
+[ext_resource type="PackedScene" uid="uid://b2itmpku1ech" path="res://objects/item_pickup.tscn" id="oil_pickup"]
+[ext_resource type="Resource" uid="uid://b0i1f1a5k2ech" path="res://inventory/items/oil_flask.tres" id="oil_item"]
 
 [sub_resource type="RectangleShape2D" id="RS_edge_left"]
 size = Vector2(128, 416)
@@ -1621,3 +1623,17 @@ action_name = "leave"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ReturnArea" unique_id=1858999839]
 shape = SubResource("RS_return")
+
+[node name="OilFlasks" type="Node2D" parent="."]
+z_index = 5
+y_sort_enabled = true
+
+[node name="UnderThePines" parent="OilFlasks" instance=ExtResource("oil_pickup")]
+position = Vector2(296, 104)
+item = ExtResource("oil_item")
+taken_flag = "oil.l2.pines"
+
+[node name="ByTheWaterfall" parent="OilFlasks" instance=ExtResource("oil_pickup")]
+position = Vector2(680, 248)
+item = ExtResource("oil_item")
+taken_flag = "oil.l2.waterfall"
