@@ -25,6 +25,11 @@ extends Node2D
 
 const SRC_CLIFF := 7
 const T_FACE := Vector2i(9, 4)
+## The two cells of ground under the doorway. Shut, they are the solid base of
+## the cliff; once the gate is open they become the walkable threshold tile, or
+## the cliff's own collision would stand in the doorway.
+const DOORWAY_CELLS := [Vector2i(-1, 0), Vector2i(0, 0)]
+const T_THRESHOLD := Vector2i(6, 0)
 const DOOR_ART := "res://art/Farm RPG - Tiny Asset Pack - (All in One)/Exterior/Dungeon/Door.png"
 ## The open door in the sheet, and a pixel inside its dark hole to fill from.
 const OPEN_FRAME := Rect2i(0, 32, 32, 32)
@@ -53,7 +58,16 @@ func _ready() -> void:
 		stumps_area.interact = Callable(self, "_say").bind("stumps")
 	occluder.texture = _build_occluder()
 	occluder.visible = gate.is_open()
-	gate.opened.connect(func() -> void: occluder.visible = true)
+	if gate.is_open():
+		_clear_doorway()
+	gate.opened.connect(func() -> void:
+		occluder.visible = true
+		_clear_doorway())
+
+
+func _clear_doorway() -> void:
+	for c in DOORWAY_CELLS:
+		cliff.set_cell(c, SRC_CLIFF, T_THRESHOLD)
 
 
 ## Darker the further into the doorway he goes; back to normal once out.

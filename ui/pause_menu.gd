@@ -29,6 +29,12 @@ var _sound: Button
 var _save: Button
 var _quit: Button
 var _back: Button
+var _quests: Button
+var _banner: Button
+var _quests_back: Button
+var _quest_scroll: ScrollContainer
+var _quest_list: VBoxContainer
+var _in_quests := false
 var _hint: Label
 var _board: Panel
 var _settings_only := false
@@ -72,22 +78,55 @@ func _show(settings_only: bool) -> void:
 	_settings_only = settings_only
 	for l in _title:
 		l.text = "SETTINGS" if settings_only else "PAUSED"
-	_resume.visible = not settings_only
-	_save.visible = not settings_only
-	_quit.visible = not settings_only
-	_back.visible = settings_only
 	_hint.text = HINT_SETTINGS if settings_only else HINT_PAUSED
 	_refresh_labels()
 	# A shorter board when there are only two planks on it.
 	var h := BOARD_H_SETTINGS if settings_only else BOARD_H
 	_board.offset_top = -h * 0.5
 	_board.offset_bottom = h * 0.5
-	_ring_focus()
+	_set_quests_view(false)
 	if not settings_only:
 		get_tree().paused = true
 	UiStack.push("pause")
 	_root.visible = true
-	(_back if settings_only else _resume).grab_focus()
+
+
+## Swap the board between the plank menu and the quest list.
+func _set_quests_view(on: bool) -> void:
+	_in_quests = on
+	for l in _title:
+		l.text = "QUESTS" if on else ("SETTINGS" if _settings_only else "PAUSED")
+	_resume.visible = not on and not _settings_only
+	_banner.visible = not on and not _settings_only
+	_quests.visible = not on and not _settings_only
+	_music.visible = not on
+	_sound.visible = not on
+	_save.visible = not on and not _settings_only
+	_quit.visible = not on and not _settings_only
+	_back.visible = not on and _settings_only
+	_quests_back.visible = on
+	_quest_scroll.visible = on
+	if on:
+		_fill_quests()
+	_hint.text = "Esc to go back" if on else (HINT_SETTINGS if _settings_only else HINT_PAUSED)
+	_ring_focus()
+	var first: Button = _quests_back if on else (_back if _settings_only else _resume)
+	first.grab_focus()
+
+
+func _fill_quests() -> void:
+	for c in _quest_list.get_children():
+		c.queue_free()
+	for level in Quests.visible_levels():
+		_quest_list.add_child(WoodUI.label(str(level["title"]).to_upper(), 26, WoodUI.FRAME))
+		for s in level["steps"]:
+			var done: bool = s["done"]
+			var l := WoodUI.label(("[x]  " if done else "[ ]  ") + str(s["text"]), 24,
+					WoodUI.BONE_DIM if done else WoodUI.BONE)
+			l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+			_quest_list.add_child(l)
+	# The current quest sits at the bottom; start the view there.
+	_quest_scroll.set_deferred("scroll_vertical", 100000)
 
 
 ## Arrow keys and Tab walk the whole viewport's focusable controls, which on
@@ -122,6 +161,11 @@ func _can_open() -> bool:
 
 func _on_music() -> void:
 	music_muted = not music_muted
+	_refresh_labels()
+
+
+func _on_banner() -> void:
+	QuestBanner.shown = not QuestBanner.shown
 	_refresh_labels()
 
 
@@ -182,6 +226,8 @@ func _refresh_labels() -> void:
 		_music.text = "Music: off" if music_muted else "Music: on"
 	if _sound:
 		_sound.text = "Sound: off" if sound_muted else "Sound: on"
+	if _banner:
+		_banner.text = "Quest banner: on" if QuestBanner.shown else "Quest banner: off"
 
 
 # --- settings on disk -------------------------------------------------------
@@ -212,7 +258,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not event.is_pressed() or event.is_echo():
 		return
 	if event.is_action("ui_cancel"):
-		if is_open:
+		if is_open and _in_quests:
+			_set_quests_view(false)
+		elif is_open:
 			close()
 		elif _can_open():
 			open()
@@ -250,7 +298,7 @@ func _step_focus(dir: int) -> void:
 # --- construction -----------------------------------------------------------
 
 const BOARD_W := 560.0
-const BOARD_H := 680.0
+const BOARD_H := 860.0
 const BOARD_H_SETTINGS := 500.0
 
 func _build() -> void:
@@ -301,12 +349,24 @@ func _build() -> void:
 	board.add_child(menu)
 
 	_resume = _button("Resume", close)
+	_quests = _button("Quests", _set_quests_view.bind(true))
 	_music = _button("Music: on", _on_music)
 	_sound = _button("Sound: on", _on_sound)
+	_banner = _button("Quest banner: on", _on_banner)
 	_save = _button("Save game", _on_save)
 	_quit = _button("Quit to title", _on_quit)
 	_back = _button("Back", close)
-	for b in [_resume, _music, _sound, _save, _quit, _back]:
+	_quests_back = _button("Back", _set_quests_view.bind(false))
+
+	_quest_scroll = ScrollContainer.new()
+	_quest_scroll.custom_minimum_size = Vector2(0, 400)
+	_quest_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	_quest_list = VBoxContainer.new()
+	_quest_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_quest_list.add_theme_constant_override("separation", 10)
+	_quest_scroll.add_child(_quest_list)
+	menu.add_child(_quest_scroll)
+	for b in [_resume, _quests, _music, _sound, _banner, _save, _quit, _back, _quests_back]:
 		menu.add_child(b)
 
 	var detail := WoodUI.PlankDetail.new()

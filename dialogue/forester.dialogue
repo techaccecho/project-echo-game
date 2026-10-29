@@ -1,6 +1,7 @@
 ~ start
 do start_talking()
 do disable_movement()
+do Flags.set_flag("forester.met")
 Forester: So. You found the key.
 - Why did you bury it? Why block the way at all?
 	Forester: Because I hoped nobody would ever need to find it. That barricade wasn't spite. It was to keep something else in.
