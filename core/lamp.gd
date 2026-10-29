@@ -1,5 +1,7 @@
 extends Node
-## Autoload "Lamp" — the oil in the player's lamp, and whether it is burning.
+## Autoload "Lamp" — the oil in the player's torch, and whether it is burning.
+## (Players see it as a torch; it was a lamp first, and the name stuck here, on
+## the item file and in old saves.)
 ##
 ## The light itself is PlayerLamp, hung off whichever player node the current
 ## scene has; there is one of those per scene, so what has to outlast a scene
@@ -12,7 +14,7 @@ extends Node
 ## burns just the same; nothing here is clever enough to save him the oil.
 
 signal changed
-## A short line for the HUD: "The lamp is already full."
+## A short line for the HUD: "The torch is already soaked."
 signal message(text: String)
 
 const LAMP_ITEM := preload("res://inventory/items/lamp.tres")
@@ -54,7 +56,7 @@ func _process(delta: float) -> void:
 	fuel = maxf(0.0, fuel - CAPACITY / BURN_SECONDS * delta)
 	if fuel <= 0.0:
 		on = false
-		message.emit("The lamp sputters out.")
+		message.emit("The torch sputters out.")
 	changed.emit()
 
 
@@ -84,7 +86,7 @@ func toggle() -> void:
 	if not has_lamp():
 		return
 	if not on and fuel <= 0.0:
-		message.emit("The lamp is dry. Pour in some oil.")
+		message.emit("The torch is dry. Pour on some oil.")
 		return
 	on = not on
 	Audio.sfx(CLICK_SFX, -10.0, 0.1)
@@ -100,12 +102,12 @@ func refill() -> bool:
 		message.emit("No oil left.")
 		return false
 	if fuel >= CAPACITY - 0.5:
-		message.emit("The lamp is already full.")
+		message.emit("The torch is already soaked.")
 		return false
 	PLAYER_INV.remove(OIL_ITEM, 1)
 	fuel = minf(CAPACITY, fuel + FLASK)
 	Audio.sfx(POUR_SFX, -16.0, 0.1)
-	message.emit("You top up the lamp.")
+	message.emit("You soak the torch in oil.")
 	changed.emit()
 	return true
 

@@ -1,8 +1,8 @@
 extends CanvasLayer
 ## Autoload "LampHud" — a plank in the bottom-left corner showing how much oil is left in
-## the lamp: the lamp, a bar, the percentage (or OFF), and how many flasks he is
-## carrying. Shown once the lamp is in his bag. Lamp's short lines ("The lamp
-## is already full.") appear just above it for a moment and fade.
+## the torch: the torch (burning or not), a bar, the percentage (or OFF), and how many flasks he is
+## carrying. Shown once the torch is in his bag. Lamp's short lines ("The torch
+## is already soaked.") appear just above it for a moment and fade.
 
 const BAR_FILL := Color("f0b048")
 const BAR_LOW := Color("d8503a")
@@ -10,6 +10,8 @@ const BAR_BACK := Color("2d1f12")
 ## How long a message stays before it starts to fade.
 const MESSAGE_HOLD := 2.2
 const MESSAGE_FADE := 0.6
+## The torch's icon while it burns; out, it is the item's own (unlit) icon.
+const LIT_ICON_REGION := Rect2(48, 9, 16, 36)
 
 var _root: Control
 var _bar: Control
@@ -19,6 +21,7 @@ var _lamp_icon: TextureRect
 var _message: Label
 var _message_tween: Tween
 var _t := 0.0
+var _lit_icon: AtlasTexture
 
 
 func _ready() -> void:
@@ -50,6 +53,11 @@ func _ready() -> void:
 	_root.add_child(row)
 
 	_lamp_icon = _icon(Lamp.LAMP_ITEM.texture)
+	var unlit := Lamp.LAMP_ITEM.texture as AtlasTexture
+	if unlit != null:
+		_lit_icon = AtlasTexture.new()
+		_lit_icon.atlas = unlit.atlas
+		_lit_icon.region = LIT_ICON_REGION
 	row.add_child(_lamp_icon)
 
 	_bar = Control.new()
@@ -89,7 +97,9 @@ func _process(delta: float) -> void:
 	_pct.text = "%d%%" % ceili(Lamp.fuel) if Lamp.on else "OFF [L]"
 	_pct.add_theme_color_override("font_color",
 			WoodUI.BONE if Lamp.on else WoodUI.BONE_DIM)
-	_lamp_icon.modulate = Color.WHITE if Lamp.is_lit() else Color(0.55, 0.5, 0.45)
+	var lit := Lamp.is_lit()
+	_lamp_icon.texture = _lit_icon if lit and _lit_icon != null else Lamp.LAMP_ITEM.texture
+	_lamp_icon.modulate = Color.WHITE if lit else Color(0.75, 0.7, 0.65)
 	_flasks.text = "x%d" % Lamp.oil_count()
 	_bar.queue_redraw()
 

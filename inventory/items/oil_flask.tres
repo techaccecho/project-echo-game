@@ -5,6 +5,6 @@
 
 [resource]
 script = ExtResource("1_m3h8r")
-name = "lamp oil"
+name = "torch oil"
 texture = ExtResource("2_oil")
 metadata/_custom_type_script = "uid://by0khe2xbsbyd"

@@ -64,7 +64,7 @@ func update(slot: InvSlot):
 			tooltip_text = "Read \"%s\"" % (slot.item as Fragment).title
 		elif slot.item == Lamp.OIL_ITEM:
 			mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-			tooltip_text = "%s (right-click to fill the lamp)" % slot.item.name
+			tooltip_text = "%s (right-click to soak the torch)" % slot.item.name
 		elif slot.item == Lamp.LAMP_ITEM:
 			mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 			tooltip_text = "%s (right-click to light or put out)" % slot.item.name
