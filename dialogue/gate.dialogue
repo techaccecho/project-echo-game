@@ -4,6 +4,11 @@ Traveller: [wait=0.5]Locked. And not the kind you put a shoulder through.
 Traveller: [[There's a keyhole. Which means there's a key.|Somebody shut this and took the key with them.|The bars are worn smooth in one place. It has been opened before.]]
 => END
 
+~ hold_key
+Traveller: The keyhole is right there. The key is in my bag, not in my hand.
+Traveller: [[Hold it first.|Select the key on the hotbar, then try again.]]
+=> END
+
 ~ unlock
 Traveller: The key turns. Stiff, then all at once.
 Traveller: [wait=0.6]So this is the way the smith meant.

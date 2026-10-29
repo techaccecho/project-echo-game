@@ -27,6 +27,8 @@ class_name LockedGate
 @export_file("*.dialogue") var story: String = "res://dialogue/gate.dialogue"
 ## Rattling it with nothing to open it with.
 @export var locked_title: String = "locked"
+## Has the key in the bag but not in hand.
+@export var hold_title: String = "hold_key"
 ## The moment it gives.
 @export var unlock_title: String = "unlock"
 ## Prompts, before and after the key is in hand.
@@ -57,6 +59,7 @@ func _ready() -> void:
 	# next rattle of the bars.
 	if player != null and player.inv != null:
 		player.inv.update.connect(_refresh_prompt)
+		player.inv.selection_changed.connect(_refresh_prompt)
 	_refresh_prompt()
 
 
@@ -69,7 +72,7 @@ func _refresh_prompt() -> void:
 	# is gone, and a later pickup must not come looking for it.
 	if interaction_area == null or not is_instance_valid(interaction_area):
 		return
-	interaction_area.action_name = unlock_action if _player_has_key() else locked_action
+	interaction_area.action_name = unlock_action if _player_holds_key() else locked_action
 
 
 func _player_has_key() -> bool:
@@ -80,11 +83,16 @@ func _player_has_key() -> bool:
 	return player != null and player.inv != null and player.inv.has(required_item)
 
 
+## The key has to be the highlighted hotbar slot, as with the axe and the rod.
+func _player_holds_key() -> bool:
+	return _player_has_key() and player.inv.holding(required_item)
+
+
 func _on_interact() -> void:
 	if _busy or is_open():
 		return
-	if not _player_has_key():
-		await _say(locked_title)
+	if not _player_holds_key():
+		await _say(locked_title if not _player_has_key() else hold_title)
 		return
 	_busy = true
 	await _say(unlock_title)
@@ -108,8 +116,11 @@ func _stand_open() -> void:
 	sprite.frame = sprite.sprite_frames.get_frame_count("open") - 1
 	sprite.pause()
 	body_shape.set_deferred("disabled", true)
-	if player != null and is_instance_valid(player) and player.inv != null 			and player.inv.update.is_connected(_refresh_prompt):
-		player.inv.update.disconnect(_refresh_prompt)
+	if player != null and is_instance_valid(player) and player.inv != null:
+		if player.inv.update.is_connected(_refresh_prompt):
+			player.inv.update.disconnect(_refresh_prompt)
+		if player.inv.selection_changed.is_connected(_refresh_prompt):
+			player.inv.selection_changed.disconnect(_refresh_prompt)
 	if interaction_area != null and is_instance_valid(interaction_area):
 		InteractionManager.deregister_area(interaction_area)
 		interaction_area.queue_free()

@@ -62,6 +62,7 @@ var _player: CharacterBody2D
 
 func _ready() -> void:
 	SceneManager.on_standalone_ready()
+	Flags.set_flag("visited." + scene_file_path.get_file().get_basename())
 	_player = get_tree().get_first_node_in_group("player")
 	if _player:
 		# He has just come in through the door behind him.

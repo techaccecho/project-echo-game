@@ -27,6 +27,8 @@ Audio="*res://core/audio.gd"
 Flags="*res://core/flags.gd"
 Clock="*res://core/clock.gd"
 SaveGame="*res://core/save_game.gd"
+Quests="*res://core/quests.gd"
+QuestBanner="*res://ui/quest_banner.gd"
 PauseMenu="*res://ui/pause_menu.tscn"
 ClockHud="*res://ui/clock_hud.tscn"
 
