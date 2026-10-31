@@ -22,6 +22,7 @@ var _player: CharacterBody2D
 
 func _ready() -> void:
 	_player = get_tree().get_first_node_in_group("player")
+	Flags.set_flag("level3.arrived")
 	for p in $Pedestals.get_children():
 		var area: InteractionArea = p.get_node("InteractionArea")
 		area.interact = Callable(self, "_on_pedestal").bind(p.name)

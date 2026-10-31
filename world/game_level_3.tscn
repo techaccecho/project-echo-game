@@ -20,6 +20,8 @@
 [ext_resource type="Resource" uid="uid://bqechofrag03x" path="res://fragments/fragment_03_the_colour_goes.tres" id="frag0"]
 [ext_resource type="Resource" uid="uid://bqechofrag04x" path="res://fragments/fragment_04_the_villager.tres" id="frag1"]
 [ext_resource type="Resource" uid="uid://bqechofrag05x" path="res://fragments/fragment_05_green_before_the_last.tres" id="frag2"]
+[ext_resource type="PackedScene" uid="uid://b2itmpku1ech" path="res://objects/item_pickup.tscn" id="oil_pickup"]
+[ext_resource type="Resource" uid="uid://b0i1f1a5k2ech" path="res://inventory/items/oil_flask.tres" id="oil_item"]
 
 [sub_resource type="RectangleShape2D" id="RS_1"]
 size = Vector2(96, 12)
@@ -12583,6 +12585,7 @@ area_center = Vector2(592, 432)
 area_size = Vector2(1384, 1064)
 
 [node name="Storm" parent="." instance=ExtResource("storm")]
+dark = Color(0.08, 0.08, 0.14, 1)
 
 [node name="Flicker" parent="." instance=ExtResource("flicker")]
 
@@ -12598,3 +12601,27 @@ ambience = {
 ambience_volume_db = {
 "wind": -16.0
 }
+
+[node name="OilFlasks" type="Node2D" parent="."]
+z_index = 5
+y_sort_enabled = true
+
+[node name="WestLog" parent="OilFlasks" instance=ExtResource("oil_pickup")]
+position = Vector2(90, 484)
+item = ExtResource("oil_item")
+taken_flag = "oil.l3.west_log"
+
+[node name="MiddleEnd" parent="OilFlasks" instance=ExtResource("oil_pickup")]
+position = Vector2(640, 520)
+item = ExtResource("oil_item")
+taken_flag = "oil.l3.middle"
+
+[node name="SouthWestLog" parent="OilFlasks" instance=ExtResource("oil_pickup")]
+position = Vector2(176, 564)
+item = ExtResource("oil_item")
+taken_flag = "oil.l3.south_west_log"
+
+[node name="NorthEastEnd" parent="OilFlasks" instance=ExtResource("oil_pickup")]
+position = Vector2(888, 168)
+item = ExtResource("oil_item")
+taken_flag = "oil.l3.north_east"

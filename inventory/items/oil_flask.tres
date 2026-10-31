@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="InvItem" format=3 uid="uid://b0i1f1a5k2ech"]
+
+[ext_resource type="Script" uid="uid://by0khe2xbsbyd" path="res://inventory/inventory_item.gd" id="1_m3h8r"]
+[ext_resource type="Texture2D" uid="uid://g5t15rmcickr" path="res://art/items/oil_flask.png" id="2_oil"]
+
+[resource]
+script = ExtResource("1_m3h8r")
+name = "torch oil"
+texture = ExtResource("2_oil")
+metadata/_custom_type_script = "uid://by0khe2xbsbyd"

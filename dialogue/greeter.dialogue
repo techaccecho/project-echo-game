@@ -1,15 +1,13 @@
 ~ start
 do start_talking()
 do disable_movement()
-Jory: Oh — hey. Didn't hear you come up. Boat, was it? Nobody comes by boat any more.
-Jory: Welcome to Hearth Hollow, friend. Old fishing town. Abandoned, mostly — the fish went, then the boats, then the people. A few of us stayed. I like the quiet.
-Jory: So. What brings you all this way? What's your purpose here?
+Jory: Oh — hey. Boat, was it? Nobody comes by boat any more.
+Jory: Welcome to Hearth Hollow, friend. Old fishing town, mostly abandoned. What brings you here?
 Traveller: Just heading through.
-Jory: Ah. See, that's the thing — you can't. The road out, up past the trees and over the ridge, got blocked off years back. Barricaded, signed, the lot. Nobody's been through since.
+Jory: You can't, I'm afraid. The road over the ridge was barricaded years back.
 Traveller: But I have to.
-Jory: Ha. Everyone who washes up here says that. [wait=0.6] Alright. Go and speak to the Blacksmith. Up past the meadow, the big house with the chimney — you'll hear the hammer before you see him.
-Jory: He's an odd one, fair warning. But if anyone can get you through, it's him.
-Jory: And take a moment to explore while you're at it. There's more of the town left than it looks. The hut on the north shore, the woods. Nobody'll mind. Nobody's here to.
+Jory: Ha. Everyone says that. [wait=0.6] Go and see the Blacksmith, the big house past the meadow. Follow the hammer.
+Jory: He's an odd one, but if anyone can get you through, it's him. Have a look around while you're at it — the north shore, the woods.
 do stop_talking()
 do enable_movement()
 => END

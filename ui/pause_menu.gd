@@ -1,7 +1,7 @@
 extends CanvasLayer
 ## The in-game menu (autoload "PauseMenu"). Esc opens it anywhere in the game,
-## freezes the world, and offers resume / music and sound toggles / save /
-## quit to title. The
+## freezes the world, and offers resume / quests / the controls guide / music
+## and sound toggles / save / quit to title. [G] opens the guide directly. The
 ## title screen's Settings button opens the same board in a trimmed form.
 ##
 ## An autoload, like the journal, because the game runs several different
@@ -12,6 +12,20 @@ const TITLE_SCENE := "res://ui/main_menu.tscn"
 const SETTINGS_FILE := "user://settings.cfg"
 const HINT_PAUSED := "Esc to resume"
 const HINT_SETTINGS := "Esc to go back"
+## The guide's rows: what it does, and what to press.
+const CONTROLS := [
+	["Move", "W A S D"],
+	["Run", "Shift"],
+	["Interact", "E"],
+	["Swing / use item", "B or click"],
+	["Pick hotbar item", "1-4 or wheel"],
+	["Bag", "I"],
+	["Journal", "J"],
+	["Torch", "L"],
+	["Next line", "Space or click"],
+	["Pause", "Esc"],
+	["Guide", "G"],
+]
 
 var is_open := false
 ## Music is its own bus. "Sound" is everything else that is not music: the
@@ -29,6 +43,14 @@ var _sound: Button
 var _save: Button
 var _quit: Button
 var _back: Button
+var _quests: Button
+var _guide: Button
+var _banner: Button
+var _list_back: Button
+var _list_scroll: ScrollContainer
+var _list: VBoxContainer
+## Which list the board is showing: "quests", "guide", or "" for the planks.
+var _view := ""
 var _hint: Label
 var _board: Panel
 var _settings_only := false
@@ -72,22 +94,78 @@ func _show(settings_only: bool) -> void:
 	_settings_only = settings_only
 	for l in _title:
 		l.text = "SETTINGS" if settings_only else "PAUSED"
-	_resume.visible = not settings_only
-	_save.visible = not settings_only
-	_quit.visible = not settings_only
-	_back.visible = settings_only
 	_hint.text = HINT_SETTINGS if settings_only else HINT_PAUSED
 	_refresh_labels()
 	# A shorter board when there are only two planks on it.
 	var h := BOARD_H_SETTINGS if settings_only else BOARD_H
 	_board.offset_top = -h * 0.5
 	_board.offset_bottom = h * 0.5
-	_ring_focus()
+	_set_view("")
 	if not settings_only:
 		get_tree().paused = true
 	UiStack.push("pause")
 	_root.visible = true
-	(_back if settings_only else _resume).grab_focus()
+
+
+## Swap the board between the plank menu and a list ("quests" or "guide").
+func _set_view(view: String) -> void:
+	_view = view
+	var on := view != ""
+	for l in _title:
+		l.text = view.to_upper() if on else ("SETTINGS" if _settings_only else "PAUSED")
+	_resume.visible = not on and not _settings_only
+	_banner.visible = not on and not _settings_only
+	_quests.visible = not on and not _settings_only
+	_guide.visible = not on and not _settings_only
+	_music.visible = not on
+	_sound.visible = not on
+	_save.visible = not on and not _settings_only
+	_quit.visible = not on and not _settings_only
+	_back.visible = not on and _settings_only
+	_list_back.visible = on
+	_list_scroll.visible = on
+	if view == "quests":
+		_fill_quests()
+	elif view == "guide":
+		_fill_guide()
+	_hint.text = "Esc to go back" if on else (HINT_SETTINGS if _settings_only else HINT_PAUSED)
+	_ring_focus()
+	var first: Button = _list_back if on else (_back if _settings_only else _resume)
+	first.grab_focus()
+
+
+func _clear_list() -> void:
+	for c in _list.get_children():
+		c.queue_free()
+
+
+func _fill_quests() -> void:
+	_clear_list()
+	for level in Quests.visible_levels():
+		_list.add_child(WoodUI.label(str(level["title"]).to_upper(), 26, WoodUI.FRAME))
+		for s in level["steps"]:
+			var done: bool = s["done"]
+			var l := WoodUI.label(("[x]  " if done else "[ ]  ") + str(s["text"]), 24,
+					WoodUI.BONE_DIM if done else WoodUI.BONE)
+			l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+			_list.add_child(l)
+	# The current quest sits at the bottom; start the view there.
+	_list_scroll.set_deferred("scroll_vertical", 100000)
+
+
+func _fill_guide() -> void:
+	_clear_list()
+	for control in CONTROLS:
+		var row := HBoxContainer.new()
+		var action := WoodUI.label(control[0], 24, WoodUI.BONE)
+		action.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+		action.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		row.add_child(action)
+		var key := WoodUI.label(control[1], 24, WoodUI.BONE_DIM)
+		key.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		row.add_child(key)
+		_list.add_child(row)
+	_list_scroll.set_deferred("scroll_vertical", 0)
 
 
 ## Arrow keys and Tab walk the whole viewport's focusable controls, which on
@@ -122,6 +200,11 @@ func _can_open() -> bool:
 
 func _on_music() -> void:
 	music_muted = not music_muted
+	_refresh_labels()
+
+
+func _on_banner() -> void:
+	QuestBanner.shown = not QuestBanner.shown
 	_refresh_labels()
 
 
@@ -182,6 +265,8 @@ func _refresh_labels() -> void:
 		_music.text = "Music: off" if music_muted else "Music: on"
 	if _sound:
 		_sound.text = "Sound: off" if sound_muted else "Sound: on"
+	if _banner:
+		_banner.text = "Quest banner: on" if QuestBanner.shown else "Quest banner: off"
 
 
 # --- settings on disk -------------------------------------------------------
@@ -212,10 +297,24 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not event.is_pressed() or event.is_echo():
 		return
 	if event.is_action("ui_cancel"):
-		if is_open:
+		if is_open and _view != "":
+			_set_view("")
+		elif is_open:
 			close()
 		elif _can_open():
 			open()
+		else:
+			return
+		get_viewport().set_input_as_handled()
+		return
+	if event.is_action("guide"):
+		if is_open and _view == "guide":
+			close()
+		elif is_open and not _settings_only:
+			_set_view("guide")
+		elif not is_open and _can_open():
+			open()
+			_set_view("guide")
 		else:
 			return
 		get_viewport().set_input_as_handled()
@@ -250,7 +349,7 @@ func _step_focus(dir: int) -> void:
 # --- construction -----------------------------------------------------------
 
 const BOARD_W := 560.0
-const BOARD_H := 680.0
+const BOARD_H := 950.0
 const BOARD_H_SETTINGS := 500.0
 
 func _build() -> void:
@@ -301,12 +400,25 @@ func _build() -> void:
 	board.add_child(menu)
 
 	_resume = _button("Resume", close)
+	_quests = _button("Quests", _set_view.bind("quests"))
+	_guide = _button("Guide", _set_view.bind("guide"))
 	_music = _button("Music: on", _on_music)
 	_sound = _button("Sound: on", _on_sound)
+	_banner = _button("Quest banner: on", _on_banner)
 	_save = _button("Save game", _on_save)
 	_quit = _button("Quit to title", _on_quit)
 	_back = _button("Back", close)
-	for b in [_resume, _music, _sound, _save, _quit, _back]:
+	_list_back = _button("Back", _set_view.bind(""))
+
+	_list_scroll = ScrollContainer.new()
+	_list_scroll.custom_minimum_size = Vector2(0, 480)
+	_list_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	_list = VBoxContainer.new()
+	_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_list.add_theme_constant_override("separation", 10)
+	_list_scroll.add_child(_list)
+	menu.add_child(_list_scroll)
+	for b in [_resume, _quests, _guide, _music, _sound, _banner, _save, _quit, _back, _list_back]:
 		menu.add_child(b)
 
 	var detail := WoodUI.PlankDetail.new()

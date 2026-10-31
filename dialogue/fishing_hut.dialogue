@@ -8,7 +8,7 @@ Traveller: Three fish, the smith said. [[Let's see what's biting.|Right. The riv
 => END
 
 ~ lamp_found
-Traveller: A lamp. The glass is smoked black, but there's oil in it and the wick is whole.
+Traveller: A torch. The head's wrapped in oil-soaked rag, and there's still a little oil in it.
 Traveller: [[Whoever fished here didn't do it blind.|Night won't be so bad with this.|That's the dark taken care of.]]
 => END
 
