@@ -22,8 +22,8 @@ var _levels: Array[Dictionary] = [
 		_step("Find the next case to explore", _flag("level3.arrived")),
 	]},
 	{"title": "Level 3", "steps": [
-		_step("Find a lamp", _flag("pickup.fishing_hut_interior.Lamp")),
-		_step("Find oil for the lamp", _flag("level3.oil")),
+		_step("Find a torch", _flag("pickup.fishing_hut_interior.Lamp")),
+		_step("Find oil for the torch", _flag("lamp.oil_found")),
 		_step("Find all fragments", _all_fragments),
 		_step("Place all fragments", _flag("level3.gate_open")),
 	]},

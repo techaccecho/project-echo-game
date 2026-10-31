@@ -27,6 +27,8 @@
 [ext_resource type="Script" uid="uid://cpwnfxebcpy1u" path="res://world/game_world.gd" id="gw_script"]
 [ext_resource type="PackedScene" uid="uid://blvlaud102ec" path="res://objects/level_audio.tscn" id="lvlaudio"]
 [ext_resource type="PackedScene" uid="uid://bibupx3yvo61" path="res://interaction/interaction_area/interaction_area.tscn" id="portal_area"]
+[ext_resource type="PackedScene" uid="uid://b2itmpku1ech" path="res://objects/item_pickup.tscn" id="oil_pickup"]
+[ext_resource type="Resource" uid="uid://b0i1f1a5k2ech" path="res://inventory/items/oil_flask.tres" id="oil_item"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_portal"]
 size = Vector2(28, 18)
@@ -187,3 +189,17 @@ ambience_volume_db = {
 
 [node name="ReturnSpawn" type="Marker2D" parent="." unique_id=729082798 groups=["player_spawn"]]
 position = Vector2(-96, -540)
+
+[node name="OilFlasks" type="Node2D" parent="."]
+z_index = 5
+y_sort_enabled = true
+
+[node name="ByFishingHut" parent="OilFlasks" instance=ExtResource("oil_pickup")]
+position = Vector2(-1288, -904)
+item = ExtResource("oil_item")
+taken_flag = "oil.l1.fishing_hut"
+
+[node name="ForestPond" parent="OilFlasks" instance=ExtResource("oil_pickup")]
+position = Vector2(-248, -104)
+item = ExtResource("oil_item")
+taken_flag = "oil.l1.forest_pond"

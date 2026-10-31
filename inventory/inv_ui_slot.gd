@@ -11,6 +11,9 @@ signal read_requested(fragment: Fragment)
 ## Emitted when another slot is dropped onto this one. The inventory UI does the
 ## moving; the slot only reports where the drag started and ended.
 signal dropped(from_index: int, to_index: int)
+## Emitted when the player right-clicks something that can be used from the bag
+## — the lamp, or a flask of its oil.
+signal use_requested(item: InvItem)
 
 ## The hotbar's highlight. The slot art has no selected frame of its own, so the
 ## backing tile is brightened rather than swapped — point this at a second atlas
@@ -59,6 +62,12 @@ func update(slot: InvSlot):
 		if slot.item is Fragment:
 			mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 			tooltip_text = "Read \"%s\"" % (slot.item as Fragment).title
+		elif slot.item == Lamp.OIL_ITEM:
+			mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+			tooltip_text = "%s (right-click to soak the torch)" % slot.item.name
+		elif slot.item == Lamp.LAMP_ITEM:
+			mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+			tooltip_text = "%s (right-click to light or put out)" % slot.item.name
 		else:
 			mouse_default_cursor_shape = Control.CURSOR_ARROW
 			tooltip_text = slot.item.name
@@ -77,7 +86,16 @@ func _apply_tint() -> void:
 		background.modulate = TINT_SELECTED if _selected else TINT_IDLE
 
 func _gui_input(event: InputEvent) -> void:
-	if current_slot == null or not (current_slot.item is Fragment):
+	if current_slot == null or current_slot.item == null:
+		return
+	# Right-click uses a usable thing in place: pours a flask into the lamp, or
+	# lights it, without having to drag it to the hotbar first.
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT \
+			and not event.pressed and Lamp.can_use(current_slot.item):
+		accept_event()
+		use_requested.emit(current_slot.item)
+		return
+	if not (current_slot.item is Fragment):
 		return
 	# On release rather than press: a press is also the start of a drag, and a
 	# page that opened the journal on the way past would tear it open mid-drag.

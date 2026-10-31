@@ -48,6 +48,8 @@ func _ready():
 			view.read_requested.connect(_on_read_requested)
 		if view.has_signal("dropped"):
 			view.dropped.connect(_on_dropped)
+		if view.has_signal("use_requested"):
+			view.use_requested.connect(Lamp.use)
 	# Whenever inventory is updated, update the inv
 	inv.update.connect(update_slots)
 	inv.selection_changed.connect(update_selection)
