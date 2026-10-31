@@ -29,6 +29,7 @@ Clock="*res://core/clock.gd"
 SaveGame="*res://core/save_game.gd"
 Quests="*res://core/quests.gd"
 QuestBanner="*res://ui/quest_banner.gd"
+ItemHint="*res://ui/item_hint.gd"
 PauseMenu="*res://ui/pause_menu.tscn"
 ClockHud="*res://ui/clock_hud.tscn"
 Lamp="*res://core/lamp.gd"
@@ -92,6 +93,11 @@ inventory={
 journal={
 "deadzone": 0.2,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":74,"key_label":0,"unicode":106,"location":0,"echo":false,"script":null)
+]
+}
+guide={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":71,"key_label":0,"unicode":103,"location":0,"echo":false,"script":null)
 ]
 }
 interact_alt={

@@ -4,13 +4,11 @@ do disable_movement()
 do Flags.set_flag("forester.met")
 Forester: So. You found the key.
 - Why did you bury it? Why block the way at all?
-	Forester: Because I hoped nobody would ever need to find it. That barricade wasn't spite. It was to keep something else in.
-	Forester: [wait=1] Past a certain point, the forest has been wrong for a long time now. Wrong in a way that spreads, if you let it get behind you.
-	Forester: Sealing the path was the only thing I knew how to do about it. Didn't hold forever, I suppose.
+	Forester: I hoped nobody would need to find it. That barricade wasn't spite. It was to keep something in.
+	Forester: [wait=1] Past a certain point the forest is wrong, in a way that spreads if you let it get behind you.
 - The blacksmith made you sound like a menace.
-	Forester: [[Good.|That was rather the idea.|Let them talk.]] Better they're afraid of an old man in the woods than go looking for what I was actually guarding against.
-	Forester: [wait=1] You're not the first to get past me, either. A stranger came through months back, asking odd questions about the trees. He never came back down.
-	Forester: I should have buried that key deeper.
+	Forester: [[Good.|That was rather the idea.|Let them talk.]] Better they fear an old man than go looking for what I'm guarding against.
+	Forester: [wait=1] You're not the first past me. A stranger came through months back, asking odd questions about the trees. He never came back down.
 Forester: The way on is past the rubble, if you're set on it. Mind yourself down there.
 do stop_talking()
 do enable_movement()
@@ -18,7 +16,6 @@ do enable_movement()
 
 ~ night
 do start_talking()
-Forester: [[Not now. I don't talk after dark, and you shouldn't walk.|The fire keeps it back. Stay in the light of it or go and find your own.|Sleep. It's worse at night, whatever it is. It knows the ground better than you do.]]
-Forester: [[There's room by the fire.|Log's free.|Sit if you're sitting.]]
+Forester: [[Not now. I don't talk after dark, and you shouldn't walk.|The fire keeps it back. Stay in the light of it.|Sleep. It's worse at night, whatever it is.]]
 do stop_talking()
 => END

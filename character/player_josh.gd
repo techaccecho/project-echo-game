@@ -228,6 +228,7 @@ func enable_movement():
 # Our player has access to the inventory. This function puts an item into the inventory by calling inventory.insert
 func collect(item):
 	inv.insert(item)
+	ItemHint.note(item)
 
 
 # Falling
