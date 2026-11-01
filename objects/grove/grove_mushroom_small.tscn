@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dvapp8a721owh"]
+
+[ext_resource type="Script" uid="uid://cxo1ehc05y2pe" path="res://objects/grove/grove_prop.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://byv247kysa4m0" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Tree/Deep Forest/Fantasy Mushroom.png" id="2_tex"]
+
+[node name="GroveMushroomSmall" type="Node2D" unique_id=1427071886]
+script = ExtResource("1_script")
+regions = Array[Rect2]([Rect2(12, 37, 9, 9), Rect2(12, 133, 9, 9), Rect2(12, 181, 9, 9), Rect2(12, 229, 9, 9)])
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1137233040]
+position = Vector2(0, 7)
+texture = ExtResource("2_tex")
+centered = false
+offset = Vector2(-4.5, -9)
+region_enabled = true
+region_rect = Rect2(12, 37, 9, 9)
