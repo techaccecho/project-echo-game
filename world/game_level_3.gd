@@ -14,6 +14,9 @@ const FLAG_OPEN := "level3.gate_open"
 ## Pedestal tint when lit / dark.
 const LIT := Color(1.0, 1.0, 1.0)
 const DARK := Color(0.55, 0.5, 0.6)
+## TESTING ONLY: set true to strip the storm darkness and the purple weather
+## tint so the grove is fully lit for manual testing. Leave false when done.
+const DEBUG_LIGHT := false
 
 var _progress := 0
 var _busy := false
@@ -23,11 +26,16 @@ var _player: CharacterBody2D
 func _ready() -> void:
 	_player = get_tree().get_first_node_in_group("player")
 	Flags.set_flag("level3.arrived")
+	if DEBUG_LIGHT:
+		# Freeing the storm clears its Clock light override on exit.
+		$Storm.queue_free()
+		$Weather.tint = Color.WHITE
 	for p in $Pedestals.get_children():
 		var area: InteractionArea = p.get_node("InteractionArea")
 		area.interact = Callable(self, "_on_pedestal").bind(p.name)
 	$Gate/InteractionArea.interact = Callable(self, "_on_gate")
 	$Log/InteractionArea.interact = Callable(self, "_say").bind("log")
+	$ReturnArea.interact = Callable(self, "_on_leave")
 	if Flags.has(FLAG_OPEN):
 		_open_gate(true)
 	else:
@@ -102,6 +110,11 @@ func _on_gate() -> void:
 	# The way on. Level 4 does not exist yet, so the open gate says as much
 	# rather than doing nothing.
 	await _say("gate_open" if Flags.has(FLAG_OPEN) else "gate_shut")
+
+
+## The west mouth of the maze: back out to the Cliffside Path, at the cave.
+func _on_leave() -> void:
+	SceneManager.change_level("res://world/game_level_2.tscn", "CaveMouth")
 
 
 # --- helpers ----------------------------------------------------------------
