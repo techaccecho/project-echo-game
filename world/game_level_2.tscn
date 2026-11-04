@@ -1591,7 +1591,7 @@ area_center = Vector2(576, 208)
 mist_bands = Array[Rect2]([Rect2(0, 40, 1280, 110), Rect2(0, 262, 1280, 150)])
 
 [node name="CameraBounds" parent="." unique_id=819412056 instance=ExtResource("cambounds")]
-bounds = Rect2i(-128, 0, 1408, 416)
+bounds = Rect2i(-128, -128, 1408, 672)
 
 [node name="LevelAudio" parent="." unique_id=1404397918 instance=ExtResource("levelaudio")]
 music = "res://audio/music/cliffside_bed.wav"

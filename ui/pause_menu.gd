@@ -367,15 +367,7 @@ func _build() -> void:
 
 	var board := Panel.new()
 	_board = board
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = WoodUI.WOOD
-	sb.border_color = WoodUI.FRAME
-	sb.set_border_width_all(5)
-	sb.set_corner_radius_all(3)
-	sb.shadow_color = Color(0, 0, 0, 0.6)
-	sb.shadow_size = 18
-	sb.shadow_offset = Vector2(0, 8)
-	board.add_theme_stylebox_override("panel", sb)
+	board.add_theme_stylebox_override("panel", WoodUI.board())
 	board.set_anchors_preset(Control.PRESET_CENTER)
 	board.offset_left = -BOARD_W * 0.5
 	board.offset_right = BOARD_W * 0.5
@@ -383,7 +375,7 @@ func _build() -> void:
 	board.offset_bottom = BOARD_H * 0.5
 	_root.add_child(board)
 
-	var bolts := Bolts.new()
+	var bolts := WoodUI.Bolts.new()
 	bolts.set_anchors_preset(Control.PRESET_FULL_RECT)
 	board.add_child(bolts)
 
@@ -438,16 +430,3 @@ func _button(text: String, pressed: Callable) -> Button:
 	_buttons.append(b)
 	return b
 
-
-## The four corner bolts of the logo's signboard.
-class Bolts extends Control:
-	func _ready() -> void:
-		mouse_filter = Control.MOUSE_FILTER_IGNORE
-
-	func _draw() -> void:
-		for cx in [22.0, size.x - 22.0]:
-			for cy in [22.0, size.y - 22.0]:
-				var c := Vector2(cx, cy)
-				draw_circle(c, 7.0, WoodUI.BOLT)
-				draw_arc(c, 7.0, 0.0, TAU, 20, WoodUI.BOLT_RIM, 2.5)
-				draw_circle(c + Vector2(-1.5, -1.5), 2.0, Color(WoodUI.WOOD_LIT, 0.5))

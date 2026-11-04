@@ -104,6 +104,34 @@ static func carved(text: String, size: float, spacing: float, mid_y: float,
 	return out
 
 
+## The four corner bolts of the logo's signboard, for a board-shaped panel.
+## Add it as a full-rect child of the Panel it belongs to.
+class Bolts extends Control:
+	func _ready() -> void:
+		mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+	func _draw() -> void:
+		for cx in [22.0, size.x - 22.0]:
+			for cy in [22.0, size.y - 22.0]:
+				var c := Vector2(cx, cy)
+				draw_circle(c, 7.0, WoodUI.BOLT)
+				draw_arc(c, 7.0, 0.0, TAU, 20, WoodUI.BOLT_RIM, 2.5)
+				draw_circle(c + Vector2(-1.5, -1.5), 2.0, Color(WoodUI.WOOD_LIT, 0.5))
+
+
+## The board the pause menu and the gate are both cut from.
+static func board() -> StyleBoxFlat:
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = WOOD
+	sb.border_color = FRAME
+	sb.set_border_width_all(5)
+	sb.set_corner_radius_all(3)
+	sb.shadow_color = Color(0, 0, 0, 0.6)
+	sb.shadow_size = 18
+	sb.shadow_offset = Vector2(0, 8)
+	return sb
+
+
 ## Grain lines and end bolts, drawn over a set of planks. Kept as its own node
 ## so it sits above the Buttons in the draw order — a Button's stylebox would
 ## bury anything drawn under it. Add it after the buttons' container.
