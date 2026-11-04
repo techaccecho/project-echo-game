@@ -1,0 +1,21 @@
+~ guardian
+do start_talking()
+Guardian: You came the whole way.
+Guardian: The barricade. The ledge. The stones in the dark wood, in the order the pages gave you.
+Guardian: Step for step. He did not miss one either.
+Guardian: [[He sat where you are standing.|He stayed four days. Then he stopped writing.|I have been waiting a long time to be asked.]]
+do stop_talking()
+=> END
+
+~ altar
+A low stone, worn round at the edges, with a spiral cut into its face. The cut is deeper than weather would make it.
+Something is set into the groove that is not stone. It is cold, and it is the only thing here that is not pale.
+=> END
+
+~ camp
+A groundsheet, a ring of cold stones, a lantern with no oil left in it. Everything is laid out neatly, and nothing has been packed.
+=> END
+
+~ stone
+A hooded figure cut from one piece, facing in. Where the face should be there is only the hood.
+=> END

@@ -7603,6 +7603,9 @@ shape = SubResource("RS_return")
 [node name="GroveEntrance" type="Marker2D" parent="." unique_id=684829696 groups=["player_spawn"]]
 position = Vector2(76, 424)
 
+[node name="GroveGate" type="Marker2D" parent="." groups=["player_spawn"]]
+position = Vector2(1044, 424)
+
 [node name="Weather" parent="." unique_id=1900372687 instance=ExtResource("weather")]
 tint = Color(0.72, 0.6, 0.88, 1)
 area_size = Vector2(1384, 1064)

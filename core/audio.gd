@@ -47,7 +47,11 @@ func _as_loop(stream: AudioStream) -> AudioStream:
 		if w.loop_mode == AudioStreamWAV.LOOP_DISABLED:
 			w.loop_mode = AudioStreamWAV.LOOP_FORWARD
 			w.loop_begin = 0
-			w.loop_end = 0
+			# The end of the file, in frames. This used to be left at 0, which
+			# asks the engine to loop a zero-length region at the very start
+			# of the sample — silence, on any import format that takes it
+			# literally.
+			w.loop_end = int(w.get_length() * w.mix_rate)
 	elif stream is AudioStreamOggVorbis:
 		(stream as AudioStreamOggVorbis).loop = true
 	elif stream is AudioStreamMP3:
@@ -75,6 +79,8 @@ func play_music(path: String, fade: float = 1.5, volume_db: float = 0.0) -> void
 		return
 	_music_path = path
 	var old := _music
+	print_verbose("Audio: music -> %s (%.1fs, %s)"
+			% [path, stream.get_length(), stream.get_class()])
 
 	_music = _make_player(MUSIC_BUS)
 	_music.stream = _as_loop(stream)

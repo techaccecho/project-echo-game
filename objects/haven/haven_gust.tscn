@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://bgu5th4v3n14"]
+
+[ext_resource type="Script" path="res://objects/haven/haven_gust.gd" id="1_script"]
+
+[sub_resource type="Gradient" id="G_streak"]
+offsets = PackedFloat32Array(0, 0.45, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GT_streak"]
+gradient = SubResource("G_streak")
+width = 34
+height = 2
+fill_from = Vector2(0, 0)
+fill_to = Vector2(1, 0)
+
+[sub_resource type="Gradient" id="G_wisp"]
+offsets = PackedFloat32Array(0, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GT_wisp"]
+gradient = SubResource("G_wisp")
+width = 40
+height = 40
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[node name="HavenGust" type="Node2D"]
+z_index = 6
+script = ExtResource("1_script")
+
+[node name="Wisps" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 26
+lifetime = 1.1
+local_coords = false
+texture = SubResource("GT_wisp")
+emission_shape = 1
+emission_sphere_radius = 11.0
+spread = 26.0
+gravity = Vector2(0, -6)
+initial_velocity_min = 14.0
+initial_velocity_max = 48.0
+damping_min = 10.0
+damping_max = 34.0
+scale_amount_min = 0.5
+scale_amount_max = 1.5
+color = Color(0.97, 0.95, 1, 0.38)
+
+[node name="Streaks" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 46
+lifetime = 0.62
+local_coords = false
+texture = SubResource("GT_streak")
+emission_shape = 1
+emission_sphere_radius = 9.0
+spread = 9.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 90.0
+initial_velocity_max = 230.0
+damping_min = 40.0
+damping_max = 150.0
+scale_amount_min = 0.5
+scale_amount_max = 1.3
+color = Color(1, 0.97, 0.9, 0.6)

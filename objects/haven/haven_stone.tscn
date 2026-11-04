@@ -1,0 +1,26 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://objects/grove/grove_prop.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://dkfu83gh7hr5e" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Farm and Tileset/Props/Winter/Stones .png" id="2_tex"]
+
+[sub_resource type="RectangleShape2D" id="RS_body"]
+size = Vector2(12, 6)
+
+[node name="HavenStone" type="Node2D"]
+script = ExtResource("1_script")
+regions = Array[Rect2]([Rect2(32, 0, 16, 16), Rect2(80, 0, 16, 16), Rect2(0, 16, 16, 16), Rect2(0, 32, 16, 16)])
+feet_below = 2.0
+flat_variants = PackedInt32Array(1, 3)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_tex")
+centered = false
+region_enabled = true
+region_rect = Rect2(32, 0, 16, 16)
+offset = Vector2(-8, -14)
+
+[node name="Body" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+position = Vector2(0, -3)
+shape = SubResource("RS_body")
