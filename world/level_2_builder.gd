@@ -119,6 +119,10 @@ const FENCE_R := Vector2i(2, 2)
 ## spawns near column 2 and the camera shows ~40 tiles, so without this the
 ## opening shot is half empty viewport.
 @export var left_margin: int = 10
+## Rows of extra scenery painted above (grass flat) and below (sea) the level.
+## The camera is allowed to travel this far past the designed area, so a tall
+## window never shows the grey clear colour. Keep CameraBounds in step.
+@export var pad_rows: int = 8
 ## Where the player arrives from: (leftmost column, arch row). Kept hard
 ## against column 0 so the mouth opens straight onto the ledge — further left
 ## and there is solid rock between the cave and the spawn, which makes nonsense
@@ -364,6 +368,137 @@ func _clear() -> void:
 				c.free()
 
 
+## Continues the sea below the level and lays a grass flat above the mountain,
+## so nothing outside the designed rows is ever empty. Idempotent: the level
+## script also calls it on load, because the baked layers predate it.
+func pad_edges() -> void:
+	var water := _layer("Water")
+	var ground := _layer("Ground")
+	var cliffs := _layer("Cliffs")
+	if water == null or ground == null or cliffs == null:
+		return
+	for x in range(-left_margin - pad_rows, level_width + pad_rows):
+		for y in range(level_height, level_height + pad_rows):
+			water.set_cell(Vector2i(x, y), SRC_WATER, T_WATER)
+		for y in range(-pad_rows, 0):
+			var c := Vector2i(x, y)
+			if _pad_grass(x, y):
+				ground.set_cell(c, SRC_CLIFF, _pad_grass_tile(x, y))
+				cliffs.erase_cell(c)
+			else:
+				# Mountain pushing up into the flat: a taller, jutting wall.
+				ground.erase_cell(c)
+				cliffs.set_cell(c, SRC_CLIFF, T_FACE)
+	_dress_top_flat()
+
+
+## How many rows the mountain wall climbs above row 0 at this column, 0..4.
+## Stepped in blocks of different widths so the skyline juts in and out.
+func _pad_rise(x: int) -> int:
+	var r := int(_rnd(floori(x / 5.0), 901) * 5.0)
+	if _rnd(floori(x / 11.0), 903) > 0.6:
+		r = maxi(r, 3)
+	return clampi(r, 0, 4)
+
+
+## Grass on the top flat: above the wall, which has a ragged top edge.
+func _pad_grass(x: int, y: int) -> bool:
+	if y >= 0:
+		return false
+	if y < -pad_rows:
+		return true
+	return y < -_pad_rise(x)
+
+
+## Same edge logic as the ledge, so the grass meets the rock with the cliff-lip
+## and side tiles instead of a flat cut-off.
+func _pad_grass_tile(x: int, y: int) -> Vector2i:
+	var up := not _pad_grass(x, y - 1)
+	var down := not _pad_grass(x, y + 1)
+	var left := not _pad_grass(x - 1, y)
+	var right := not _pad_grass(x + 1, y)
+	if up and left: return T_TL
+	if up and right: return T_TR
+	if down and left: return T_BL
+	if down and right: return T_BR
+	if up: return T_UP
+	if down: return T_DOWN
+	if left: return T_LEFT
+	if right: return T_RIGHT
+	return T_GRASS
+
+
+## Boulders, rocks, bushes, tufts and pines across the grass flat above the
+## mountain. Purely scenery -- the camera bounds keep the player out of it -- so
+## there is no collision and no lamps. Deterministic, so safe to run repeatedly.
+func _dress_top_flat() -> void:
+	var scatter := _layer("Scatter")
+	var parent := get_parent()
+	if scatter == null or parent == null:
+		return
+	var x0 := -left_margin - pad_rows
+	var x1 := level_width + pad_rows
+	var used := {}
+	# Stamps first, so loose greenery fills around them.
+	var groups := [[BOULDER_LARGE, 70, 401], [BOULDER_SMALL, 130, 411], [ROCK_PAIRS, 220, 421]]
+	for g in groups:
+		var stamps: Array = g[0]
+		for i in int(g[1]):
+			var x := x0 + int(_rnd(i, g[2]) * (x1 - x0))
+			var y := -pad_rows + int(_rnd(i, g[2] + 1) * (pad_rows - 1))
+			var stamp: Array = stamps[int(_rnd(i, g[2] + 2) * stamps.size()) % stamps.size()]
+			var ok := true
+			for dy in stamp.size():
+				for dx in (stamp[dy] as Array).size():
+					var c := Vector2i(x + dx, y + dy)
+					if used.has(c) or x + dx >= x1 or not _pad_grass(c.x, c.y) or not _pad_grass(c.x, c.y + 1):
+						ok = false
+			if not ok:
+				continue
+			for dy in stamp.size():
+				var row: Array = stamp[dy]
+				for dx in row.size():
+					var t: Array = row[dx]
+					var c := Vector2i(x + dx, y + dy)
+					scatter.set_cell(c, int(t[0]), Vector2i(int(t[1]), int(t[2])))
+					used[c] = true
+	for x in range(x0, x1):
+		for y in range(-pad_rows, 0):
+			var c := Vector2i(x, y)
+			if used.has(c) or not _pad_grass(x, y) or not _pad_grass(x, y + 1):
+				continue
+			var n := _rnd(x, y + 713)
+			if n > 0.86:
+				scatter.set_cell(c, 3, Vector2i(int(_rnd(x, y + 57) * 8) % 8, BUSH_ROW))
+			elif n > 0.66:
+				scatter.set_cell(c, 3, Vector2i(int(_rnd(x, y + 23) * 6) % 6, TUFT_ROW))
+	# Pines, skipping any already placed on an earlier call.
+	var props := parent.get_node_or_null("Props") as Node2D
+	if props == null or pine_scene == null:
+		return
+	var owner_node := get_tree().edited_scene_root if Engine.is_editor_hint() else parent
+	var i := 0
+	for x in range(x0 + 1, x1 - 1, 3):
+		if _rnd(x, 801) < 0.35:
+			continue
+		var row := -7 + int(_rnd(x, 802) * 5)        # rows -7..-3
+		if row > -_pad_rise(x) - 2:
+			i += 1
+			continue                                 # would stand in the wall
+		var pos := Vector2(x * 16 + 8 + int(_rnd(x, 803) * 9) - 4, row * 16 + 12)
+		var nm := "PadPine%d" % i
+		i += 1
+		if props.has_node(nm):
+			continue
+		var pine := pine_scene.instantiate() as Node2D
+		pine.name = nm
+		pine.position = pos
+		pine.z_index = 5
+		props.add_child(pine)
+		if owner_node:
+			pine.owner = owner_node
+
+
 func _build() -> void:
 	var parent := get_parent()
 	if parent == null:
@@ -409,6 +544,7 @@ func _build() -> void:
 			ground.set_cell(Vector2i(x, y), SRC_CLIFF, _grass_tile(x, y))
 
 	_build_left_margin(cliffs)
+	pad_edges()
 
 	if build_cave:
 		_build_cave(cliffs)

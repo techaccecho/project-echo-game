@@ -15,6 +15,10 @@ var _busy := false
 
 func _ready() -> void:
 	_player = get_tree().get_first_node_in_group("player")
+	# Scenery past the top and bottom of the designed area (grass flat / sea).
+	var builder := get_node_or_null("TerrainBuilder")
+	if builder and builder.has_method("pad_edges"):
+		builder.pad_edges()
 	if return_area:
 		return_area.interact = Callable(self, "_on_leave")
 	for area in $Looks.get_children():
