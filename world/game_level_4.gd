@@ -15,7 +15,19 @@ extends Node2D
 const STORY := "res://dialogue/haven.dialogue"
 
 ## How long the Guardian stays in one stone before moving on.
-const STAY := Vector2(26.0, 52.0)
+const STAY := Vector2(12.0, 30.0)
+## Now and then it does not settle at all. It leaves again almost at once,
+## two or three times over, and then goes quiet for longer than usual. A fixed
+## interval is a metronome you stop seeing after a few minutes; this way the
+## plain occasionally looks like it is making up its mind.
+const RESTLESS_CHANCE := 0.3
+const BURST_HOPS := Vector2i(1, 3)
+const BURST_WAIT := Vector2(2.5, 6.0)
+## How much quicker the crossing is inside a burst. Taking the usual drifting
+## 1.25s for each hop of a flurry reads as slow, not urgent.
+const BURST_CROSS := 0.6
+## The long stillness after a burst, so the burst reads as one.
+const AFTER_BURST := Vector2(34.0, 58.0)
 ## It will not leave while the player is this close — you are standing there
 ## about to talk to it. Short on purpose: the crossing is worth seeing, so it
 ## is quite happy to move while you watch from across the plain.
@@ -27,6 +39,11 @@ var _guardian: CharacterBody2D
 var _stones: Array[Node2D] = []
 var _home := -1
 var _until_move := 0.0
+## Hops still owed to the burst it is in, whether the next crossing is one of
+## them, and whether it has a burst to recover from. See _schedule().
+var _burst := 0
+var _quick := false
+var _spent := false
 
 
 func _ready() -> void:
@@ -41,7 +58,7 @@ func _ready() -> void:
 	_home = _nearest(_guardian.global_position)
 	_guardian.global_position = _stones[_home].global_position
 	_stones[_home].visible = false
-	_until_move = randf_range(STAY.x, STAY.y)
+	_schedule()
 
 
 func _process(delta: float) -> void:
@@ -53,7 +70,7 @@ func _process(delta: float) -> void:
 	if _player != null and is_instance_valid(_player) \
 			and _player.global_position.distance_to(_guardian.global_position) < TOO_CLOSE:
 		return
-	_until_move = randf_range(STAY.x, STAY.y)
+	_schedule()
 	_move_on()
 
 
@@ -68,10 +85,39 @@ func _move_on() -> void:
 		return
 	await _guardian.vacate()
 	_stones[_home].visible = true
-	await _guardian.cross_to(_stones[next].global_position)
+	# -1 means "take your usual time"; a burst hop is quicker.
+	var seconds := -1.0
+	if _quick:
+		seconds = BURST_CROSS * float(_guardian.cross_seconds)
+	await _guardian.cross_to(_stones[next].global_position, seconds)
 	_stones[next].visible = false
 	_home = next
 	await _guardian.settle()
+
+
+## How long until it moves again, and whether that move is a quick one. Most
+## waits are an ordinary long one; a few open a burst, in which every hop is
+## short and quick; and the wait after a burst is longer than any ordinary one,
+## so the flurry reads as a flurry rather than as the new tempo. Always called
+## before the move it is scheduling, so no path through _process() can leave
+## the timer expired with nothing booked.
+func _schedule() -> void:
+	if _burst > 0:                              # still inside one
+		_burst -= 1
+		_quick = true
+		_until_move = randf_range(BURST_WAIT.x, BURST_WAIT.y)
+	elif _spent:                                # the stillness after one
+		_spent = false
+		_quick = false
+		_until_move = randf_range(AFTER_BURST.x, AFTER_BURST.y)
+	elif randf() < RESTLESS_CHANCE:             # this move opens one
+		_burst = randi_range(BURST_HOPS.x, BURST_HOPS.y)
+		_spent = true
+		_quick = true
+		_until_move = randf_range(BURST_WAIT.x, BURST_WAIT.y)
+	else:
+		_quick = false
+		_until_move = randf_range(STAY.x, STAY.y)
 
 
 ## Anywhere but where it is, and biased towards the far side of the plain so

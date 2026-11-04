@@ -6,11 +6,19 @@ extends Node2D
 ## The puzzle: four gem pedestals in the east clearing. Cedric's three pages
 ## give the order — blue, red, green, purple. Touching them in order lights
 ## each in turn; a wrong one puts the row out. The full sequence opens the
-## gate, which is the hand-off to Level 4 and, until that exists, says so.
+## gate, and the gate then asks for six characters typed into its lintel
+## before it lets you through to the Haven.
 
 const STORY := "res://dialogue/grove.dialogue"
 const ORDER := ["blue", "red", "green", "purple"]
 const FLAG_OPEN := "level3.gate_open"
+## Asked once. Flagged rather than re-asked, so coming back from the Haven and
+## going through again does not make the player type it a second time.
+const FLAG_PASSED := "level3.gate_password"
+## Six marks cut into the lintel. The pedestals open the gate; this is what
+## gets you through it, and it is not findable anywhere in the game — it comes
+## from outside, which is the point of the hand-off to the blog.
+const GATE_PASSWORD := "123456"
 ## Pedestal tint when lit / dark.
 const LIT := Color(1.0, 1.0, 1.0)
 const DARK := Color(0.55, 0.5, 0.6)
@@ -107,12 +115,35 @@ func _open_gate(silent: bool) -> void:
 
 
 func _on_gate() -> void:
-	# The way on, once the pedestals have opened it: through to the Haven.
+	# The way on: the pedestals unseal the arch, the lintel asks for the code,
+	# and only then does it lead to the Haven.
+	if _busy:
+		return
+	_busy = true
 	if not Flags.has(FLAG_OPEN):
 		await _say("gate_shut")
+		_busy = false
 		return
-	await _say("gate_open")
+	if not Flags.has(FLAG_PASSED):
+		await _say("gate_open")
+		if not await _ask_password():
+			_busy = false
+			return
+		Flags.set_flag(FLAG_PASSED)
+	await _say("gate_pass")
+	_busy = false
 	SceneManager.change_level("res://world/game_level_4.tscn", "HavenArrival")
+
+
+## Put the lintel's six squares up and wait. False if the player backed out or
+## never got it right, in which case they are left standing in the grove.
+func _ask_password() -> bool:
+	var gate := PasswordGate.new()
+	gate.answer = GATE_PASSWORD
+	gate.length = GATE_PASSWORD.length()
+	add_child(gate)
+	var accepted: bool = await gate.closed
+	return accepted
 
 
 ## The west mouth of the maze: back out to the Cliffside Path, at the cave.

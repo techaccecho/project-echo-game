@@ -10,9 +10,22 @@ you walking off into the white.
 Run from the repo root:  python3 tools/gen_level4.py [--bake]
 Without --bake it only writes the preview PNG.
 """
-import base64, math, random, struct, sys
+import base64, math, random, re, struct, sys
 
 random.seed(104)
+
+def rect(s):
+    """The four numbers out of a `Rect2(x, y, w, h)` literal, as ints.
+
+    Not `s.strip("Rect2() ")`: strip takes a set of characters, so that idiom
+    also eats any leading or trailing digit that is one of Rect2's own —
+    "Rect2(0, 0, 32, 32)" parsed as 32x3 and the open chest's
+    "Rect2(200, 0, 16, 16)" parsed at x=0. Both were wrong for a long time,
+    silently, in the preview renderer that is supposed to catch exactly this.
+    """
+    inside = re.search(r"\(([^)]*)\)", s).group(1)
+    return tuple(int(n) for n in re.findall(r"-?\d+", inside))
+
 
 ART = "res://art/Farm RPG - Tiny Asset Pack - (All in One)/"
 DISK = "art/Farm RPG - Tiny Asset Pack - (All in One)/"
@@ -187,6 +200,13 @@ for _ in range(400):
 # scattered at random: someone chose where to put each of these. Entries are
 # (sheet id, dx, dy, region, flat) — flat items have no collision and draw
 # under the player, who walks over them.
+CAMP_SHEETS = {
+    "sheet": "Exterior/Picnic.png", "moss": "Exterior/wood moss.png",
+    "chest": "Exterior/chest.png", "lamp": "Exterior/Lamp .png",
+    "box": "Exterior/Box.png",
+    "page": "Icons/Weapons/Books and Potions/Books.png",
+}
+
 CAMP_PROPS = [
     ("sheet",  34,  26, "Rect2(48, 0, 48, 48)",   True),   # his groundsheet
     ("page",   32,   4, "Rect2(0, 48, 16, 16)",   True),
@@ -196,11 +216,53 @@ CAMP_PROPS = [
     ("moss",  -34,   6, "Rect2(0, 0, 32, 32)",    False),  # his woodpile
     ("moss",   22, -14, "Rect2(32, 0, 16, 32)",   False),  # a log to sit on
     ("chest",  -6, -24, "Rect2(200, 0, 16, 16)",  False),  # left standing open
-    ("lamp",   16, -26, "Rect2(0, 0, 16, 16)",    False),  # unlit
+    # East of the log, not behind it. The preview renderer draws these in
+    # table order rather than y-sorted, so the lamp looked fine there while
+    # the game would have hidden it behind the log entirely.
+    ("lamp",   44, -26, "Rect2(0, 0, 16, 16)",    False),  # unlit
     ("box",   -30, -16, "Rect2(16, 0, 16, 16)",   False),
     ("box",   -16,  24, "Rect2(0, 0, 16, 16)",    False),
     ("box",    40,  -4, "Rect2(0, 16, 16, 16)",   False),
 ]
+
+_FOOT = {}
+
+def footprint(sheet, region):
+    """Where a standing prop actually meets the ground, read off its alpha.
+
+    Hand-written collision boxes were the bug here: the camp was baked as bare
+    Sprite2Ds with none at all, so you walked straight through the crates and
+    the woodpile, and the y-sorting that was working correctly looked broken
+    because nothing stopped you standing inside a thing you were drawn over.
+
+    Guessing the box from the crop is no good either — several of these crops
+    have empty rows under the art (the lamp's bottom three are blank), so a
+    box sized to the crop floats. This finds the lowest opaque row, takes the
+    widest the art gets over the five rows above it, and returns a rect in the
+    node's own space, where the sprite's offset puts the crop's bottom edge
+    two pixels below the origin.
+    """
+    key = (sheet, region)
+    if key in _FOOT:
+        return _FOOT[key]
+    from PIL import Image
+    rx, ry, rw, rh = region
+    a = (Image.open(DISK + CAMP_SHEETS[sheet]).convert("RGBA")
+         .crop((rx, ry, rx + rw, ry + rh)).split()[3])
+    rows = [[x for x in range(rw) if a.getpixel((x, y)) > 40] for y in range(rh)]
+    solid = [y for y, xs in enumerate(rows) if xs]
+    top, base = solid[0], solid[-1]
+    span = [x for y in range(max(top, base - 4), base + 1) for x in rows[y]]
+    lo, hi = min(span), max(span)
+    # Half the art's height, so a crate is waist-deep and a woodpile is not
+    # something you can stand in the middle of; capped either way.
+    h = max(5, min(10, (base - top + 1) // 2))
+    # The crop's bottom row sits at y = +2 in node space (offset is -rh + 2),
+    # so the art's own last row is at +2 - (rh - 1 - base).
+    bottom = 2 - (rh - 1 - base)
+    foot = (hi - lo + 1, h, (lo + hi + 1) / 2 - rw / 2, bottom - h / 2)
+    _FOOT[key] = foot
+    return foot
 
 # --- emit -------------------------------------------------------------------
 def encode(cells):
@@ -263,9 +325,10 @@ def write_scene():
         f'region_rect = Rect2(0, 48, 16, 16)\n'
         for i, (x, y, r) in enumerate(PAGES))
     ap, cp, gp, rp = px(ALTAR), px(CAMP), px(GUARDIAN), px(ARCH)
-    camp = ""
+    camp, camp_bodies = "", ""
     for i, (sheet, dx, dy, r, flat) in enumerate(CAMP_PROPS):
-        w, h = (float(n) for n in r.strip("Rect2() ").split(", ")[2:])
+        region = rect(r)
+        w, h = float(region[2]), float(region[3])
         # Flat things lie on the ground under the player; standing ones have
         # their origin on the footprint so y-sorting puts him in front of
         # anything he is south of.
@@ -277,6 +340,17 @@ def write_scene():
                  f'centered = false\ntexture = ExtResource("{sheet}")\n'
                  f'region_enabled = true\nregion_rect = {r}\n'
                  f'offset = {off}\n')
+        if flat:
+            continue
+        # One StaticBody2D for all of them, with a shape per prop: the player
+        # walks round the crates and the woodpile and over the groundsheet and
+        # the pages, which is the distinction `flat` is for.
+        fw, fh, fx, fy = footprint(sheet, region)
+        camp_bodies += (
+            f'\n[node name="F{i}_{sheet}" type="CollisionShape2D" '
+            f'parent="CampProps"]\n'
+            f'position = Vector2({cp[0] + dx + fx}, {cp[1] + dy + fy})\n'
+            f'shape = SubResource("{shape(fw, fh)}")\n')
     altar_body, altar_touch = shape(44, 16), shape(60, 46)
     fire_body = shape(14, 6)
 
@@ -378,6 +452,8 @@ position = Vector2{cp}
 position = Vector2(0, -3)
 shape = SubResource("{fire_body}")
 
+[node name="CampProps" type="StaticBody2D" parent="."]
+{camp_bodies}
 [node name="Arch" parent="." instance=ExtResource("portal")]
 z_index = 5
 position = Vector2{rp}
@@ -406,8 +482,8 @@ bounds = Rect2i(0, 0, {PX[0]}, {PX[1]})
 
 [node name="LevelAudio" parent="." instance=ExtResource("levelaudio")]
 music = "res://audio/music/haven_bed.wav"
-music_volume_db = -7.0
-music_fade = 4.0
+music_volume_db = -9.5
+music_fade = 7.0
 ''')
 
 def write_preview():
@@ -428,8 +504,7 @@ def write_preview():
         img.alpha_composite(s, (int(cell[0] * TILE + 8 - rw // 2 + ox),
                                 int(cell[1] * TILE + 8 - rh + oy)))
     for x, y, v in DRESSING:
-        r = [tuple(int(n) for n in q.strip("Rect2() ").split(", "))
-             for q in STONE_REGIONS][v]
+        r = [rect(q) for q in STONE_REGIONS][v]
         prop("Farm and Tileset/Props/Winter/Stones .png", r, (x, y), 0, 0, (.96, .96, 1.))
     for x, y, _ in PAGES:
         prop("Icons/Weapons/Books and Potions/Books.png", (0, 48, 16, 16),
@@ -441,7 +516,7 @@ def write_preview():
               "box": "Exterior/Box.png",
               "page": "Icons/Weapons/Books and Potions/Books.png"}
     for sheet, dx, dy, q, flat in CAMP_PROPS:
-        r = tuple(int(n) for n in q.strip("Rect2() ").split(", "))
+        r = rect(q)
         # Scene offsets are (-w/2, -h/2) flat and (-w/2, -h+2) standing; prop()
         # already subtracts h, so only the remainder goes in here.
         prop(sheets[sheet], r, CAMP, dx, dy + (r[3] // 2 if flat else 2),

@@ -84,12 +84,15 @@ func vacate() -> void:
 	await t.finished
 
 
-## Blow across to `to`, arriving invisible.
-func cross_to(to: Vector2) -> void:
+## Blow across to `to`, arriving invisible. `seconds` overrides the usual
+## crossing time — the level shortens it during one of the Guardian's restless
+## bursts, where a leisurely drift would undercut the point.
+func cross_to(to: Vector2, seconds: float = -1.0) -> void:
+	var over := cross_seconds if seconds < 0.0 else seconds
 	var gust = GUST.instantiate()
 	get_parent().add_child(gust)
-	gust.travel(global_position, to, cross_seconds)
-	await get_tree().create_timer(cross_seconds).timeout
+	gust.travel(global_position, to, over)
+	await get_tree().create_timer(over).timeout
 	global_position = to
 
 

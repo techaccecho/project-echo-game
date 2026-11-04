@@ -28,7 +28,11 @@ Two uprights and a lintel, and between them stone as solid as the rest. Four sto
 
 ~ gate_open
 The stone between the uprights is gone. The air past it is pale, and it moves.
-Whatever is on the other side is not ready for you yet.
+Cut into the lintel, six shallow squares in a row. They are the last thing holding it shut.
+=> END
+
+~ gate_pass
+The air in the arch thins until there is nothing between you and the pale light beyond it.
 => END
 
 ~ log
