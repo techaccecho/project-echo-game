@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://cgu4rd1anech4"]
+
+[ext_resource type="Script" path="res://character/npc_guardian.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://bvw32kp0wfgsw" path="res://art/Farm RPG - Tiny Asset Pack - (All in One)/Exterior/Dungeon/statue.png" id="2_tex"]
+[ext_resource type="PackedScene" uid="uid://bibupx3yvo61" path="res://interaction/interaction_area/interaction_area.tscn" id="3_iarea"]
+
+[sub_resource type="Gradient" id="G_halo"]
+offsets = PackedFloat32Array(0, 0.45, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.35, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GT_halo"]
+gradient = SubResource("G_halo")
+width = 96
+height = 96
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="RectangleShape2D" id="RS_body"]
+size = Vector2(38, 14)
+
+[sub_resource type="RectangleShape2D" id="RS_talk"]
+size = Vector2(74, 56)
+
+[node name="NpcGuardian" type="CharacterBody2D"]
+y_sort_enabled = true
+script = ExtResource("1_script")
+
+[node name="Light" type="PointLight2D" parent="."]
+position = Vector2(0, -20)
+color = Color(0.86, 0.9, 1, 1)
+energy = 0.9
+texture = SubResource("GT_halo")
+texture_scale = 2.4
+
+[node name="Halo" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(0, -20)
+modulate = Color(0.98, 0.95, 1, 0.34)
+scale = Vector2(1.25, 1.1)
+texture = SubResource("GT_halo")
+
+[node name="Figure" type="Sprite2D" parent="."]
+modulate = Color(1, 0.97, 0.94, 1)
+centered = false
+texture = ExtResource("2_tex")
+region_enabled = true
+region_rect = Rect2(0, 144, 64, 48)
+offset = Vector2(-32, -42)
+
+[node name="Physics" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4)
+shape = SubResource("RS_body")
+
+[node name="InteractionArea" parent="." instance=ExtResource("3_iarea")]
+position = Vector2(0, -18)
+action_name = "speak"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("RS_talk")
+
+[node name="BalloonAnchor2D" type="Node2D" parent="."]
+position = Vector2(0, -46)

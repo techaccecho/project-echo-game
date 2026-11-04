@@ -107,9 +107,12 @@ func _open_gate(silent: bool) -> void:
 
 
 func _on_gate() -> void:
-	# The way on. Level 4 does not exist yet, so the open gate says as much
-	# rather than doing nothing.
-	await _say("gate_open" if Flags.has(FLAG_OPEN) else "gate_shut")
+	# The way on, once the pedestals have opened it: through to the Haven.
+	if not Flags.has(FLAG_OPEN):
+		await _say("gate_shut")
+		return
+	await _say("gate_open")
+	SceneManager.change_level("res://world/game_level_4.tscn", "HavenArrival")
 
 
 ## The west mouth of the maze: back out to the Cliffside Path, at the cave.
